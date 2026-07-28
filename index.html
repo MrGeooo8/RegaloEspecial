@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Un pequeño detalle ✨</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+overflow-x:hidden;
+background:
+linear-gradient(180deg,#12001f,#030008);
+color:white;
+}
+
+
+/* ESTRELLAS */
+
+.star{
+position:fixed;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation:starMove linear infinite;
+opacity:.8;
+}
+
+@keyframes starMove{
+from{
+transform:translateY(100vh);
+}
+to{
+transform:translateY(-10vh);
+}
+}
+
+
+
+/* PANTALLAS */
+
+.screen{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+
+.hidden{
+display:none;
+}
+
+
+
+/* TARJETAS */
+
+.box{
+
+max-width:450px;
+width:100%;
+padding:35px;
+text-align:center;
+
+background:rgba(255,255,255,.08);
+border:1px solid rgba(255,255,255,.2);
+backdrop-filter:blur(20px);
+
+border-radius:30px;
+
+box-shadow:
+0 0 40px rgba(255,100,200,.15);
+
+animation:entrada 1.5s;
+
+}
+
+
+@keyframes entrada{
+
+from{
+opacity:0;
+transform:scale(.7) translateY(50px);
+}
+
+to{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+
+
+h1{
+
+font-size:35px;
+margin-bottom:20px;
+
+background:
+linear-gradient(45deg,#ff8bd5,#b98cff);
+
+-webkit-background-clip:text;
+color:transparent;
+
+}
+
+
+p{
+
+font-size:18px;
+line-height:1.7;
+
+}
+
+
+
+button{
+
+margin-top:30px;
+
+padding:15px 35px;
+
+border:none;
+
+border-radius:50px;
+
+font-size:16px;
+
+color:white;
+
+background:
+linear-gradient(45deg,#ff4fa3,#805cff);
+
+cursor:pointer;
+
+transition:.4s;
+
+}
+
+
+button:hover{
+
+transform:scale(1.1);
+
+box-shadow:
+0 0 30px #ff4fa3;
+
+}
+
+
+
+/* TEXTO */
+
+#texto{
+
+min-height:130px;
+
+}
+
+
+/* TARJETAS PEQUEÑAS */
+
+
+.cards{
+
+display:grid;
+
+gap:15px;
+
+margin-top:25px;
+
+}
+
+
+.small{
+
+padding:15px;
+
+background:rgba(255,255,255,.1);
+
+border-radius:20px;
+
+animation:flotar 3s infinite alternate;
+
+}
+
+
+
+@keyframes flotar{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-8px);
+}
+
+}
+
+
+
+/* FINAL */
+
+.finalTitle{
+
+font-size:42px;
+
+}
+
+
+.glow{
+
+text-shadow:
+0 0 10px #ff5cb8,
+0 0 30px #ff5cb8;
+
+}
+
+
+
+.heart{
+
+position:fixed;
+
+font-size:25px;
+
+animation:heart 4s forwards;
+
+}
+
+
+@keyframes heart{
+
+0%{
+transform:translateY(0) scale(1);
+opacity:1;
+}
+
+100%{
+
+transform:translateY(-700px) scale(2);
+
+opacity:0;
+
+}
+
+}
+
+
+
+.confetti{
+
+position:fixed;
+
+width:8px;
+
+height:15px;
+
+background:white;
+
+animation:conf 3s linear forwards;
+
+}
+
+
+@keyframes conf{
+
+from{
+
+transform:translateY(-20px) rotate(0);
+
+}
+
+to{
+
+transform:translateY(100vh) rotate(720deg);
+
+}
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<script>
+
+for(let i=0;i<80;i++){
+
+let s=document.createElement("div");
+
+s.className="star";
+
+s.style.left=Math.random()*100+"%";
+
+s.style.animationDuration=
+(5+Math.random()*10)+"s";
+
+s.style.animationDelay=
+Math.random()*5+"s";
+
+document.body.appendChild(s);
+
+}
+
+</script>
+
+
+
+
+<section class="screen" id="inicio">
+
+
+<div class="box">
+
+<h1>
+Tengo algo para ti ✨
+</h1>
+
+
+<p>
+No es algo enorme...
+solo un pequeño detalle diferente.
+</p>
+
+
+<button onclick="abrir()">
+Abrir sorpresa 💫
+</button>
+
+
+</div>
+
+</section>
+
+
+
+
+
+<section class="screen hidden" id="carta">
+
+<div class="box">
+
+<h1>
+Un pequeño mensaje 🌙
+</h1>
+
+
+<p id="texto"></p>
+
+
+<button onclick="siguiente()">
+Continuar ✨
+</button>
+
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<section class="screen hidden" id="detalles">
+
+<div class="box">
+
+
+<h1>
+Algo curioso 🤍
+</h1>
+
+
+<div class="cards">
+
+
+<div class="small">
+✨ Tu forma de responder hace divertida una conversación.
+</div>
+
+
+<div class="small">
+🌙 Tienes una energía diferente.
+</div>
+
+
+<div class="small">
+💫 Siempre hay algo que hace interesante hablar contigo.
+</div>
+
+
+</div>
+
+
+<button onclick="final()">
+Última sorpresa 💗
+</button>
+
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<section class="screen hidden" id="fin">
+
+
+<div class="box">
+
+
+<h1 class="finalTitle glow">
+Gracias por leer 🤍
+</h1>
+
+
+<p>
+
+No sé si esto logró sacarte una sonrisa,
+pero esa era la idea.
+
+A veces un detalle pequeño puede hacer especial un momento cualquiera ✨
+
+</p>
+
+
+<button onclick="fiesta()">
+Presiona aquí 😌
+</button>
+
+
+</div>
+
+</section>
+
+
+
+
+<script>
+
+
+let mensajes=[
+
+"No soy mucho de hacer cosas así JAJA, pero pensé que algo diferente estaría bonito.",
+
+"A veces alguien aparece de la nada y hace que una conversación cualquiera sea más divertida.",
+
+"Y bueno... todavía estoy descubriendo si eres más difícil de entender o más fácil de hacer reír 😌"
+
+];
+
+
+let indice=0;
+
+
+
+function abrir(){
+
+inicio.style.display="none";
+
+carta.classList.remove("hidden");
+
+escribir();
+
+}
+
+
+
+
+function escribir(){
+
+let texto=document.getElementById("texto");
+
+texto.innerHTML="";
+
+let mensaje=mensajes[indice];
+
+let i=0;
+
+
+let intervalo=setInterval(()=>{
+
+
+texto.innerHTML+=mensaje[i];
+
+i++;
+
+
+if(i>=mensaje.length){
+
+clearInterval(intervalo);
+
+}
+
+
+},45);
+
+
+}
+
+
+
+function siguiente(){
+
+
+indice++;
+
+
+if(indice<mensajes.length){
+
+escribir();
+
+corazon();
+
+}
+
+else{
+
+carta.classList.add("hidden");
+
+detalles.classList.remove("hidden");
+
+}
+
+
+}
+
+
+
+
+function final(){
+
+
+detalles.classList.add("hidden");
+
+fin.classList.remove("hidden");
+
+}
+
+
+
+function corazon(){
+
+let h=document.createElement("div");
+
+h.className="heart";
+
+h.innerHTML="❤";
+
+h.style.left=Math.random()*100+"%";
+
+h.style.bottom="0";
+
+document.body.appendChild(h);
+
+
+setTimeout(()=>h.remove(),4000);
+
+}
+
+
+
+
+function fiesta(){
+
+
+for(let i=0;i<40;i++){
+
+
+setTimeout(()=>{
+
+
+corazon();
+
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"%";
+
+c.style.background=
+"hsl("+Math.random()*360+",80%,70%)";
+
+
+document.body.appendChild(c);
+
+
+setTimeout(()=>c.remove(),3000);
+
+
+},i*80);
+
+
+}
+
+
+
+}
+
+</script>
+
+
+</body>
+</html>
