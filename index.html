@@ -1,632 +1,1137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Un pequeño detalle ✨</title>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
-
-body{
-height:100vh;
-overflow-x:hidden;
-background:
-linear-gradient(180deg,#12001f,#030008);
-color:white;
-}
-
-
-/* ESTRELLAS */
-
-.star{
-position:fixed;
-width:3px;
-height:3px;
-background:white;
-border-radius:50%;
-animation:starMove linear infinite;
-opacity:.8;
-}
-
-@keyframes starMove{
-from{
-transform:translateY(100vh);
-}
-to{
-transform:translateY(-10vh);
-}
-}
-
-
-
-/* PANTALLAS */
-
-.screen{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-
-.hidden{
-display:none;
-}
-
-
-
-/* TARJETAS */
-
-.box{
-
-max-width:450px;
-width:100%;
-padding:35px;
-text-align:center;
-
-background:rgba(255,255,255,.08);
-border:1px solid rgba(255,255,255,.2);
-backdrop-filter:blur(20px);
-
-border-radius:30px;
-
-box-shadow:
-0 0 40px rgba(255,100,200,.15);
-
-animation:entrada 1.5s;
-
-}
-
-
-@keyframes entrada{
-
-from{
-opacity:0;
-transform:scale(.7) translateY(50px);
-}
-
-to{
-opacity:1;
-transform:scale(1);
-}
-
-}
-
-
-
-h1{
-
-font-size:35px;
-margin-bottom:20px;
-
-background:
-linear-gradient(45deg,#ff8bd5,#b98cff);
-
--webkit-background-clip:text;
-color:transparent;
-
-}
-
-
-p{
-
-font-size:18px;
-line-height:1.7;
-
-}
-
-
-
-button{
-
-margin-top:30px;
-
-padding:15px 35px;
-
-border:none;
-
-border-radius:50px;
-
-font-size:16px;
-
-color:white;
-
-background:
-linear-gradient(45deg,#ff4fa3,#805cff);
-
-cursor:pointer;
-
-transition:.4s;
-
-}
-
-
-button:hover{
-
-transform:scale(1.1);
-
-box-shadow:
-0 0 30px #ff4fa3;
-
-}
-
-
-
-/* TEXTO */
-
-#texto{
-
-min-height:130px;
-
-}
-
-
-/* TARJETAS PEQUEÑAS */
-
-
-.cards{
-
-display:grid;
-
-gap:15px;
-
-margin-top:25px;
-
-}
-
-
-.small{
-
-padding:15px;
-
-background:rgba(255,255,255,.1);
-
-border-radius:20px;
-
-animation:flotar 3s infinite alternate;
-
-}
-
-
-
-@keyframes flotar{
-
-from{
-transform:translateY(0);
-}
-
-to{
-transform:translateY(-8px);
-}
-
-}
-
-
-
-/* FINAL */
-
-.finalTitle{
-
-font-size:42px;
-
-}
-
-
-.glow{
-
-text-shadow:
-0 0 10px #ff5cb8,
-0 0 30px #ff5cb8;
-
-}
-
-
-
-.heart{
-
-position:fixed;
-
-font-size:25px;
-
-animation:heart 4s forwards;
-
-}
-
-
-@keyframes heart{
-
-0%{
-transform:translateY(0) scale(1);
-opacity:1;
-}
-
-100%{
-
-transform:translateY(-700px) scale(2);
-
-opacity:0;
-
-}
-
-}
-
-
-
-.confetti{
-
-position:fixed;
-
-width:8px;
-
-height:15px;
-
-background:white;
-
-animation:conf 3s linear forwards;
-
-}
-
-
-@keyframes conf{
-
-from{
-
-transform:translateY(-20px) rotate(0);
-
-}
-
-to{
-
-transform:translateY(100vh) rotate(720deg);
-
-}
-
-}
-
-
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universo Especial - Flor Leidy ✨</title>
+    <style>
+        :root {
+            --primary: #ff3366;
+            --secondary: #ff758c;
+            --gold: #ffd700;
+            --gold-glow: rgba(255, 215, 0, 0.6);
+            --bg-dark: #05050a;
+            --glass: rgba(255, 255, 255, 0.07);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text: #ffffff;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f3ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text);
+            overflow-x: hidden;
+            transition: background 1.5s ease;
+        }
+
+        /* Canvas Layers */
+        #bg-canvas, #fx-canvas, #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+        }
+        #bg-canvas { z-index: 1; }
+        #fx-canvas { z-index: 2; }
+        #fireworks-canvas { z-index: 999; }
+
+        /* Moon Element */
+        .moon {
+            position: fixed;
+            top: 35px;
+            right: 35px;
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle at 35% 35%, #ffffff, #dcdde1);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.9), 0 0 100px rgba(255, 255, 255, 0.3);
+            z-index: 3;
+            transition: all 1s ease;
+            animation: floatMoon 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatMoon {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-12px) rotate(5deg); }
+        }
+
+        /* Screen Shake Animation */
+        .shake {
+            animation: shakeAnim 0.3s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shakeAnim {
+            10%, 90% { transform: translate3d(-2px, 0, 0); }
+            20%, 80% { transform: translate3d(4px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+            40%, 60% { transform: translate3d(6px, 0, 0); }
+        }
+
+        /* Main Container */
+        .app-container {
+            position: relative;
+            z-index: 10;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 20px 15px 80px 15px;
+        }
+
+        /* Cinematic Intro Screen */
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, #111122 0%, #030308 100%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
+        }
+
+        .golden-glow {
+            font-size: clamp(2.8rem, 8vw, 4.8rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff099 0%, #ffd700 50%, #ff8c00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px var(--gold-glow);
+            margin-bottom: 20px;
+            animation: pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4)); }
+            100% { filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.9)); }
+        }
+
+        .typewriter {
+            font-size: 1.25rem;
+            color: #e2e8f0;
+            border-right: 3px solid var(--gold);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blinkCaret 0.75s step-end infinite;
+            min-height: 1.6em;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        @keyframes blinkCaret { 50% { border-color: transparent; } }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px 25px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 215, 0, 0.35);
+        }
+
+        /* Glowing Ultra Buttons */
+        .btn-glow {
+            background: linear-gradient(135deg, #ff3366, #ff758c);
+            border: none;
+            color: white;
+            padding: 14px 32px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 6px;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.7);
+        }
+
+        .btn-glow:active { transform: translateY(1px) scale(0.98); }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn-glow:hover::before { left: 100%; }
+
+        /* Music Player */
+        .music-player {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--gold));
+            box-shadow: 0 0 10px var(--gold);
+            transition: width 0.1s linear;
+        }
+
+        /* Game Grid Styling */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+            margin-top: 20px;
+        }
+
+        .game-card-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 22px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-7px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+        }
+
+        .game-icon {
+            font-size: 2.8rem;
+            display: block;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .game-card-btn:hover .game-icon {
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        /* 3D Card Flip Mechanics for "Busca la flor" */
+        .flip-container {
+            perspective: 1000px;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .flip-card {
+            width: 85px;
+            height: 120px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .flip-card.flipped { transform: rotateY(180deg); }
+
+        .card-front, .card-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            border: 2px solid var(--gold);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            color: var(--gold);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #2d3436, #000);
+            transform: rotateY(180deg);
+        }
+
+        /* Roulette Wheel 3D Feel */
+        .roulette-wrapper {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            margin: 20px auto;
+        }
+
+        .roulette-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 22px solid var(--gold);
+            z-index: 10;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+        }
+
+        .roulette-wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 6px solid var(--gold);
+            background: conic-gradient(
+                #ff3366 0deg 90deg, 
+                #33cc99 90deg 180deg, 
+                #ffd700 180deg 270deg, 
+                #8e44ad 270deg 360deg
+            );
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(0,0,0,0.5);
+            transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1);
+        }
+
+        /* Doors System */
+        .doors-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            perspective: 600px;
+        }
+
+        .door-btn {
+            width: 85px;
+            height: 130px;
+            background: linear-gradient(180deg, #4a154b, #2c0b2e);
+            border-radius: 10px 10px 0 0;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            transform-origin: left;
+        }
+
+        .door-btn:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+            transform: scale(1.05);
+        }
+
+        .door-btn.open {
+            transform: rotateY(-110deg);
+            opacity: 0.3;
+        }
+
+        /* Polaroid Gallery */
+        .polaroid-grid {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 14px 14px 30px 14px;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transform: rotate(-3deg);
+            transition: all 0.35s ease;
+            width: 190px;
+            text-align: center;
+            color: #222;
+        }
+
+        .polaroid:nth-child(even) { transform: rotate(4deg); }
+        .polaroid:hover {
+            transform: scale(1.12) rotate(0deg);
+            z-index: 10;
+            box-shadow: 0 18px 35px rgba(0,0,0,0.6);
+        }
+
+        .polaroid-img {
+            width: 100%;
+            height: 160px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        /* Garden Canvas */
+        #garden-canvas {
+            width: 100%;
+            height: 220px;
+            background: radial-gradient(circle at bottom, #0a2012 0%, #030805 100%);
+            border-radius: 18px;
+            cursor: crosshair;
+            border: 1px dashed var(--glass-border);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        /* Envelopes */
+        .envelopes-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; }
+        .envelope {
+            width: 110px;
+            height: 75px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .envelope:hover { transform: translateY(-6px) rotate(3deg); box-shadow: 0 12px 25px rgba(231, 76, 60, 0.5); }
+
+        /* Modal System */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .modal.active { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background: linear-gradient(145deg, #161623, #0d0d15);
+            border: 1.5px solid var(--gold);
+            padding: 30px 25px;
+            border-radius: 28px;
+            max-width: 460px;
+            width: 92%;
+            text-align: center;
+            box-shadow: 0 0 50px var(--gold-glow);
+            transform: scale(0.85);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal.active .modal-content { transform: scale(1); }
+
+        h2 { margin-bottom: 12px; color: var(--gold); font-size: 1.6rem; }
+
+        /* Floating Score Text Overlay */
+        .floating-text {
+            position: fixed;
+            pointer-events: none;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: var(--gold);
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+            z-index: 9999;
+            animation: floatUpFade 1s forwards ease-out;
+        }
+
+        @keyframes floatUpFade {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-60px) scale(1.4); }
+        }
+    </style>
 </head>
-
-
 <body>
 
-
-
-<script>
-
-for(let i=0;i<80;i++){
-
-let s=document.createElement("div");
-
-s.className="star";
-
-s.style.left=Math.random()*100+"%";
-
-s.style.animationDuration=
-(5+Math.random()*10)+"s";
-
-s.style.animationDelay=
-Math.random()*5+"s";
-
-document.body.appendChild(s);
-
-}
-
-</script>
-
-
-
-
-<section class="screen" id="inicio">
-
-
-<div class="box">
-
-<h1>
-Tengo algo para ti ✨
-</h1>
-
-
-<p>
-No es algo enorme...
-solo un pequeño detalle diferente.
-</p>
-
-
-<button onclick="abrir()">
-Abrir sorpresa 💫
-</button>
-
-
-</div>
-
-</section>
-
-
-
-
-
-<section class="screen hidden" id="carta">
-
-<div class="box">
-
-<h1>
-Un pequeño mensaje 🌙
-</h1>
-
-
-<p id="texto"></p>
-
-
-<button onclick="siguiente()">
-Continuar ✨
-</button>
-
-
-</div>
-
-</section>
-
-
-
-
-
-
-
-<section class="screen hidden" id="detalles">
-
-<div class="box">
-
-
-<h1>
-Algo curioso 🤍
-</h1>
-
-
-<div class="cards">
-
-
-<div class="small">
-✨ Tu forma de responder hace divertida una conversación.
-</div>
-
-
-<div class="small">
-🌙 Tienes una energía diferente.
-</div>
-
-
-<div class="small">
-💫 Siempre hay algo que hace interesante hablar contigo.
-</div>
-
-
-</div>
-
-
-<button onclick="final()">
-Última sorpresa 💗
-</button>
-
-
-</div>
-
-</section>
-
-
-
-
-
-
-
-<section class="screen hidden" id="fin">
-
-
-<div class="box">
-
-
-<h1 class="finalTitle glow">
-Gracias por leer 🤍
-</h1>
-
-
-<p>
-
-No sé si esto logró sacarte una sonrisa,
-pero esa era la idea.
-
-A veces un detalle pequeño puede hacer especial un momento cualquiera ✨
-
-</p>
-
-
-<button onclick="fiesta()">
-Presiona aquí 😌
-</button>
-
-
-</div>
-
-</section>
-
-
-
-
-<script>
-
-
-let mensajes=[
-
-"No soy mucho de hacer cosas así JAJA, pero pensé que algo diferente estaría bonito.",
-
-"A veces alguien aparece de la nada y hace que una conversación cualquiera sea más divertida.",
-
-"Y bueno... todavía estoy descubriendo si eres más difícil de entender o más fácil de hacer reír 😌"
-
-];
-
-
-let indice=0;
-
-
-
-function abrir(){
-
-inicio.style.display="none";
-
-carta.classList.remove("hidden");
-
-escribir();
-
-}
-
-
-
-
-function escribir(){
-
-let texto=document.getElementById("texto");
-
-texto.innerHTML="";
-
-let mensaje=mensajes[indice];
-
-let i=0;
-
-
-let intervalo=setInterval(()=>{
-
-
-texto.innerHTML+=mensaje[i];
-
-i++;
-
-
-if(i>=mensaje.length){
-
-clearInterval(intervalo);
-
-}
-
-
-},45);
-
-
-}
-
-
-
-function siguiente(){
-
-
-indice++;
-
-
-if(indice<mensajes.length){
-
-escribir();
-
-corazon();
-
-}
-
-else{
-
-carta.classList.add("hidden");
-
-detalles.classList.remove("hidden");
-
-}
-
-
-}
-
-
-
-
-function final(){
-
-
-detalles.classList.add("hidden");
-
-fin.classList.remove("hidden");
-
-}
-
-
-
-function corazon(){
-
-let h=document.createElement("div");
-
-h.className="heart";
-
-h.innerHTML="❤";
-
-h.style.left=Math.random()*100+"%";
-
-h.style.bottom="0";
-
-document.body.appendChild(h);
-
-
-setTimeout(()=>h.remove(),4000);
-
-}
-
-
-
-
-function fiesta(){
-
-
-for(let i=0;i<40;i++){
-
-
-setTimeout(()=>{
-
-
-corazon();
-
-
-let c=document.createElement("div");
-
-c.className="confetti";
-
-c.style.left=Math.random()*100+"%";
-
-c.style.background=
-"hsl("+Math.random()*360+",80%,70%)";
-
-
-document.body.appendChild(c);
-
-
-setTimeout(()=>c.remove(),3000);
-
-
-},i*80);
-
-
-}
-
-
-
-}
-
-</script>
-
-
+    <!-- Canvases -->
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="fx-canvas"></canvas>
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="moon" id="moon"></div>
+
+    <!-- Intro Cinematográfica -->
+    <div id="intro-screen">
+        <div class="golden-glow">Flor Leidy</div>
+        <div class="typewriter" id="typewriter"></div>
+        <button class="btn-glow" style="margin-top: 35px;" onclick="startExperience()">
+            <span>Entrar al Universo</span> ✨
+        </button>
+    </div>
+
+    <!-- App Main UI -->
+    <div class="app-container">
+
+        <!-- Music Player -->
+        <div class="glass-card music-player">
+            <button class="btn-glow" id="play-btn" onclick="toggleMusic()">🎵 Play</button>
+            <div style="flex-grow: 1;">
+                <div style="font-size: 0.85rem; margin-bottom: 6px; font-weight: 600; color: #ddd;" id="song-title">Melodía Especial</div>
+                <div class="progress-bar" onclick="seekMusic(event)">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Constellation Interactive -->
+        <div class="glass-card" style="text-align: center;">
+            <h2>🌌 Constelación Animada</h2>
+            <p style="color: #ccc; margin-bottom: 15px;">Mira cómo las estrellas se conectan en tiempo real para formar algo único:</p>
+            <button class="btn-glow" onclick="triggerConstellation()">Alinear Estrellas ✨</button>
+        </div>
+
+        <!-- Minijuegos Realistas -->
+        <div class="glass-card">
+            <h2>🎮 Zona de Minijuegos Interactivos</h2>
+            <p style="margin-bottom: 18px; color: #aaa; font-size: 0.95rem;">Selecciona un juego y desbloquea sorpresas con efectos reales:</p>
+            
+            <div class="game-grid">
+                <div class="game-card-btn" onclick="openGame('flower')">
+                    <span class="game-icon">🌸</span>
+                    <strong>¿Dónde está la flor?</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Encuéntrala en 3D</p>
+                </div>
+                <div class="game-card-btn" onclick="openGame('hearts')">
+                    <span class="game-icon">❤️</span>
+                    <strong>Caza-Corazones</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Récord en 10 segundos</p>
+                </div>
+                <div class="game-card-btn" onclick="openGame('roulette')">
+                    <span class="game-icon">🎡</span>
+                    <strong>Ruleta de la Suerte</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Gira el destino</p>
+                </div>
+                <div class="game-card-btn" onclick="openGame('door')">
+                    <span class="game-icon">🚪</span>
+                    <strong>Puertas Secretas</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Abre tu regalo</p>
+                </div>
+                <div class="game-card-btn" onclick="openGame('box')">
+                    <span class="game-icon">📦</span>
+                    <strong>Caja Misteriosa</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Sorpresa animada</p>
+                </div>
+                <div class="game-card-btn" onclick="openGame('balloons')">
+                    <span class="game-icon">🎈</span>
+                    <strong>Explotar Globos</strong>
+                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Efectos visuales</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cartas Secretas -->
+        <div class="glass-card">
+            <h2>💌 Cartas Secretas</h2>
+            <div class="envelopes-container">
+                <div class="envelope" onclick="openLetter('romantica')">🌹</div>
+                <div class="envelope" onclick="openLetter('divertida')">😂</div>
+                <div class="envelope" onclick="openLetter('tierna')">🧸</div>
+            </div>
+        </div>
+
+        <!-- Galería Polaroid -->
+        <div class="glass-card">
+            <h2>📸 Galería del Futuro</h2>
+            <div class="polaroid-grid">
+                <div class="polaroid">
+                    <div class="polaroid-img">Espacio para Foto</div>
+                    <p style="margin-top: 10px; font-weight: bold;">Próximamente...</p>
+                </div>
+                <div class="polaroid">
+                    <div class="polaroid-img">Espacio para Foto</div>
+                    <p style="margin-top: 10px; font-weight: bold;">Un gran día ✨</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Café Scene -->
+        <div class="glass-card" style="text-align: center; position: relative; overflow: hidden;">
+            <h2>☕ Momento Especial</h2>
+            <p style="margin: 15px 0; color: #ddd; line-height: 1.6;">Lluvia suave afuera, el aroma a café recién hecho y la mejor compañía...</p>
+            <blockquote style="font-style: italic; color: var(--gold);">"Los mejores momentos ocurren cuando menos lo esperas."</blockquote>
+        </div>
+
+        <!-- Jardín Interactivo -->
+        <div class="glass-card">
+            <h2>🌹 Jardín Interactivo</h2>
+            <p style="margin-bottom: 12px; color: #aaa; font-size: 0.9rem;">Toca la tierra para hacer crecer tallos y flores en tiempo real:</p>
+            <canvas id="garden-canvas"></canvas>
+        </div>
+
+        <!-- Botones Especiales -->
+        <div style="text-align: center; margin: 40px 0;">
+            <button class="btn-glow" onclick="toggleNightMode()">🌙 Modo Noche Ultra</button>
+            <button class="btn-glow" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000;" onclick="triggerGrandFinale()">✨ ¡Gran Final de Fuegos Artificiales!</button>
+        </div>
+
+    </div>
+
+    <!-- Modal Interactivo -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Juego</h2>
+            <div id="game-interactive-area"></div>
+            <p id="modal-body" style="margin: 15px 0; color: #ddd; font-size: 1.05rem;"></p>
+            <button class="btn-glow" onclick="closeModal()">Cerrar / Volver</button>
+        </div>
+    </div>
+
+    <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+
+    <script>
+        /* ==================== SONIDOS DESACTIVADOS ==================== */
+        function playSound(type) {
+            // Función deshabilitada
+        }
+
+        /* ==================== CANVAS DE FONDO (Estrellas + Flores) ==================== */
+        const bgCanvas = document.getElementById('bg-canvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        const fxCanvas = document.getElementById('fx-canvas');
+        const fxCtx = fxCanvas.getContext('2d');
+        let width, height;
+
+        function resize() {
+            width = bgCanvas.width = fxCanvas.width = window.innerWidth;
+            height = bgCanvas.height = fxCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = [];
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.type = Math.random() > 0.45 ? 'star' : (Math.random() > 0.5 ? 'flower' : 'firefly');
+                this.size = this.type === 'star' ? Math.random() * 2 + 0.5 : (this.type === 'flower' ? Math.random() * 8 + 6 : Math.random() * 3 + 1);
+                this.speedY = this.type === 'flower' ? Math.random() * 0.8 + 0.4 : (Math.random() - 0.5) * 0.4;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random();
+                this.fade = Math.random() * 0.02 + 0.005;
+            }
+            update() {
+                this.y += this.speedY; this.x += this.speedX;
+                if (this.type === 'flower' && this.y > height) this.y = -10;
+                if (this.x < 0 || this.x > width) this.x = Math.random() * width;
+                this.opacity += this.fade;
+                if (this.opacity > 1 || this.opacity < 0) this.fade = -this.fade;
+            }
+            draw(ctx) {
+                ctx.save();
+                ctx.globalAlpha = Math.abs(this.opacity);
+                if (this.type === 'star') {
+                    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                } else if (this.type === 'firefly') {
+                    ctx.fillStyle = '#ffd700'; ctx.shadowBlur = 8; ctx.shadowColor = '#ffd700'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                } else {
+                    ctx.font = `${this.size}px serif`; ctx.fillText('🌸', this.x, this.y);
+                }
+                ctx.restore();
+            }
+        }
+        for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+        function animateBg() {
+            bgCtx.clearRect(0, 0, width, height);
+            particles.forEach(p => { p.update(); p.draw(bgCtx); });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        /* ==================== MOTOR DE FUEGOS ARTIFICIALES (GRAN FINAL) ==================== */
+        const fwCanvas = document.getElementById('fireworks-canvas');
+        const fwCtx = fwCanvas.getContext('2d');
+        fwCanvas.width = window.innerWidth;
+        fwCanvas.height = window.innerHeight;
+
+        let fireworks = [];
+        let fwParticles = [];
+
+        class Firework {
+            constructor(sx, sy, tx, ty) {
+                this.x = sx; this.y = sy;
+                this.sx = sx; this.sy = sy;
+                this.tx = tx; this.ty = ty;
+                this.distanceToTarget = Math.hypot(tx - sx, ty - sy);
+                this.distanceTraveled = 0;
+                this.coordinates = [];
+                this.coordinateCount = 3;
+                while (this.coordinateCount--) this.coordinates.push([this.x, this.y]);
+                this.angle = Math.atan2(ty - sy, tx - sx);
+                this.speed = 4;
+                this.acceleration = 1.04;
+                this.brightness = Math.random() * 50 + 50;
+            }
+            update(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.acceleration;
+                const vx = Math.cos(this.angle) * this.speed;
+                const vy = Math.sin(this.angle) * this.speed;
+                this.distanceTraveled = Math.hypot(this.x + vx - this.sx, this.y + vy - this.sy);
+
+                if (this.distanceTraveled >= this.distanceToTarget) {
+                    createFwParticles(this.tx, this.ty);
+                    fireworks.splice(index, 1);
+                } else {
+                    this.x += vx; this.y += vy;
+                }
+            }
+            draw() {
+                fwCtx.beginPath();
+                fwCtx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                fwCtx.lineTo(this.x, this.y);
+                fwCtx.strokeStyle = `hsl(${Math.random()*360}, 100%, ${this.brightness}%)`;
+                fwCtx.stroke();
+            }
+        }
+
+        class FwParticle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.coordinates = [];
+                this.coordinateCount = 5;
+                while (this.coordinateCount--) this.coordinates.push([this.x, this.y]);
+                this.angle = Math.random() * Math.PI * 2;
+                this.speed = Math.random() * 10 + 1;
+                this.friction = 0.95;
+                this.gravity = 1;
+                this.hue = Math.random() * 360;
+                this.brightness = Math.random() * 50 + 50;
+                this.alpha = 1;
+                this.decay = Math.random() * 0.03 + 0.015;
+            }
+            update(index) {
+                this.coordinates.pop();
+                this.coordinates.unshift([this.x, this.y]);
+                this.speed *= this.friction;
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed + this.gravity;
+                this.alpha -= this.decay;
+                if (this.alpha <= this.decay) fwParticles.splice(index, 1);
+            }
+            draw() {
+                fwCtx.beginPath();
+                fwCtx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
+                fwCtx.lineTo(this.x, this.y);
+                fwCtx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
+                fwCtx.stroke();
+            }
+        }
+
+        function createFwParticles(x, y) {
+            let count = 40;
+            while (count--) fwParticles.push(new FwParticle(x, y));
+        }
+
+        function loopFireworks() {
+            fwCtx.globalCompositeOperation = 'destination-out';
+            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
+            fwCtx.globalCompositeOperation = 'lighter';
+
+            let i = fireworks.length;
+            while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
+            let j = fwParticles.length;
+            while (j--) { fwParticles[j].draw(); fwParticles[j].update(j); }
+
+            requestAnimationFrame(loopFireworks);
+        }
+        loopFireworks();
+
+        /* ==================== INTRO & MÚSICA ==================== */
+        const textToType = "Un espacio diseñado para sacarte una sonrisa súper bonita... ✨";
+        let typeIndex = 0;
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                document.getElementById("typewriter").innerHTML += textToType.charAt(typeIndex);
+                typeIndex++; setTimeout(typeWriter, 45);
+            }
+        }
+        setTimeout(typeWriter, 600);
+
+        const audio = document.getElementById('bg-audio');
+        let isPlaying = false;
+        function toggleMusic() {
+            if (isPlaying) { audio.pause(); document.getElementById('play-btn').innerText = '🎵 Play'; }
+            else { audio.play(); document.getElementById('play-btn').innerText = 'Pausa ⏸️'; }
+            isPlaying = !isPlaying;
+        }
+
+        function seekMusic(e) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        }
+
+        audio.ontimeupdate = () => {
+            if (audio.duration) {
+                document.getElementById('progress-fill').style.width = (audio.currentTime / audio.duration) * 100 + '%';
+            }
+        };
+
+        function startExperience() {
+            document.getElementById('intro-screen').style.opacity = '0';
+            setTimeout(() => document.getElementById('intro-screen').style.visibility = 'hidden', 1200);
+            toggleMusic();
+        }
+
+        /* ==================== MODAL & JUEGOS REALISTAS ==================== */
+        function showModal(title, text, customHtml = '') {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = text;
+            document.getElementById('game-interactive-area').innerHTML = customHtml;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            clearInterval(heartTimer);
+        }
+
+        let heartTimer;
+        function openGame(gameType) {
+            const area = document.getElementById('game-interactive-area');
+
+            // 1. DÓNDE ESTÁ LA FLOR 3D
+            if (gameType === 'flower') {
+                const flowerPos = Math.floor(Math.random() * 3);
+                let html = '<p style="margin-bottom:15px; color:#aaa;">Toca una carta para dar la vuelta en 3D:</p><div>';
+                for (let i = 0; i < 3; i++) {
+                    html += `
+                        <div class="flip-container" onclick="flipCard(this, ${i === flowerPos})">
+                            <div class="flip-card">
+                                <div class="card-front">❓</div>
+                                <div class="card-back">${i === flowerPos ? '🌸' : '🤡'}</div>
+                            </div>
+                        </div>`;
+                }
+                html += '</div>';
+                showModal('🌸 ¿Dónde está la flor?', '', html);
+            }
+
+            // 2. CAZA-CORAZONES CON COMBO Y SHAKE
+            else if (gameType === 'hearts') {
+                let html = `
+                    <p>¡Presiona el corazón lo más rápido posible!</p>
+                    <h1 id="heart-counter" style="font-size: 3.5rem; color: var(--primary); margin: 15px 0;">0</h1>
+                    <button class="btn-glow" id="catch-btn" onclick="scoreHeart(event)">❤️ ¡TOCAR!</button>
+                    <p id="timer-text" style="margin-top:12px; font-weight:bold; color: var(--gold);">Tiempo restante: 10s</p>
+                `;
+                showModal('❤️ Caza-Corazones Arcade', '', html);
+                startHeartGame();
+            }
+
+            // 3. RULETA 3D REALISTA
+            else if (gameType === 'roulette') {
+                let html = `
+                    <div class="roulette-wrapper">
+                        <div class="roulette-pointer"></div>
+                        <div class="roulette-wheel" id="wheel"></div>
+                    </div>
+                    <button class="btn-glow" onclick="spinWheelReal()">🎰 ¡Girar con fuerza!</button>
+                `;
+                showModal('🎡 Ruleta de la Suerte', '¡Pon a prueba tu suerte hoy mismo!', html);
+            }
+
+            // 4. PUERTAS ANIMADAS
+            else if (gameType === 'door') {
+                let html = `
+                    <p style="margin-bottom:15px;">Abre una puerta para descubrir lo que oculta:</p>
+                    <div class="doors-container">
+                        <div class="door-btn" onclick="openDoorReal(this, 1)">1️⃣</div>
+                        <div class="door-btn" onclick="openDoorReal(this, 2)">2️⃣</div>
+                        <div class="door-btn" onclick="openDoorReal(this, 3)">3️⃣</div>
+                    </div>
+                `;
+                showModal('🚪 Puertas Misteriosas', '', html);
+            }
+
+            // 5. CAJA SORPRESA
+            else if (gameType === 'box') {
+                let html = `
+                    <div style="font-size: 5rem; cursor: pointer; transition: transform 0.3s;" id="mystery-box" onclick="unwrapBoxReal()">🎁</div>
+                    <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">(Toca el regalo para abrirlo)</p>
+                `;
+                showModal('📦 Caja Sorpresa', '', html);
+            }
+
+            // 6. GLOBOS CON POP REAL
+            else if (gameType === 'balloons') {
+                let html = `
+                    <p style="margin-bottom:10px;">¡Haz clic sobre los globos antes de que vuelen!</p>
+                    <div id="balloon-zone" style="height: 160px; position: relative; overflow: hidden; border: 1px dashed var(--glass-border); border-radius: 15px;"></div>
+                `;
+                showModal('🎈 Revienta Globos', '', html);
+                spawnBalloonsReal();
+            }
+        }
+
+        /* Mecánicas */
+        function flipCard(elem, isCorrect) {
+            const card = elem.querySelector('.flip-card');
+            if (card.classList.contains('flipped')) return;
+            card.classList.add('flipped');
+
+            setTimeout(() => {
+                if (isCorrect) {
+                    document.getElementById('modal-body').innerText = '🎉 ¡Felicidades! Encontraste la flor radiante al primer intento.';
+                } else {
+                    document.getElementById('modal-body').innerText = '🤡 ¡Upps! Ahí solo había un payasito. ¡Sigue intentando!';
+                }
+            }, 300);
+        }
+
+        let heartScore = 0, timeLeft = 10;
+        function startHeartGame() {
+            heartScore = 0; timeLeft = 10;
+            clearInterval(heartTimer);
+            heartTimer = setInterval(() => {
+                timeLeft--;
+                const tElem = document.getElementById('timer-text');
+                if (tElem) tElem.innerText = `Tiempo restante: ${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(heartTimer);
+                    const btn = document.getElementById('catch-btn');
+                    if (btn) btn.disabled = true;
+                    document.getElementById('modal-body').innerText = `🔥 ¡Tiempo! Lograste la increíble cifra de ${heartScore} corazones. ¡Reflejos nivel leyenda!`;
+                }
+            }, 1000);
+        }
+
+        function scoreHeart(e) {
+            if (timeLeft > 0) {
+                heartScore++;
+                document.getElementById('heart-counter').innerText = heartScore;
+                createFloatingText(e.clientX, e.clientY, '+1 ❤️');
+                document.body.classList.add('shake');
+                setTimeout(() => document.body.classList.remove('shake'), 200);
+            }
+        }
+
+        function spinWheelReal() {
+            const wheel = document.getElementById('wheel');
+            const randomDeg = Math.floor(Math.random() * 360) + 1800;
+            wheel.style.transform = `rotate(${randomDeg}deg)`;
+
+            const prizes = [
+                '🥤 Un helado o café gratis asegurado.',
+                '👑 100,000 puntos de buena energía hoy.',
+                '✨ Deseo concedido: Esta semana será inolvidable.',
+                '🍰 Vale por una rebanada de pastel virtual.'
+            ];
+
+            setTimeout(() => {
+                document.getElementById('modal-body').innerText = `🎉 ¡Resultado!: ${prizes[Math.floor(Math.random() * prizes.length)]}`;
+            }, 4000);
+        }
+
+        function openDoorReal(elem, num) {
+            if (elem.classList.contains('open')) return;
+            elem.classList.add('open');
+
+            const doorResults = {
+                1: '🎉 Puerta 1: ¡Te ganaste un pase libre de preocupaciones por 48 horas!',
+                2: '🤡 Puerta 2: "¿Qué le dice una impresora a otra? ¿Esa hoja es tuya o es impresión mía?" 😂',
+                3: '✨ Puerta 3: Recordatorio del día: Sos una gran persona y tienes una vibra excelente.'
+            };
+
+            setTimeout(() => {
+                document.getElementById('modal-body').innerText = doorResults[num];
+            }, 400);
+        }
+
+        function unwrapBoxReal() {
+            const box = document.getElementById('mystery-box');
+            box.style.transform = 'scale(1.4) rotate(20deg)';
+            setTimeout(() => {
+                box.innerText = '🍰';
+                document.getElementById('modal-body').innerText = '¡Taran! La caja contenía dulzura y buena vibra infinita para tu día.';
+            }, 300);
+        }
+
+        function spawnBalloonsReal() {
+            const zone = document.getElementById('balloon-zone');
+            zone.innerHTML = '';
+            const icons = ['🎈', '💖', '⭐', '🌸'];
+
+            for (let i = 0; i < 7; i++) {
+                const b = document.createElement('span');
+                b.innerText = icons[Math.floor(Math.random() * icons.length)];
+                b.style.position = 'absolute';
+                b.style.left = (i * 50 + 15) + 'px';
+                b.style.top = '110px';
+                b.style.fontSize = '2.2rem';
+                b.style.cursor = 'pointer';
+                b.style.transition = 'all 1.8s ease-out';
+                b.onclick = function(e) {
+                    createFloatingText(e.clientX, e.clientY, '¡POP!');
+                    this.innerText = '💥';
+                    setTimeout(() => this.remove(), 200);
+                };
+                zone.appendChild(b);
+                setTimeout(() => { b.style.top = (Math.random() * 40 + 10) + 'px'; }, 100);
+            }
+        }
+
+        function createFloatingText(x, y, text) {
+            const el = document.createElement('div');
+            el.className = 'floating-text';
+            el.innerText = text;
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        /* Cartas */
+        function openLetter(type) {
+            const letters = {
+                'romantica': '🌹 "Hay detalles sencillos que convierten cualquier día común en un momento bonito..."',
+                'divertida': '😂 "Si reírse suma vida, seguro con esta app aseguramos unos 90 años de salud extra."',
+                'tierna': '🧸 "Que nunca te falten motivos para sonreír, tomarte un buen café y pasarla alegre."'
+            };
+            showModal('💌 Carta Secreta', letters[type]);
+        }
+
+        /* Interactive Screen Touch Particles */
+        window.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('.game-card-btn') || e.target.closest('.modal-content')) return;
+            const heart = document.createElement('div');
+            heart.innerText = ['💖', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
+            heart.style.position = 'fixed';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            heart.style.fontSize = '22px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '9999';
+            heart.style.transition = 'all 0.9s cubic-bezier(0.1, 0.8, 0.3, 1)';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.style.transform = `translateY(-70px) scale(1.5)`;
+                heart.style.opacity = '0';
+            }, 20);
+            setTimeout(() => heart.remove(), 900);
+        });
+
+        /* Jardín Interactivo Canvas */
+        const gardenCanvas = document.getElementById('garden-canvas');
+        const gCtx = gardenCanvas.getContext('2d');
+        gardenCanvas.width = gardenCanvas.offsetWidth;
+        gardenCanvas.height = gardenCanvas.offsetHeight;
+
+        gardenCanvas.addEventListener('click', (e) => {
+            const rect = gardenCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Tallo
+            gCtx.strokeStyle = '#2ed573';
+            gCtx.lineWidth = 3;
+            gCtx.beginPath();
+            gCtx.moveTo(x, gardenCanvas.height);
+            gCtx.lineTo(x, y);
+            gCtx.stroke();
+
+            // Flor
+            gCtx.font = '22px serif';
+            gCtx.fillText('🌸', x - 11, y);
+        });
+
+        /* Constelación Conectada */
+        function triggerConstellation() {
+            showModal('🌌 Constelación Activa', 'Mira hacia el cielo nocturno... Las estrellas se están uniendo formando la silueta de un corazón brillante dedicado a Flor Leidy ✨');
+
+            // Dibujar líneas doradas en fxCanvas
+            fxCtx.clearRect(0, 0, width, height);
+            fxCtx.strokeStyle = 'rgba(255, 215, 0, 0.7)';
+            fxCtx.lineWidth = 1.5;
+            fxCtx.beginPath();
+            for (let i = 0; i < 15; i++) {
+                const p1 = particles[i];
+                const p2 = particles[(i + 1) % 15];
+                fxCtx.moveTo(p1.x, p1.y);
+                fxCtx.lineTo(p2.x, p2.y);
+            }
+            fxCtx.stroke();
+
+            setTimeout(() => fxCtx.clearRect(0, 0, width, height), 6000);
+        }
+
+        let nightMode = false;
+        function toggleNightMode() {
+            nightMode = !nightMode;
+            document.body.style.backgroundColor = nightMode ? '#020205' : '#05050a';
+            document.getElementById('moon').style.transform = nightMode ? 'scale(1.25) rotate(10deg)' : 'scale(1) rotate(0deg)';
+        }
+
+        /* GRAN FINAL CON FUEGOS ARTIFICIALES */
+        function triggerGrandFinale() {
+            showModal('✨ ¡GRAN FINAL SPECTACULAR!', '🎉 ¡Lluvia masiva de fuegos artificiales, confeti y estrellas para Flor Leidy!');
+
+            // Disparar ráfagas de fuegos artificiales
+            let timer = 0;
+            const interval = setInterval(() => {
+                const sx = Math.random() * fwCanvas.width;
+                const sy = fwCanvas.height;
+                const tx = Math.random() * fwCanvas.width;
+                const ty = Math.random() * (fwCanvas.height * 0.5);
+                fireworks.push(new Firework(sx, sy, tx, ty));
+                timer++;
+                if (timer > 25) clearInterval(interval);
+            }, 250);
+        }
+    </script>
 </body>
 </html>
