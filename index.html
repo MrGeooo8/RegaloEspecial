@@ -1,1137 +1,787 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universo Especial - Flor Leidy ✨</title>
-    <style>
-        :root {
-            --primary: #ff3366;
-            --secondary: #ff758c;
-            --gold: #ffd700;
-            --gold-glow: rgba(255, 215, 0, 0.6);
-            --bg-dark: #05050a;
-            --glass: rgba(255, 255, 255, 0.07);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --text: #ffffff;
-            --neon-pink: #ff007f;
-            --neon-blue: #00f3ff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para usted ✨</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#08070d;
+  --card:rgba(255,255,255,.075);
+  --line:rgba(255,255,255,.13);
+  --pink:#ffb7d8;
+  --purple:#c9b7ff;
+  --text:#fff;
+  --muted:#bdb7c8;
+}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+html{scroll-behavior:smooth}
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text);
-            overflow-x: hidden;
-            transition: background 1.5s ease;
-        }
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 10%,#3b214b 0,transparent 30%),
+    radial-gradient(circle at 85% 80%,#241c48 0,transparent 32%),
+    var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  overflow-x:hidden;
+}
 
-        /* Canvas Layers */
-        #bg-canvas, #fx-canvas, #fireworks-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-        }
-        #bg-canvas { z-index: 1; }
-        #fx-canvas { z-index: 2; }
-        #fireworks-canvas { z-index: 999; }
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.55;
+}
 
-        /* Moon Element */
-        .moon {
-            position: fixed;
-            top: 35px;
-            right: 35px;
-            width: 90px;
-            height: 90px;
-            background: radial-gradient(circle at 35% 35%, #ffffff, #dcdde1);
-            border-radius: 50%;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.9), 0 0 100px rgba(255, 255, 255, 0.3);
-            z-index: 3;
-            transition: all 1s ease;
-            animation: floatMoon 6s ease-in-out infinite alternate;
-        }
+.wrap{
+  position:relative;
+  z-index:2;
+  width:min(94%,520px);
+  margin:auto;
+  padding:24px 0 70px;
+}
 
-        @keyframes floatMoon {
-            0% { transform: translateY(0px) rotate(0deg); }
-            100% { transform: translateY(-12px) rotate(5deg); }
-        }
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
 
-        /* Screen Shake Animation */
-        .shake {
-            animation: shakeAnim 0.3s cubic-bezier(.36,.07,.19,.97) both;
-        }
+.logo{
+  font-weight:800;
+  letter-spacing:.4px;
+}
 
-        @keyframes shakeAnim {
-            10%, 90% { transform: translate3d(-2px, 0, 0); }
-            20%, 80% { transform: translate3d(4px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
-            40%, 60% { transform: translate3d(6px, 0, 0); }
-        }
+.pill{
+  font-size:11px;
+  padding:7px 11px;
+  border:1px solid var(--line);
+  border-radius:99px;
+  background:rgba(255,255,255,.06);
+  color:#ddd;
+}
 
-        /* Main Container */
-        .app-container {
-            position: relative;
-            z-index: 10;
-            max-width: 920px;
-            margin: 0 auto;
-            padding: 20px 15px 80px 15px;
-        }
+.screen{
+  min-height:78vh;
+  display:flex;
+  align-items:center;
+}
 
-        /* Cinematic Intro Screen */
-        #intro-screen {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, #111122 0%, #030308 100%);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
-        }
+.hero{
+  text-align:center;
+  width:100%;
+}
 
-        .golden-glow {
-            font-size: clamp(2.8rem, 8vw, 4.8rem);
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #fff099 0%, #ffd700 50%, #ff8c00 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--gold-glow);
-            margin-bottom: 20px;
-            animation: pulseGlow 3s ease-in-out infinite alternate;
-        }
+.mini{
+  color:var(--pink);
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
 
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.4)); }
-            100% { filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.9)); }
-        }
+h1{
+  font-size:clamp(40px,12vw,68px);
+  line-height:.94;
+  margin:17px 0;
+  background:linear-gradient(
+    120deg,
+    #fff,
+    var(--pink),
+    var(--purple),
+    #fff
+  );
+  background-size:250%;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:shine 5s linear infinite;
+}
 
-        .typewriter {
-            font-size: 1.25rem;
-            color: #e2e8f0;
-            border-right: 3px solid var(--gold);
-            white-space: nowrap;
-            overflow: hidden;
-            animation: blinkCaret 0.75s step-end infinite;
-            min-height: 1.6em;
-            max-width: 90%;
-            margin: 0 auto;
-        }
+@keyframes shine{
+  to{background-position:250%}
+}
 
-        @keyframes blinkCaret { 50% { border-color: transparent; } }
+.sub{
+  color:var(--muted);
+  line-height:1.7;
+  max-width:430px;
+  margin:0 auto 28px;
+}
 
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px 25px;
-            margin: 30px 0;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease;
-        }
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:0;
+  border-radius:15px;
+  padding:14px 20px;
+  margin:5px;
+  background:linear-gradient(135deg,#fff,#ffd5e8);
+  color:#17121c;
+  font-weight:850;
+  cursor:pointer;
+  box-shadow:0 12px 35px rgba(255,183,216,.13);
+  transition:.2s;
+}
 
-        .glass-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(255, 215, 0, 0.35);
-        }
+.btn:hover{
+  transform:translateY(-3px);
+}
 
-        /* Glowing Ultra Buttons */
-        .btn-glow {
-            background: linear-gradient(135deg, #ff3366, #ff758c);
-            border: none;
-            color: white;
-            padding: 14px 32px;
-            font-size: 1.05rem;
-            font-weight: 700;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 6px;
-        }
+.ghost{
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  border:1px solid var(--line);
+  box-shadow:none;
+}
 
-        .btn-glow:hover {
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.7);
-        }
+.section{
+  margin:24px 0;
+  padding:24px;
+  border:1px solid var(--line);
+  background:var(--card);
+  backdrop-filter:blur(20px);
+  border-radius:28px;
+  box-shadow:0 18px 60px #0005;
+}
 
-        .btn-glow:active { transform: translateY(1px) scale(0.98); }
+.kicker{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--pink);
+}
 
-        .btn-glow::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.7s ease;
-        }
+h2{
+  font-size:28px;
+  margin:8px 0 12px;
+}
 
-        .btn-glow:hover::before { left: 100%; }
+.text{
+  color:#d0cad7;
+  line-height:1.65;
+}
 
-        /* Music Player */
-        .music-player {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
 
-        .progress-bar {
-            flex-grow: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-        }
+.tile{
+  padding:17px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  background:rgba(255,255,255,.045);
+  cursor:pointer;
+  transition:.2s;
+}
 
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), var(--gold));
-            box-shadow: 0 0 10px var(--gold);
-            transition: width 0.1s linear;
-        }
+.tile:hover{
+  transform:translateY(-3px);
+  background:rgba(255,255,255,.08);
+}
 
-        /* Game Grid Styling */
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 18px;
-            margin-top: 20px;
-        }
+.tile b{
+  display:block;
+  margin-bottom:5px;
+}
 
-        .game-card-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 22px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
+.tile span{
+  font-size:13px;
+  color:var(--muted);
+}
 
-        .game-card-btn:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-7px) scale(1.02);
-            border-color: var(--gold);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
-        }
+.reveal{
+  display:none;
+  margin-top:14px;
+  padding:16px;
+  border-radius:18px;
+  background:rgba(255,183,216,.08);
+  border:1px solid rgba(255,183,216,.18);
+  animation:up .4s;
+}
 
-        .game-icon {
-            font-size: 2.8rem;
-            display: block;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-            transition: transform 0.3s ease;
-        }
+@keyframes up{
+  from{
+    opacity:0;
+    transform:translateY(10px)
+  }
+  to{
+    opacity:1;
+    transform:none
+  }
+}
 
-        .game-card-btn:hover .game-icon {
-            transform: scale(1.2) rotate(8deg);
-        }
+.chat{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
 
-        /* 3D Card Flip Mechanics for "Busca la flor" */
-        .flip-container {
-            perspective: 1000px;
-            display: inline-block;
-            margin: 10px;
-        }
+.bubble{
+  max-width:86%;
+  padding:12px 15px;
+  border-radius:18px;
+  background:rgba(255,255,255,.07);
+  color:#ddd;
+}
 
-        .flip-card {
-            width: 85px;
-            height: 120px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
+.me{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#443052,#30234a);
+  border-bottom-right-radius:5px;
+}
 
-        .flip-card.flipped { transform: rotateY(180deg); }
+.her{
+  align-self:flex-start;
+  border-bottom-left-radius:5px;
+}
 
-        .card-front, .card-back {
-            position: absolute;
-            inset: 0;
-            backface-visibility: hidden;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            border: 2px solid var(--gold);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-        }
+.choice{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:14px;
+}
 
-        .card-front {
-            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-            color: var(--gold);
-        }
+.choice button{
+  flex:1;
+  min-width:120px;
+}
 
-        .card-back {
-            background: linear-gradient(135deg, #2d3436, #000);
-            transform: rotateY(180deg);
-        }
+.timeline{
+  border-left:1px solid #ffffff22;
+  margin:18px 0 0 8px;
+  padding-left:20px;
+}
 
-        /* Roulette Wheel 3D Feel */
-        .roulette-wrapper {
-            position: relative;
-            width: 170px;
-            height: 170px;
-            margin: 20px auto;
-        }
+.step{
+  position:relative;
+  margin:0 0 23px;
+}
 
-        .roulette-pointer {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-top: 22px solid var(--gold);
-            z-index: 10;
-            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
-        }
+.step:before{
+  content:"";
+  position:absolute;
+  left:-27px;
+  top:5px;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 0 18px var(--pink);
+}
 
-        .roulette-wheel {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 6px solid var(--gold);
-            background: conic-gradient(
-                #ff3366 0deg 90deg, 
-                #33cc99 90deg 180deg, 
-                #ffd700 180deg 270deg, 
-                #8e44ad 270deg 360deg
-            );
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(0,0,0,0.5);
-            transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1);
-        }
+.step b{
+  display:block;
+}
 
-        /* Doors System */
-        .doors-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            perspective: 600px;
-        }
+.step span{
+  font-size:13px;
+  color:var(--muted);
+}
 
-        .door-btn {
-            width: 85px;
-            height: 130px;
-            background: linear-gradient(180deg, #4a154b, #2c0b2e);
-            border-radius: 10px 10px 0 0;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.2rem;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-            transition: all 0.4s ease;
-            transform-origin: left;
-        }
+.big{
+  text-align:center;
+  padding:30px 18px;
+}
 
-        .door-btn:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 20px var(--gold-glow);
-            transform: scale(1.05);
-        }
+.big .emoji{
+  font-size:50px;
+}
 
-        .door-btn.open {
-            transform: rotateY(-110deg);
-            opacity: 0.3;
-        }
+.big h2{
+  font-size:32px;
+}
 
-        /* Polaroid Gallery */
-        .polaroid-grid {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
+#final{
+  display:none;
+}
 
-        .polaroid {
-            background: white;
-            padding: 14px 14px 30px 14px;
-            border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            transform: rotate(-3deg);
-            transition: all 0.35s ease;
-            width: 190px;
-            text-align: center;
-            color: #222;
-        }
+footer{
+  text-align:center;
+  color:#777180;
+  font-size:11px;
+  margin-top:35px;
+}
 
-        .polaroid:nth-child(even) { transform: rotate(4deg); }
-        .polaroid:hover {
-            transform: scale(1.12) rotate(0deg);
-            z-index: 10;
-            box-shadow: 0 18px 35px rgba(0,0,0,0.6);
-        }
+.confetti{
+  position:fixed;
+  top:-20px;
+  z-index:20;
+  font-size:18px;
+  pointer-events:none;
+  animation:fall 2.5s linear forwards;
+}
 
-        .polaroid-img {
-            width: 100%;
-            height: 160px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-        }
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(540deg);
+    opacity:0;
+  }
+}
 
-        /* Garden Canvas */
-        #garden-canvas {
-            width: 100%;
-            height: 220px;
-            background: radial-gradient(circle at bottom, #0a2012 0%, #030805 100%);
-            border-radius: 18px;
-            cursor: crosshair;
-            border: 1px dashed var(--glass-border);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-        }
+@media(max-width:380px){
+  .grid{
+    grid-template-columns:1fr;
+  }
 
-        /* Envelopes */
-        .envelopes-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px; }
-        .envelope {
-            width: 110px;
-            height: 75px;
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.8rem;
-            cursor: pointer;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .envelope:hover { transform: translateY(-6px) rotate(3deg); box-shadow: 0 12px 25px rgba(231, 76, 60, 0.5); }
-
-        /* Modal System */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 3000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-        }
-
-        .modal.active { opacity: 1; pointer-events: auto; }
-
-        .modal-content {
-            background: linear-gradient(145deg, #161623, #0d0d15);
-            border: 1.5px solid var(--gold);
-            padding: 30px 25px;
-            border-radius: 28px;
-            max-width: 460px;
-            width: 92%;
-            text-align: center;
-            box-shadow: 0 0 50px var(--gold-glow);
-            transform: scale(0.85);
-            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal.active .modal-content { transform: scale(1); }
-
-        h2 { margin-bottom: 12px; color: var(--gold); font-size: 1.6rem; }
-
-        /* Floating Score Text Overlay */
-        .floating-text {
-            position: fixed;
-            pointer-events: none;
-            font-weight: 900;
-            font-size: 1.5rem;
-            color: var(--gold);
-            text-shadow: 0 0 10px rgba(0,0,0,0.8);
-            z-index: 9999;
-            animation: floatUpFade 1s forwards ease-out;
-        }
-
-        @keyframes floatUpFade {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-60px) scale(1.4); }
-        }
-    </style>
+  h1{
+    font-size:45px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-    <!-- Canvases -->
-    <canvas id="bg-canvas"></canvas>
-    <canvas id="fx-canvas"></canvas>
-    <canvas id="fireworks-canvas"></canvas>
+<canvas id="stars"></canvas>
 
-    <div class="moon" id="moon"></div>
+<div class="wrap">
 
-    <!-- Intro Cinematográfica -->
-    <div id="intro-screen">
-        <div class="golden-glow">Flor Leidy</div>
-        <div class="typewriter" id="typewriter"></div>
-        <button class="btn-glow" style="margin-top: 35px;" onclick="startExperience()">
-            <span>Entrar al Universo</span> ✨
-        </button>
-    </div>
+  <div class="top">
+    <div class="logo">para usted ♡</div>
+    <div class="pill">experimento en progreso 👀</div>
+  </div>
 
-    <!-- App Main UI -->
-    <div class="app-container">
+  <section class="screen">
 
-        <!-- Music Player -->
-        <div class="glass-card music-player">
-            <button class="btn-glow" id="play-btn" onclick="toggleMusic()">🎵 Play</button>
-            <div style="flex-grow: 1;">
-                <div style="font-size: 0.85rem; margin-bottom: 6px; font-weight: 600; color: #ddd;" id="song-title">Melodía Especial</div>
-                <div class="progress-bar" onclick="seekMusic(event)">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
-            </div>
-        </div>
+    <div class="hero">
 
-        <!-- Constellation Interactive -->
-        <div class="glass-card" style="text-align: center;">
-            <h2>🌌 Constelación Animada</h2>
-            <p style="color: #ccc; margin-bottom: 15px;">Mira cómo las estrellas se conectan en tiempo real para formar algo único:</p>
-            <button class="btn-glow" onclick="triggerConstellation()">Alinear Estrellas ✨</button>
-        </div>
+      <div class="mini">
+        una pequeña cosa que hice
+      </div>
 
-        <!-- Minijuegos Realistas -->
-        <div class="glass-card">
-            <h2>🎮 Zona de Minijuegos Interactivos</h2>
-            <p style="margin-bottom: 18px; color: #aaa; font-size: 0.95rem;">Selecciona un juego y desbloquea sorpresas con efectos reales:</p>
-            
-            <div class="game-grid">
-                <div class="game-card-btn" onclick="openGame('flower')">
-                    <span class="game-icon">🌸</span>
-                    <strong>¿Dónde está la flor?</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Encuéntrala en 3D</p>
-                </div>
-                <div class="game-card-btn" onclick="openGame('hearts')">
-                    <span class="game-icon">❤️</span>
-                    <strong>Caza-Corazones</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Récord en 10 segundos</p>
-                </div>
-                <div class="game-card-btn" onclick="openGame('roulette')">
-                    <span class="game-icon">🎡</span>
-                    <strong>Ruleta de la Suerte</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Gira el destino</p>
-                </div>
-                <div class="game-card-btn" onclick="openGame('door')">
-                    <span class="game-icon">🚪</span>
-                    <strong>Puertas Secretas</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Abre tu regalo</p>
-                </div>
-                <div class="game-card-btn" onclick="openGame('box')">
-                    <span class="game-icon">📦</span>
-                    <strong>Caja Misteriosa</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Sorpresa animada</p>
-                </div>
-                <div class="game-card-btn" onclick="openGame('balloons')">
-                    <span class="game-icon">🎈</span>
-                    <strong>Explotar Globos</strong>
-                    <p style="font-size: 0.75rem; color: #888; margin-top: 4px;">Efectos visuales</p>
-                </div>
-            </div>
-        </div>
+      <h1>
+        No todo se<br>
+        dice por chat.
+      </h1>
 
-        <!-- Cartas Secretas -->
-        <div class="glass-card">
-            <h2>💌 Cartas Secretas</h2>
-            <div class="envelopes-container">
-                <div class="envelope" onclick="openLetter('romantica')">🌹</div>
-                <div class="envelope" onclick="openLetter('divertida')">😂</div>
-                <div class="envelope" onclick="openLetter('tierna')">🧸</div>
-            </div>
-        </div>
+      <p class="sub">
+        Así que hice esto. No prometo que sea perfecto,
+        pero sí que me tomé el tiempo de hacerlo pensando
+        en usted. Y eso ya cuenta, ¿no? 😂
+      </p>
 
-        <!-- Galería Polaroid -->
-        <div class="glass-card">
-            <h2>📸 Galería del Futuro</h2>
-            <div class="polaroid-grid">
-                <div class="polaroid">
-                    <div class="polaroid-img">Espacio para Foto</div>
-                    <p style="margin-top: 10px; font-weight: bold;">Próximamente...</p>
-                </div>
-                <div class="polaroid">
-                    <div class="polaroid-img">Espacio para Foto</div>
-                    <p style="margin-top: 10px; font-weight: bold;">Un gran día ✨</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Café Scene -->
-        <div class="glass-card" style="text-align: center; position: relative; overflow: hidden;">
-            <h2>☕ Momento Especial</h2>
-            <p style="margin: 15px 0; color: #ddd; line-height: 1.6;">Lluvia suave afuera, el aroma a café recién hecho y la mejor compañía...</p>
-            <blockquote style="font-style: italic; color: var(--gold);">"Los mejores momentos ocurren cuando menos lo esperas."</blockquote>
-        </div>
-
-        <!-- Jardín Interactivo -->
-        <div class="glass-card">
-            <h2>🌹 Jardín Interactivo</h2>
-            <p style="margin-bottom: 12px; color: #aaa; font-size: 0.9rem;">Toca la tierra para hacer crecer tallos y flores en tiempo real:</p>
-            <canvas id="garden-canvas"></canvas>
-        </div>
-
-        <!-- Botones Especiales -->
-        <div style="text-align: center; margin: 40px 0;">
-            <button class="btn-glow" onclick="toggleNightMode()">🌙 Modo Noche Ultra</button>
-            <button class="btn-glow" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000;" onclick="triggerGrandFinale()">✨ ¡Gran Final de Fuegos Artificiales!</button>
-        </div>
+      <button class="btn" onclick="go('historia')">
+        A ver qué hizo 👀
+      </button>
 
     </div>
 
-    <!-- Modal Interactivo -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <h2 id="modal-title">Juego</h2>
-            <div id="game-interactive-area"></div>
-            <p id="modal-body" style="margin: 15px 0; color: #ddd; font-size: 1.05rem;"></p>
-            <button class="btn-glow" onclick="closeModal()">Cerrar / Volver</button>
-        </div>
+  </section>
+
+
+  <section class="section" id="historia">
+
+    <div class="kicker">
+      capítulo 01
     </div>
 
-    <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+    <h2>
+      La verdadera razón
+    </h2>
 
-    <script>
-        /* ==================== SONIDOS DESACTIVADOS ==================== */
-        function playSound(type) {
-            // Función deshabilitada
-        }
+    <p class="text">
+      Empezó con una historia de 24 horas...
+      y de alguna manera terminamos hablando de una posible salida.
+      Creo que las historias de Instagram están haciendo demasiado
+      trabajo últimamente. 😂
+    </p>
 
-        /* ==================== CANVAS DE FONDO (Estrellas + Flores) ==================== */
-        const bgCanvas = document.getElementById('bg-canvas');
-        const bgCtx = bgCanvas.getContext('2d');
-        const fxCanvas = document.getElementById('fx-canvas');
-        const fxCtx = fxCanvas.getContext('2d');
-        let width, height;
+    <div class="grid">
 
-        function resize() {
-            width = bgCanvas.width = fxCanvas.width = window.innerWidth;
-            height = bgCanvas.height = fxCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
+      <div class="tile" onclick="reveal('r1')">
+        <b>24 horas ⏳</b>
+        <span>
+          Una historia que duraba poco.
+        </span>
+      </div>
 
-        const particles = [];
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.type = Math.random() > 0.45 ? 'star' : (Math.random() > 0.5 ? 'flower' : 'firefly');
-                this.size = this.type === 'star' ? Math.random() * 2 + 0.5 : (this.type === 'flower' ? Math.random() * 8 + 6 : Math.random() * 3 + 1);
-                this.speedY = this.type === 'flower' ? Math.random() * 0.8 + 0.4 : (Math.random() - 0.5) * 0.4;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.opacity = Math.random();
-                this.fade = Math.random() * 0.02 + 0.005;
-            }
-            update() {
-                this.y += this.speedY; this.x += this.speedX;
-                if (this.type === 'flower' && this.y > height) this.y = -10;
-                if (this.x < 0 || this.x > width) this.x = Math.random() * width;
-                this.opacity += this.fade;
-                if (this.opacity > 1 || this.opacity < 0) this.fade = -this.fade;
-            }
-            draw(ctx) {
-                ctx.save();
-                ctx.globalAlpha = Math.abs(this.opacity);
-                if (this.type === 'star') {
-                    ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-                } else if (this.type === 'firefly') {
-                    ctx.fillStyle = '#ffd700'; ctx.shadowBlur = 8; ctx.shadowColor = '#ffd700'; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
-                } else {
-                    ctx.font = `${this.size}px serif`; ctx.fillText('🌸', this.x, this.y);
-                }
-                ctx.restore();
-            }
-        }
-        for (let i = 0; i < 90; i++) particles.push(new Particle());
+      <div class="tile" onclick="reveal('r2')">
+        <b>Una conversación 💬</b>
+        <span>
+          Que terminó durando más.
+        </span>
+      </div>
 
-        function animateBg() {
-            bgCtx.clearRect(0, 0, width, height);
-            particles.forEach(p => { p.update(); p.draw(bgCtx); });
-            requestAnimationFrame(animateBg);
-        }
-        animateBg();
+      <div class="tile" onclick="reveal('r3')">
+        <b>Un reto 👀</b>
+        <span>
+          “Sorpréndame”, dijo usted.
+        </span>
+      </div>
 
-        /* ==================== MOTOR DE FUEGOS ARTIFICIALES (GRAN FINAL) ==================== */
-        const fwCanvas = document.getElementById('fireworks-canvas');
-        const fwCtx = fwCanvas.getContext('2d');
-        fwCanvas.width = window.innerWidth;
-        fwCanvas.height = window.innerHeight;
+      <div class="tile" onclick="reveal('r4')">
+        <b>Y aquí estamos ✨</b>
+        <span>
+          Yo intentando no quedar mal.
+        </span>
+      </div>
 
-        let fireworks = [];
-        let fwParticles = [];
+    </div>
 
-        class Firework {
-            constructor(sx, sy, tx, ty) {
-                this.x = sx; this.y = sy;
-                this.sx = sx; this.sy = sy;
-                this.tx = tx; this.ty = ty;
-                this.distanceToTarget = Math.hypot(tx - sx, ty - sy);
-                this.distanceTraveled = 0;
-                this.coordinates = [];
-                this.coordinateCount = 3;
-                while (this.coordinateCount--) this.coordinates.push([this.x, this.y]);
-                this.angle = Math.atan2(ty - sy, tx - sx);
-                this.speed = 4;
-                this.acceleration = 1.04;
-                this.brightness = Math.random() * 50 + 50;
-            }
-            update(index) {
-                this.coordinates.pop();
-                this.coordinates.unshift([this.x, this.y]);
-                this.speed *= this.acceleration;
-                const vx = Math.cos(this.angle) * this.speed;
-                const vy = Math.sin(this.angle) * this.speed;
-                this.distanceTraveled = Math.hypot(this.x + vx - this.sx, this.y + vy - this.sy);
+    <div id="r1" class="reveal">
+      Confirmado: las historias desaparecen.
+      El interés, aparentemente, no. 😂
+    </div>
 
-                if (this.distanceTraveled >= this.distanceToTarget) {
-                    createFwParticles(this.tx, this.ty);
-                    fireworks.splice(index, 1);
-                } else {
-                    this.x += vx; this.y += vy;
-                }
-            }
-            draw() {
-                fwCtx.beginPath();
-                fwCtx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
-                fwCtx.lineTo(this.x, this.y);
-                fwCtx.strokeStyle = `hsl(${Math.random()*360}, 100%, ${this.brightness}%)`;
-                fwCtx.stroke();
-            }
-        }
+    <div id="r2" class="reveal">
+      Y eso que todavía estamos en la etapa de
+      “a ver qué me cuenta”.
+    </div>
 
-        class FwParticle {
-            constructor(x, y) {
-                this.x = x; this.y = y;
-                this.coordinates = [];
-                this.coordinateCount = 5;
-                while (this.coordinateCount--) this.coordinates.push([this.x, this.y]);
-                this.angle = Math.random() * Math.PI * 2;
-                this.speed = Math.random() * 10 + 1;
-                this.friction = 0.95;
-                this.gravity = 1;
-                this.hue = Math.random() * 360;
-                this.brightness = Math.random() * 50 + 50;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.03 + 0.015;
-            }
-            update(index) {
-                this.coordinates.pop();
-                this.coordinates.unshift([this.x, this.y]);
-                this.speed *= this.friction;
-                this.x += Math.cos(this.angle) * this.speed;
-                this.y += Math.sin(this.angle) * this.speed + this.gravity;
-                this.alpha -= this.decay;
-                if (this.alpha <= this.decay) fwParticles.splice(index, 1);
-            }
-            draw() {
-                fwCtx.beginPath();
-                fwCtx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
-                fwCtx.lineTo(this.x, this.y);
-                fwCtx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
-                fwCtx.stroke();
-            }
-        }
+    <div id="r3" class="reveal">
+      Ese “sorpréndame” fue una jugada peligrosa.
+      Ahora me tocó cumplir. 😌
+    </div>
 
-        function createFwParticles(x, y) {
-            let count = 40;
-            while (count--) fwParticles.push(new FwParticle(x, y));
-        }
+    <div id="r4" class="reveal">
+      Por eso preferí hacer algo distinto en vez
+      de mandar otro mensaje bonito y ya.
+    </div>
 
-        function loopFireworks() {
-            fwCtx.globalCompositeOperation = 'destination-out';
-            fwCtx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            fwCtx.fillRect(0, 0, fwCanvas.width, fwCanvas.height);
-            fwCtx.globalCompositeOperation = 'lighter';
+  </section>
 
-            let i = fireworks.length;
-            while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
-            let j = fwParticles.length;
-            while (j--) { fwParticles[j].draw(); fwParticles[j].update(j); }
 
-            requestAnimationFrame(loopFireworks);
-        }
-        loopFireworks();
+  <section class="section">
 
-        /* ==================== INTRO & MÚSICA ==================== */
-        const textToType = "Un espacio diseñado para sacarte una sonrisa súper bonita... ✨";
-        let typeIndex = 0;
-        function typeWriter() {
-            if (typeIndex < textToType.length) {
-                document.getElementById("typewriter").innerHTML += textToType.charAt(typeIndex);
-                typeIndex++; setTimeout(typeWriter, 45);
-            }
-        }
-        setTimeout(typeWriter, 600);
+    <div class="kicker">
+      capítulo 02
+    </div>
 
-        const audio = document.getElementById('bg-audio');
-        let isPlaying = false;
-        function toggleMusic() {
-            if (isPlaying) { audio.pause(); document.getElementById('play-btn').innerText = '🎵 Play'; }
-            else { audio.play(); document.getElementById('play-btn').innerText = 'Pausa ⏸️'; }
-            isPlaying = !isPlaying;
-        }
+    <h2>
+      Mini prueba de compatibilidad
+    </h2>
 
-        function seekMusic(e) {
-            const rect = e.currentTarget.getBoundingClientRect();
-            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-        }
+    <p class="text">
+      No es científica. De hecho, probablemente no sirve para nada.
+      Pero ya que está aquí... 😂
+    </p>
 
-        audio.ontimeupdate = () => {
-            if (audio.duration) {
-                document.getElementById('progress-fill').style.width = (audio.currentTime / audio.duration) * 100 + '%';
-            }
-        };
+    <div class="chat">
 
-        function startExperience() {
-            document.getElementById('intro-screen').style.opacity = '0';
-            setTimeout(() => document.getElementById('intro-screen').style.visibility = 'hidden', 1200);
-            toggleMusic();
-        }
+      <div class="bubble me">
+        Pregunta importante: ¿qué tan fácil es hacerla reír?
+      </div>
 
-        /* ==================== MODAL & JUEGOS REALISTAS ==================== */
-        function showModal(title, text, customHtml = '') {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-body').innerText = text;
-            document.getElementById('game-interactive-area').innerHTML = customHtml;
-            document.getElementById('modal').classList.add('active');
-        }
+      <div class="bubble her">
+        Depende 👀
+      </div>
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-            clearInterval(heartTimer);
-        }
+      <div class="bubble me">
+        Mmm... respuesta peligrosa.
+      </div>
 
-        let heartTimer;
-        function openGame(gameType) {
-            const area = document.getElementById('game-interactive-area');
+    </div>
 
-            // 1. DÓNDE ESTÁ LA FLOR 3D
-            if (gameType === 'flower') {
-                const flowerPos = Math.floor(Math.random() * 3);
-                let html = '<p style="margin-bottom:15px; color:#aaa;">Toca una carta para dar la vuelta en 3D:</p><div>';
-                for (let i = 0; i < 3; i++) {
-                    html += `
-                        <div class="flip-container" onclick="flipCard(this, ${i === flowerPos})">
-                            <div class="flip-card">
-                                <div class="card-front">❓</div>
-                                <div class="card-back">${i === flowerPos ? '🌸' : '🤡'}</div>
-                            </div>
-                        </div>`;
-                }
-                html += '</div>';
-                showModal('🌸 ¿Dónde está la flor?', '', html);
-            }
+    <div class="choice">
 
-            // 2. CAZA-CORAZONES CON COMBO Y SHAKE
-            else if (gameType === 'hearts') {
-                let html = `
-                    <p>¡Presiona el corazón lo más rápido posible!</p>
-                    <h1 id="heart-counter" style="font-size: 3.5rem; color: var(--primary); margin: 15px 0;">0</h1>
-                    <button class="btn-glow" id="catch-btn" onclick="scoreHeart(event)">❤️ ¡TOCAR!</button>
-                    <p id="timer-text" style="margin-top:12px; font-weight:bold; color: var(--gold);">Tiempo restante: 10s</p>
-                `;
-                showModal('❤️ Caza-Corazones Arcade', '', html);
-                startHeartGame();
-            }
+      <button class="btn" onclick="answer('a')">
+        Muy fácil 😂
+      </button>
 
-            // 3. RULETA 3D REALISTA
-            else if (gameType === 'roulette') {
-                let html = `
-                    <div class="roulette-wrapper">
-                        <div class="roulette-pointer"></div>
-                        <div class="roulette-wheel" id="wheel"></div>
-                    </div>
-                    <button class="btn-glow" onclick="spinWheelReal()">🎰 ¡Girar con fuerza!</button>
-                `;
-                showModal('🎡 Ruleta de la Suerte', '¡Pon a prueba tu suerte hoy mismo!', html);
-            }
+      <button class="btn ghost" onclick="answer('b')">
+        Tiene que esforzarse 😌
+      </button>
 
-            // 4. PUERTAS ANIMADAS
-            else if (gameType === 'door') {
-                let html = `
-                    <p style="margin-bottom:15px;">Abre una puerta para descubrir lo que oculta:</p>
-                    <div class="doors-container">
-                        <div class="door-btn" onclick="openDoorReal(this, 1)">1️⃣</div>
-                        <div class="door-btn" onclick="openDoorReal(this, 2)">2️⃣</div>
-                        <div class="door-btn" onclick="openDoorReal(this, 3)">3️⃣</div>
-                    </div>
-                `;
-                showModal('🚪 Puertas Misteriosas', '', html);
-            }
+    </div>
 
-            // 5. CAJA SORPRESA
-            else if (gameType === 'box') {
-                let html = `
-                    <div style="font-size: 5rem; cursor: pointer; transition: transform 0.3s;" id="mystery-box" onclick="unwrapBoxReal()">🎁</div>
-                    <p style="font-size: 0.8rem; color: #888; margin-top: 10px;">(Toca el regalo para abrirlo)</p>
-                `;
-                showModal('📦 Caja Sorpresa', '', html);
-            }
+    <div id="answer" class="reveal"></div>
 
-            // 6. GLOBOS CON POP REAL
-            else if (gameType === 'balloons') {
-                let html = `
-                    <p style="margin-bottom:10px;">¡Haz clic sobre los globos antes de que vuelen!</p>
-                    <div id="balloon-zone" style="height: 160px; position: relative; overflow: hidden; border: 1px dashed var(--glass-border); border-radius: 15px;"></div>
-                `;
-                showModal('🎈 Revienta Globos', '', html);
-                spawnBalloonsReal();
-            }
-        }
+  </section>
 
-        /* Mecánicas */
-        function flipCard(elem, isCorrect) {
-            const card = elem.querySelector('.flip-card');
-            if (card.classList.contains('flipped')) return;
-            card.classList.add('flipped');
 
-            setTimeout(() => {
-                if (isCorrect) {
-                    document.getElementById('modal-body').innerText = '🎉 ¡Felicidades! Encontraste la flor radiante al primer intento.';
-                } else {
-                    document.getElementById('modal-body').innerText = '🤡 ¡Upps! Ahí solo había un payasito. ¡Sigue intentando!';
-                }
-            }, 300);
-        }
+  <section class="section">
 
-        let heartScore = 0, timeLeft = 10;
-        function startHeartGame() {
-            heartScore = 0; timeLeft = 10;
-            clearInterval(heartTimer);
-            heartTimer = setInterval(() => {
-                timeLeft--;
-                const tElem = document.getElementById('timer-text');
-                if (tElem) tElem.innerText = `Tiempo restante: ${timeLeft}s`;
-                if (timeLeft <= 0) {
-                    clearInterval(heartTimer);
-                    const btn = document.getElementById('catch-btn');
-                    if (btn) btn.disabled = true;
-                    document.getElementById('modal-body').innerText = `🔥 ¡Tiempo! Lograste la increíble cifra de ${heartScore} corazones. ¡Reflejos nivel leyenda!`;
-                }
-            }, 1000);
-        }
+    <div class="kicker">
+      capítulo 03
+    </div>
 
-        function scoreHeart(e) {
-            if (timeLeft > 0) {
-                heartScore++;
-                document.getElementById('heart-counter').innerText = heartScore;
-                createFloatingText(e.clientX, e.clientY, '+1 ❤️');
-                document.body.classList.add('shake');
-                setTimeout(() => document.body.classList.remove('shake'), 200);
-            }
-        }
+    <h2>
+      Lo que tengo en mente ☕
+    </h2>
 
-        function spinWheelReal() {
-            const wheel = document.getElementById('wheel');
-            const randomDeg = Math.floor(Math.random() * 360) + 1800;
-            wheel.style.transform = `rotate(${randomDeg}deg)`;
+    <p class="text">
+      No quería hacer una invitación enorme ni ponerle presión a nada.
+      Solo algo sencillo para conocernos fuera de una pantalla.
+    </p>
 
-            const prizes = [
-                '🥤 Un helado o café gratis asegurado.',
-                '👑 100,000 puntos de buena energía hoy.',
-                '✨ Deseo concedido: Esta semana será inolvidable.',
-                '🍰 Vale por una rebanada de pastel virtual.'
-            ];
+    <div class="timeline">
 
-            setTimeout(() => {
-                document.getElementById('modal-body').innerText = `🎉 ¡Resultado!: ${prizes[Math.floor(Math.random() * prizes.length)]}`;
-            }, 4000);
-        }
+      <div class="step">
+        <b>01 · Café</b>
+        <span>
+          Buena conversación. Sin guion.
+        </span>
+      </div>
 
-        function openDoorReal(elem, num) {
-            if (elem.classList.contains('open')) return;
-            elem.classList.add('open');
+      <div class="step">
+        <b>02 · Caminar</b>
+        <span>
+          Si la conversación se pone buena, no hay prisa.
+        </span>
+      </div>
 
-            const doorResults = {
-                1: '🎉 Puerta 1: ¡Te ganaste un pase libre de preocupaciones por 48 horas!',
-                2: '🤡 Puerta 2: "¿Qué le dice una impresora a otra? ¿Esa hoja es tuya o es impresión mía?" 😂',
-                3: '✨ Puerta 3: Recordatorio del día: Sos una gran persona y tienes una vibra excelente.'
-            };
+      <div class="step">
+        <b>03 · Ver qué pasa</b>
+        <span>
+          Sin expectativas raras. Solo disfrutar el momento.
+        </span>
+      </div>
 
-            setTimeout(() => {
-                document.getElementById('modal-body').innerText = doorResults[num];
-            }, 400);
-        }
+    </div>
 
-        function unwrapBoxReal() {
-            const box = document.getElementById('mystery-box');
-            box.style.transform = 'scale(1.4) rotate(20deg)';
-            setTimeout(() => {
-                box.innerText = '🍰';
-                document.getElementById('modal-body').innerText = '¡Taran! La caja contenía dulzura y buena vibra infinita para tu día.';
-            }, 300);
-        }
+  </section>
 
-        function spawnBalloonsReal() {
-            const zone = document.getElementById('balloon-zone');
-            zone.innerHTML = '';
-            const icons = ['🎈', '💖', '⭐', '🌸'];
 
-            for (let i = 0; i < 7; i++) {
-                const b = document.createElement('span');
-                b.innerText = icons[Math.floor(Math.random() * icons.length)];
-                b.style.position = 'absolute';
-                b.style.left = (i * 50 + 15) + 'px';
-                b.style.top = '110px';
-                b.style.fontSize = '2.2rem';
-                b.style.cursor = 'pointer';
-                b.style.transition = 'all 1.8s ease-out';
-                b.onclick = function(e) {
-                    createFloatingText(e.clientX, e.clientY, '¡POP!');
-                    this.innerText = '💥';
-                    setTimeout(() => this.remove(), 200);
-                };
-                zone.appendChild(b);
-                setTimeout(() => { b.style.top = (Math.random() * 40 + 10) + 'px'; }, 100);
-            }
-        }
+  <section class="section big">
 
-        function createFloatingText(x, y, text) {
-            const el = document.createElement('div');
-            el.className = 'floating-text';
-            el.innerText = text;
-            el.style.left = x + 'px';
-            el.style.top = y + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1000);
-        }
+    <div class="emoji">
+      ☕✨
+    </div>
 
-        /* Cartas */
-        function openLetter(type) {
-            const letters = {
-                'romantica': '🌹 "Hay detalles sencillos que convierten cualquier día común en un momento bonito..."',
-                'divertida': '😂 "Si reírse suma vida, seguro con esta app aseguramos unos 90 años de salud extra."',
-                'tierna': '🧸 "Que nunca te falten motivos para sonreír, tomarte un buen café y pasarla alegre."'
-            };
-            showModal('💌 Carta Secreta', letters[type]);
-        }
+    <h2>
+      Y ahora viene la parte difícil...
+    </h2>
 
-        /* Interactive Screen Touch Particles */
-        window.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('.game-card-btn') || e.target.closest('.modal-content')) return;
-            const heart = document.createElement('div');
-            heart.innerText = ['💖', '✨', '🌸', '🌟'][Math.floor(Math.random() * 4)];
-            heart.style.position = 'fixed';
-            heart.style.left = e.clientX + 'px';
-            heart.style.top = e.clientY + 'px';
-            heart.style.fontSize = '22px';
-            heart.style.pointerEvents = 'none';
-            heart.style.zIndex = '9999';
-            heart.style.transition = 'all 0.9s cubic-bezier(0.1, 0.8, 0.3, 1)';
-            document.body.appendChild(heart);
+    <p class="text">
+      Después de tanto “sorpréndame”, creo que me toca
+      hacer una pregunta sencilla.
+    </p>
 
-            setTimeout(() => {
-                heart.style.transform = `translateY(-70px) scale(1.5)`;
-                heart.style.opacity = '0';
-            }, 20);
-            setTimeout(() => heart.remove(), 900);
-        });
+    <button class="btn" onclick="yes()">
+      Acepto el reto 👀
+    </button>
 
-        /* Jardín Interactivo Canvas */
-        const gardenCanvas = document.getElementById('garden-canvas');
-        const gCtx = gardenCanvas.getContext('2d');
-        gardenCanvas.width = gardenCanvas.offsetWidth;
-        gardenCanvas.height = gardenCanvas.offsetHeight;
+    <button class="btn ghost" onclick="no()">
+      Todavía me lo estoy pensando 😂
+    </button>
 
-        gardenCanvas.addEventListener('click', (e) => {
-            const rect = gardenCanvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+    <div id="final"></div>
 
-            // Tallo
-            gCtx.strokeStyle = '#2ed573';
-            gCtx.lineWidth = 3;
-            gCtx.beginPath();
-            gCtx.moveTo(x, gardenCanvas.height);
-            gCtx.lineTo(x, y);
-            gCtx.stroke();
+  </section>
 
-            // Flor
-            gCtx.font = '22px serif';
-            gCtx.fillText('🌸', x - 11, y);
-        });
 
-        /* Constelación Conectada */
-        function triggerConstellation() {
-            showModal('🌌 Constelación Activa', 'Mira hacia el cielo nocturno... Las estrellas se están uniendo formando la silueta de un corazón brillante dedicado a Flor Leidy ✨');
+  <footer>
+    hecho con código, curiosidad y un poquito de valentía ♡
+  </footer>
 
-            // Dibujar líneas doradas en fxCanvas
-            fxCtx.clearRect(0, 0, width, height);
-            fxCtx.strokeStyle = 'rgba(255, 215, 0, 0.7)';
-            fxCtx.lineWidth = 1.5;
-            fxCtx.beginPath();
-            for (let i = 0; i < 15; i++) {
-                const p1 = particles[i];
-                const p2 = particles[(i + 1) % 15];
-                fxCtx.moveTo(p1.x, p1.y);
-                fxCtx.lineTo(p2.x, p2.y);
-            }
-            fxCtx.stroke();
+</div>
 
-            setTimeout(() => fxCtx.clearRect(0, 0, width, height), 6000);
-        }
 
-        let nightMode = false;
-        function toggleNightMode() {
-            nightMode = !nightMode;
-            document.body.style.backgroundColor = nightMode ? '#020205' : '#05050a';
-            document.getElementById('moon').style.transform = nightMode ? 'scale(1.25) rotate(10deg)' : 'scale(1) rotate(0deg)';
-        }
+<script>
 
-        /* GRAN FINAL CON FUEGOS ARTIFICIALES */
-        function triggerGrandFinale() {
-            showModal('✨ ¡GRAN FINAL SPECTACULAR!', '🎉 ¡Lluvia masiva de fuegos artificiales, confeti y estrellas para Flor Leidy!');
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
 
-            // Disparar ráfagas de fuegos artificiales
-            let timer = 0;
-            const interval = setInterval(() => {
-                const sx = Math.random() * fwCanvas.width;
-                const sy = fwCanvas.height;
-                const tx = Math.random() * fwCanvas.width;
-                const ty = Math.random() * (fwCanvas.height * 0.5);
-                fireworks.push(new Firework(sx, sy, tx, ty));
-                timer++;
-                if (timer > 25) clearInterval(interval);
-            }, 250);
-        }
-    </script>
+let stars = [];
+
+function resize(){
+
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+
+  stars = Array.from(
+    {length:90},
+    () => ({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*1.6+.3,
+      a:Math.random()
+    })
+  );
+}
+
+function draw(){
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  stars.forEach(s => {
+
+    s.a += .01;
+
+    ctx.globalAlpha =
+      .25 + .25 * Math.sin(s.a);
+
+    ctx.fillStyle = '#fff';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      s.x,
+      s.y,
+      s.r,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+  });
+
+  requestAnimationFrame(draw);
+}
+
+addEventListener('resize',resize);
+
+resize();
+draw();
+
+
+function go(id){
+
+  document
+    .getElementById(id)
+    .scrollIntoView({
+      behavior:'smooth'
+    });
+
+}
+
+
+function reveal(id){
+
+  document
+    .querySelectorAll('.reveal')
+    .forEach(x => {
+
+      if(x.id !== id)
+        x.style.display='none';
+
+    });
+
+  let e =
+    document.getElementById(id);
+
+  e.style.display =
+    e.style.display === 'block'
+    ? 'none'
+    : 'block';
+
+}
+
+
+function answer(x){
+
+  let e =
+    document.getElementById('answer');
+
+  e.style.display='block';
+
+  if(x === 'a'){
+
+    e.innerHTML =
+      'Entonces ya llevo ventaja 😂';
+
+  }else{
+
+    e.innerHTML =
+      'Perfecto, me gustan los retos. ' +
+      'Pero no se vale ponerme nervioso desde el inicio 👀';
+
+  }
+
+}
+
+
+function confetti(){
+
+  for(let i=0;i<45;i++){
+
+    let e =
+      document.createElement('div');
+
+    e.className='confetti';
+
+    e.textContent =
+      ['♡','✦','♥','✨']
+      [Math.floor(Math.random()*4)];
+
+    e.style.left =
+      Math.random()*100+'vw';
+
+    e.style.animationDelay =
+      Math.random()*.7+'s';
+
+    document.body.appendChild(e);
+
+    setTimeout(
+      () => e.remove(),
+      3200
+    );
+
+  }
+
+}
+
+
+function yes(){
+
+  confetti();
+
+  let e =
+    document.getElementById('final');
+
+  e.style.display='block';
+
+  e.innerHTML = `
+
+    <p style="
+      color:#ffd6e8;
+      font-weight:800;
+      font-size:19px
+    ">
+      Entonces queda pendiente ese café. ☕😌
+    </p>
+
+    <p class="text">
+      Prometo una buena conversación.
+      Lo demás... lo dejamos para cuando
+      estemos en persona. 👀
+    </p>
+
+  `;
+
+}
+
+
+function no(){
+
+  let e =
+    document.getElementById('final');
+
+  e.style.display='block';
+
+  e.innerHTML = `
+
+    <p style="
+      color:#ddd;
+      font-weight:700
+    ">
+      Jajajaja, sabía que no me la iba a poner
+      tan fácil. 😂
+    </p>
+
+    <p class="text">
+      Está bien, todavía tiene tiempo de pensarlo...
+      pero no demasiado. 👀
+    </p>
+
+  `;
+
+}
+
+</script>
+
 </body>
 </html>
