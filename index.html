@@ -1,787 +1,929 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para usted ✨</title>
+<title>Un pequeño universo para Vanesa ❤️</title>
+
 <style>
-*{box-sizing:border-box}
-:root{
-  --bg:#08070d;
-  --card:rgba(255,255,255,.075);
-  --line:rgba(255,255,255,.13);
-  --pink:#ffb7d8;
-  --purple:#c9b7ff;
-  --text:#fff;
-  --muted:#bdb7c8;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+
+:root {
+  --pink: #ff719d;
+  --rose: #ffb6ca;
+  --bg: #100910;
+  --card: #21131f;
+  --text: #fff0f5;
+  --muted: #c6aab9;
 }
 
-html{scroll-behavior:smooth}
+* { box-sizing: border-box; }
 
-body{
-  margin:0;
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
   background:
-    radial-gradient(circle at 15% 10%,#3b214b 0,transparent 30%),
-    radial-gradient(circle at 85% 80%,#241c48 0,transparent 32%),
+    radial-gradient(ellipse at 50% 0%, #45152f 0%, transparent 55%),
     var(--bg);
-  color:var(--text);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  overflow-x:hidden;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
 }
 
-canvas{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.55;
+button {
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.wrap{
-  position:relative;
-  z-index:2;
-  width:min(94%,520px);
-  margin:auto;
-  padding:24px 0 70px;
+button:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
 }
 
-.top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:18px;
+#stars, #particles {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-.logo{
-  font-weight:800;
-  letter-spacing:.4px;
+#stars { z-index: 0; }
+#particles { z-index: 5; }
+
+main {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 32px, 760px);
+  margin: auto;
 }
 
-.pill{
-  font-size:11px;
-  padding:7px 11px;
-  border:1px solid var(--line);
-  border-radius:99px;
-  background:rgba(255,255,255,.06);
-  color:#ddd;
+section {
+  padding: 78px 0;
+  text-align: center;
 }
 
-.screen{
-  min-height:78vh;
-  display:flex;
-  align-items:center;
+.hidden { display: none !important; }
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 10px;
+  color: var(--rose);
 }
 
-.hero{
-  text-align:center;
-  width:100%;
+h1, h2, .serif {
+  font-family: 'Playfair Display', serif;
 }
 
-.mini{
-  color:var(--pink);
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
+h1 {
+  font-size: clamp(44px, 10vw, 78px);
+  line-height: 1.05;
+  margin: 22px 0;
 }
 
-h1{
-  font-size:clamp(40px,12vw,68px);
-  line-height:.94;
-  margin:17px 0;
-  background:linear-gradient(
-    120deg,
-    #fff,
-    var(--pink),
-    var(--purple),
-    #fff
-  );
-  background-size:250%;
-  -webkit-background-clip:text;
-  color:transparent;
-  animation:shine 5s linear infinite;
+h2 {
+  font-size: clamp(30px, 7vw, 44px);
+  margin: 16px 0;
 }
 
-@keyframes shine{
-  to{background-position:250%}
+p {
+  color: var(--muted);
+  line-height: 1.8;
 }
 
-.sub{
-  color:var(--muted);
-  line-height:1.7;
-  max-width:430px;
-  margin:0 auto 28px;
+.gradient {
+  background: linear-gradient(100deg, #fff1f6, #ff719d, #ffd4e3);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
 }
 
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  border:0;
-  border-radius:15px;
-  padding:14px 20px;
-  margin:5px;
-  background:linear-gradient(135deg,#fff,#ffd5e8);
-  color:#17121c;
-  font-weight:850;
-  cursor:pointer;
-  box-shadow:0 12px 35px rgba(255,183,216,.13);
-  transition:.2s;
+.glow {
+  text-shadow: 0 0 35px #ff719d55;
 }
 
-.btn:hover{
-  transform:translateY(-3px);
+.btn {
+  border: 1px solid #ff9dbc55;
+  border-radius: 100px;
+  padding: 14px 24px;
+  color: white;
+  background: #ff719d16;
+  transition: .25s;
 }
 
-.ghost{
-  background:rgba(255,255,255,.07);
-  color:#fff;
-  border:1px solid var(--line);
-  box-shadow:none;
+.btn:hover {
+  transform: translateY(-3px);
+  background: #ff719d32;
+  border-color: var(--pink);
 }
 
-.section{
-  margin:24px 0;
-  padding:24px;
-  border:1px solid var(--line);
-  background:var(--card);
-  backdrop-filter:blur(20px);
-  border-radius:28px;
-  box-shadow:0 18px 60px #0005;
+.btn.primary {
+  color: #321020;
+  background: linear-gradient(110deg, #ffb6ca, #ff719d);
+  border: 0;
+  font-weight: 700;
+  box-shadow: 0 8px 35px #ff719d25;
 }
 
-.kicker{
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:2px;
-  color:var(--pink);
+.btn:active { transform: scale(.97); }
+
+.row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 25px;
 }
 
-h2{
-  font-size:28px;
-  margin:8px 0 12px;
+.hero {
+  min-height: 94svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.text{
-  color:#d0cad7;
-  line-height:1.65;
+.orbit {
+  width: 180px;
+  height: 180px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  margin: 16px 0;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.orbit::before, .orbit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid #ff719d40;
+  border-radius: 50%;
+  animation: rotate 15s linear infinite;
 }
 
-.tile{
-  padding:17px;
-  border:1px solid var(--line);
-  border-radius:20px;
-  background:rgba(255,255,255,.045);
-  cursor:pointer;
-  transition:.2s;
+.orbit::after {
+  inset: 16px;
+  border-style: dashed;
+  animation-direction: reverse;
+  animation-duration: 22s;
 }
 
-.tile:hover{
-  transform:translateY(-3px);
-  background:rgba(255,255,255,.08);
+.big-heart {
+  font-size: 72px;
+  filter: drop-shadow(0 0 22px #ff719d99);
+  animation: heartbeat 2s infinite;
 }
 
-.tile b{
-  display:block;
-  margin-bottom:5px;
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  12% { transform: scale(1.13); }
+  24% { transform: scale(1); }
+  36% { transform: scale(1.08); }
 }
 
-.tile span{
-  font-size:13px;
-  color:var(--muted);
+@keyframes rotate {
+  to { transform: rotate(360deg); }
 }
 
-.reveal{
-  display:none;
-  margin-top:14px;
-  padding:16px;
-  border-radius:18px;
-  background:rgba(255,183,216,.08);
-  border:1px solid rgba(255,183,216,.18);
-  animation:up .4s;
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); opacity: 0; }
+  15% { opacity: .8; }
+  100% { transform: translateY(-105vh) rotate(35deg); opacity: 0; }
 }
 
-@keyframes up{
-  from{
-    opacity:0;
-    transform:translateY(10px)
-  }
-  to{
-    opacity:1;
-    transform:none
-  }
+.small-note {
+  font-size: 12px;
+  letter-spacing: 1px;
 }
 
-.chat{
-  display:flex;
-  flex-direction:column;
-  gap:9px;
+.card {
+  padding: 28px;
+  border: 1px solid #ffb6ca20;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #2b1827cc, #160d18ed);
+  box-shadow: 0 20px 60px #0003;
+  text-align: left;
 }
 
-.bubble{
-  max-width:86%;
-  padding:12px 15px;
-  border-radius:18px;
-  background:rgba(255,255,255,.07);
-  color:#ddd;
+.card.center { text-align: center; }
+
+.icon {
+  font-size: 32px;
+  margin-bottom: 12px;
 }
 
-.me{
-  align-self:flex-end;
-  background:linear-gradient(135deg,#443052,#30234a);
-  border-bottom-right-radius:5px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+  margin-top: 28px;
 }
 
-.her{
-  align-self:flex-start;
-  border-bottom-left-radius:5px;
+.tile {
+  padding: 22px 15px;
+  min-height: 150px;
+  border-radius: 20px;
+  border: 1px solid #ffb6ca22;
+  background: #ffffff05;
+  text-align: left;
 }
 
-.choice{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:14px;
+.tile .icon { font-size: 26px; }
+.tile h3 { font-size: 15px; margin: 8px 0; }
+.tile p { font-size: 13px; margin: 0; }
+
+.envelope {
+  width: min(270px, 75vw);
+  height: 175px;
+  margin: 35px auto;
+  position: relative;
+  display: grid;
+  place-items: center;
+  background: #6f294d;
+  border-radius: 8px;
+  box-shadow: 0 12px 50px #0005;
+  cursor: pointer;
 }
 
-.choice button{
-  flex:1;
-  min-width:120px;
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #ffb6ca, #d64b83);
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  transform-origin: top;
+  transition: transform .8s;
+  z-index: 2;
 }
 
-.timeline{
-  border-left:1px solid #ffffff22;
-  margin:18px 0 0 8px;
-  padding-left:20px;
+.envelope.open::before {
+  transform: rotateX(180deg);
 }
 
-.step{
-  position:relative;
-  margin:0 0 23px;
+.envelope .seal {
+  z-index: 3;
+  font-size: 34px;
+  transition: .4s;
 }
 
-.step:before{
-  content:"";
-  position:absolute;
-  left:-27px;
-  top:5px;
-  width:11px;
-  height:11px;
-  border-radius:50%;
-  background:var(--pink);
-  box-shadow:0 0 18px var(--pink);
+.envelope.open .seal {
+  opacity: 0;
+  transform: scale(.3);
 }
 
-.step b{
-  display:block;
+.letter {
+  max-width: 530px;
+  margin: -12px auto 0;
+  padding: 28px;
+  background: #fff0f4;
+  color: #4b2037;
+  border-radius: 12px;
+  text-align: left;
+  animation: appear .7s ease;
 }
 
-.step span{
-  font-size:13px;
-  color:var(--muted);
+.letter p { color: #70445a; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.big{
-  text-align:center;
-  padding:30px 18px;
+.game-box {
+  padding: 24px;
+  border: 1px solid #ff719d44;
+  border-radius: 24px;
+  background: #1a101c;
 }
 
-.big .emoji{
-  font-size:50px;
+.game-stats {
+  display: flex;
+  justify-content: space-between;
+  color: var(--rose);
+  font-size: 13px;
 }
 
-.big h2{
-  font-size:32px;
+#gameArea {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+  margin-top: 18px;
+  border-radius: 18px;
+  background: radial-gradient(ellipse, #51203955, #120b15);
+  border: 1px solid #ffffff0d;
+  touch-action: manipulation;
 }
 
-#final{
-  display:none;
+.catch-heart {
+  position: absolute;
+  font-size: 29px;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  animation: appear .2s ease;
 }
 
-footer{
-  text-align:center;
-  color:#777180;
-  font-size:11px;
-  margin-top:35px;
+.catch-heart:active { transform: scale(1.3); }
+
+.progress {
+  height: 5px;
+  border-radius: 10px;
+  background: #ffffff10;
+  overflow: hidden;
+  margin: 18px 0;
 }
 
-.confetti{
-  position:fixed;
-  top:-20px;
-  z-index:20;
-  font-size:18px;
-  pointer-events:none;
-  animation:fall 2.5s linear forwards;
+.progress > div {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ff719d, #ffd4e3);
+  transition: width .4s;
 }
 
-@keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(540deg);
-    opacity:0;
-  }
+.quiz-option {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid #ffb6ca25;
+  background: #ffffff05;
+  color: white;
+  border-radius: 14px;
+  text-align: left;
+  transition: .2s;
 }
 
-@media(max-width:380px){
-  .grid{
-    grid-template-columns:1fr;
-  }
+.quiz-option:hover {
+  border-color: var(--pink);
+  background: #ff719d15;
+}
 
-  h1{
-    font-size:45px;
+.quiz-option:disabled { opacity: .65; cursor: default; }
+
+.feedback {
+  color: var(--rose);
+  min-height: 30px;
+  font-size: 14px;
+}
+
+.final-card {
+  padding: 35px 25px;
+  border: 1px solid #ff719d55;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at top, #54213d, #1a101c 65%);
+}
+
+footer {
+  padding: 25px 0 50px;
+  text-align: center;
+  color: #9e7c91;
+  font-size: 12px;
+}
+
+@media (max-width: 460px) {
+  section { padding: 55px 0; }
+  .grid { gap: 9px; }
+  .tile { padding: 16px 12px; }
+  .card { padding: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
   }
 }
 </style>
 </head>
 
 <body>
-
 <canvas id="stars"></canvas>
+<div id="particles"></div>
 
-<div class="wrap">
+<main>
+  <!-- PORTADA -->
+  <section class="hero" id="inicio">
+    <div class="eyebrow">Un pequeño secreto del universo</div>
 
-  <div class="top">
-    <div class="logo">para usted ♡</div>
-    <div class="pill">experimento en progreso 👀</div>
-  </div>
+    <div class="orbit">
+      <div class="big-heart">❤️</div>
+    </div>
 
-  <section class="screen">
+    <h1 class="glow">Hola,<br><span class="gradient">Vanesa.</span></h1>
 
-    <div class="hero">
+    <p style="max-width:400px">
+      Hice algo que probablemente no esperabas encontrar hoy.
+      No es una tarea, no es un examen... puedes respirar tranquila. JAJA.
+    </p>
 
-      <div class="mini">
-        una pequeña cosa que hice
+    <button class="btn primary" onclick="enterSite()">
+      Descubrir la sorpresa ✨
+    </button>
+
+    <p class="small-note">HECHO CON CURIOSIDAD Y UN POQUITO DE VALENTÍA</p>
+  </section>
+
+  <div id="content" class="hidden">
+
+    <!-- INTRODUCCIÓN -->
+    <section id="intro">
+      <div class="eyebrow">Expediente secreto · 001</div>
+      <h2>¿Por qué tú?</h2>
+
+      <div class="card center">
+        <div class="icon">🌙</div>
+        <p>
+          No sé en qué momento se me ocurrió hacer una página
+          entera para ti, pero aquí estamos.
+        </p>
+        <p>
+          Hay personas que tienen algo especial sin proponérselo.
+          Y tú tienes esa curiosa capacidad de llamar mi atención
+          sin hacer demasiado.
+        </p>
+        <p style="color:#ffb6ca">
+          Así que decidí convertir una idea medio loca en algo bonito.
+        </p>
+      </div>
+    </section>
+
+    <!-- PEQUEÑAS COSAS -->
+    <section id="detalles">
+      <div class="eyebrow">Cosas que merecen una sonrisa</div>
+      <h2>Pequeños detalles,<br><span class="gradient">grandes efectos.</span></h2>
+
+      <p>No hacen falta grandes discursos para que algo sea especial.</p>
+
+      <div class="grid">
+        <div class="tile">
+          <div class="icon">😊</div>
+          <h3>Una sonrisa</h3>
+          <p>De esas que hacen que un día normal se sienta diferente.</p>
+        </div>
+
+        <div class="tile">
+          <div class="icon">🪐</div>
+          <h3>Tu esencia</h3>
+          <p>Ser tú, sin tener que impresionar a nadie.</p>
+        </div>
+
+        <div class="tile">
+          <div class="icon">😂</div>
+          <h3>Las tonterías</h3>
+          <p>Porque reírse de cualquier cosa también cuenta como plan.</p>
+        </div>
+
+        <div class="tile">
+          <div class="icon">✨</div>
+          <h3>Lo inesperado</h3>
+          <p>Como encontrarte una página así de la nada. JAJA.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA -->
+    <section id="carta">
+      <div class="eyebrow">Correspondencia confidencial</div>
+      <h2>Tienes una carta. 💌</h2>
+
+      <p>Solo tienes que tocar el sobre para abrirla.</p>
+
+      <div class="envelope" id="envelope" role="button" tabindex="0"
+           aria-label="Abrir carta" onclick="openLetter()"
+           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLetter()}">
+        <div class="seal">💌</div>
       </div>
 
-      <h1>
-        No todo se<br>
-        dice por chat.
-      </h1>
+      <div id="letter" class="letter hidden">
+        <div class="serif" style="font-size:24px">Para Vanesa:</div>
 
-      <p class="sub">
-        Así que hice esto. No prometo que sea perfecto,
-        pero sí que me tomé el tiempo de hacerlo pensando
-        en usted. Y eso ya cuenta, ¿no? 😂
+        <p>
+          Quería hacerte algo diferente, algo que no fuera simplemente
+          mandar un mensaje más.
+        </p>
+
+        <p>
+          No voy a fingir que te conozco por completo, porque todavía
+          hay muchas cosas que descubrir. Pero sí puedo decir que
+          me pareces una persona interesante y que me gustaría
+          compartir más momentos contigo.
+        </p>
+
+        <p>
+          Sin presiones, sin complicaciones y sin tener que convertir
+          todo en algo demasiado serio.
+        </p>
+
+        <p>
+          A veces basta con una buena conversación, una risa inesperada
+          y las ganas de volver a coincidir.
+        </p>
+
+        <p class="serif" style="font-size:21px;color:#a83264">
+          Y bueno... esta es mi manera un poquito extraña de decirte eso. ❤️
+        </p>
+
+        <p style="text-align:right;margin-bottom:0">
+          — Alguien que decidió programar en vez de dormir.
+        </p>
+      </div>
+    </section>
+
+    <!-- MINIJUEGO -->
+    <section id="juego">
+      <div class="eyebrow">Prueba de habilidad</div>
+      <h2>La misión de los <span class="gradient">corazones</span></h2>
+
+      <p>
+        Atrapa 7 corazones. Hay una pequeña sorpresa al completar
+        la misión. No hace falta tener poderes mágicos.
       </p>
 
-      <button class="btn" onclick="go('historia')">
-        A ver qué hizo 👀
-      </button>
+      <div class="game-box">
+        <div class="game-stats">
+          <span>❤️ Corazones: <b id="score">0</b>/7</span>
+          <span id="gameStatus">Misión pendiente</span>
+        </div>
 
-    </div>
+        <div class="progress"><div id="gameProgress"></div></div>
 
-  </section>
+        <div id="gameArea" aria-label="Zona del minijuego">
+          <button class="btn primary" id="startGame"
+                  style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"
+                  onclick="startGame()">
+            ¡Comenzar! 🎮
+          </button>
+        </div>
 
-
-  <section class="section" id="historia">
-
-    <div class="kicker">
-      capítulo 01
-    </div>
-
-    <h2>
-      La verdadera razón
-    </h2>
-
-    <p class="text">
-      Empezó con una historia de 24 horas...
-      y de alguna manera terminamos hablando de una posible salida.
-      Creo que las historias de Instagram están haciendo demasiado
-      trabajo últimamente. 😂
-    </p>
-
-    <div class="grid">
-
-      <div class="tile" onclick="reveal('r1')">
-        <b>24 horas ⏳</b>
-        <span>
-          Una historia que duraba poco.
-        </span>
+        <div id="gameWin" class="hidden">
+          <h3 class="gradient">¡Misión completada! 🏆</h3>
+          <p>
+            Excelente trabajo, Vanesa. Has demostrado una habilidad
+            preocupante para coleccionar corazones. JAJAJA.
+          </p>
+          <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
+            Siguiente desafío →
+          </button>
+        </div>
       </div>
+    </section>
 
-      <div class="tile" onclick="reveal('r2')">
-        <b>Una conversación 💬</b>
-        <span>
-          Que terminó durando más.
-        </span>
+    <!-- PREGUNTAS -->
+    <section id="quiz">
+      <div class="eyebrow">Nivel bonus</div>
+      <h2>Una pequeña prueba 😌</h2>
+      <p>Responde según tu criterio. Aquí no se reprueba.</p>
+
+      <div class="card">
+        <div class="small-note" id="questionNumber">PREGUNTA 1 DE 3</div>
+        <h3 id="questionText">¿Cuál es el mejor plan para una tarde?</h3>
+
+        <div id="options"></div>
+        <p class="feedback" id="quizFeedback" aria-live="polite"></p>
+
+        <button class="btn primary hidden" id="nextQuestion"
+                onclick="nextQuestion()">Siguiente pregunta →</button>
       </div>
+    </section>
 
-      <div class="tile" onclick="reveal('r3')">
-        <b>Un reto 👀</b>
-        <span>
-          “Sorpréndame”, dijo usted.
-        </span>
+    <!-- FINAL -->
+    <section id="final">
+      <div class="eyebrow">Has llegado al final</div>
+
+      <div class="final-card">
+        <div style="font-size:48px">🌹</div>
+
+        <h2>Una última cosa,<br><span class="gradient">Vanesa.</span></h2>
+
+        <p>
+          Si llegaste hasta aquí, primero que nada:
+          gracias por dedicarle unos minutos a esta pequeña locura.
+        </p>
+
+        <p>
+          No sé qué te pareció todo esto, pero espero haberte sacado
+          aunque sea una sonrisa.
+        </p>
+
+        <p>
+          Y si algún día te apetece, podríamos dejar las pantallas
+          por un rato y hacer algo más divertido en persona.
+        </p>
+
+        <h3 class="serif" style="font-size:27px">
+          ¿Te gustaría que nos viéramos un día de estos? ☕
+        </h3>
+
+        <div class="row">
+          <button class="btn primary" onclick="yesAnswer()">
+            Va, estaría bonito 😊
+          </button>
+
+          <button class="btn" onclick="maybeAnswer()">
+            Déjame pensarlo 👀
+          </button>
+        </div>
+
+        <div id="finalResponse" class="hidden" aria-live="polite">
+          <p id="responseText" style="color:#ffd4e3"></p>
+          <button class="btn" onclick="restartSite()">Volver al principio ↺</button>
+        </div>
       </div>
+    </section>
+  </div>
+</main>
 
-      <div class="tile" onclick="reveal('r4')">
-        <b>Y aquí estamos ✨</b>
-        <span>
-          Yo intentando no quedar mal.
-        </span>
-      </div>
-
-    </div>
-
-    <div id="r1" class="reveal">
-      Confirmado: las historias desaparecen.
-      El interés, aparentemente, no. 😂
-    </div>
-
-    <div id="r2" class="reveal">
-      Y eso que todavía estamos en la etapa de
-      “a ver qué me cuenta”.
-    </div>
-
-    <div id="r3" class="reveal">
-      Ese “sorpréndame” fue una jugada peligrosa.
-      Ahora me tocó cumplir. 😌
-    </div>
-
-    <div id="r4" class="reveal">
-      Por eso preferí hacer algo distinto en vez
-      de mandar otro mensaje bonito y ya.
-    </div>
-
-  </section>
-
-
-  <section class="section">
-
-    <div class="kicker">
-      capítulo 02
-    </div>
-
-    <h2>
-      Mini prueba de compatibilidad
-    </h2>
-
-    <p class="text">
-      No es científica. De hecho, probablemente no sirve para nada.
-      Pero ya que está aquí... 😂
-    </p>
-
-    <div class="chat">
-
-      <div class="bubble me">
-        Pregunta importante: ¿qué tan fácil es hacerla reír?
-      </div>
-
-      <div class="bubble her">
-        Depende 👀
-      </div>
-
-      <div class="bubble me">
-        Mmm... respuesta peligrosa.
-      </div>
-
-    </div>
-
-    <div class="choice">
-
-      <button class="btn" onclick="answer('a')">
-        Muy fácil 😂
-      </button>
-
-      <button class="btn ghost" onclick="answer('b')">
-        Tiene que esforzarse 😌
-      </button>
-
-    </div>
-
-    <div id="answer" class="reveal"></div>
-
-  </section>
-
-
-  <section class="section">
-
-    <div class="kicker">
-      capítulo 03
-    </div>
-
-    <h2>
-      Lo que tengo en mente ☕
-    </h2>
-
-    <p class="text">
-      No quería hacer una invitación enorme ni ponerle presión a nada.
-      Solo algo sencillo para conocernos fuera de una pantalla.
-    </p>
-
-    <div class="timeline">
-
-      <div class="step">
-        <b>01 · Café</b>
-        <span>
-          Buena conversación. Sin guion.
-        </span>
-      </div>
-
-      <div class="step">
-        <b>02 · Caminar</b>
-        <span>
-          Si la conversación se pone buena, no hay prisa.
-        </span>
-      </div>
-
-      <div class="step">
-        <b>03 · Ver qué pasa</b>
-        <span>
-          Sin expectativas raras. Solo disfrutar el momento.
-        </span>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section class="section big">
-
-    <div class="emoji">
-      ☕✨
-    </div>
-
-    <h2>
-      Y ahora viene la parte difícil...
-    </h2>
-
-    <p class="text">
-      Después de tanto “sorpréndame”, creo que me toca
-      hacer una pregunta sencilla.
-    </p>
-
-    <button class="btn" onclick="yes()">
-      Acepto el reto 👀
-    </button>
-
-    <button class="btn ghost" onclick="no()">
-      Todavía me lo estoy pensando 😂
-    </button>
-
-    <div id="final"></div>
-
-  </section>
-
-
-  <footer>
-    hecho con código, curiosidad y un poquito de valentía ♡
-  </footer>
-
-</div>
-
+<footer>
+  Diseñado con cariño, curiosidad y varias líneas de código. ❤️
+  <br><br>
+  <span id="footerDate"></span>
+</footer>
 
 <script>
+const $ = id => document.getElementById(id);
 
-const canvas = document.getElementById('stars');
+// Fondo de estrellas
+const canvas = $('stars');
 const ctx = canvas.getContext('2d');
-
 let stars = [];
 
-function resize(){
+function makeStars() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = innerWidth * dpr;
+  canvas.height = innerHeight * dpr;
+  canvas.style.width = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
-
-  stars = Array.from(
-    {length:90},
-    () => ({
-      x:Math.random()*canvas.width,
-      y:Math.random()*canvas.height,
-      r:Math.random()*1.6+.3,
-      a:Math.random()
-    })
-  );
+  stars = Array.from({length: Math.min(120, Math.floor(innerWidth / 4))}, () => ({
+    x: Math.random() * innerWidth,
+    y: Math.random() * innerHeight,
+    r: Math.random() * 1.5 + .3,
+    a: Math.random(),
+    speed: Math.random() * .008 + .002
+  }));
 }
 
-function draw(){
-
-  ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
+function drawStars() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
 
   stars.forEach(s => {
-
-    s.a += .01;
-
-    ctx.globalAlpha =
-      .25 + .25 * Math.sin(s.a);
-
-    ctx.fillStyle = '#fff';
-
+    s.a += s.speed;
+    const alpha = .25 + Math.abs(Math.sin(s.a)) * .65;
     ctx.beginPath();
-
-    ctx.arc(
-      s.x,
-      s.y,
-      s.r,
-      0,
-      Math.PI*2
-    );
-
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,190,218,${alpha})`;
     ctx.fill();
-
   });
 
-  requestAnimationFrame(draw);
+  requestAnimationFrame(drawStars);
 }
 
-addEventListener('resize',resize);
+makeStars();
+drawStars();
+window.addEventListener('resize', makeStars);
 
-resize();
-draw();
+// Entrada
+function enterSite() {
+  $('content').classList.remove('hidden');
+  $('intro').scrollIntoView({behavior:'smooth'});
+  burst(window.innerWidth / 2, window.innerHeight / 2);
+}
 
+// Corazones flotantes
+function burst(x, y) {
+  const container = $('particles');
+  const emojis = ['❤️','💗','✨','💕','🌸'];
 
-function go(id){
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('span');
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-  document
-    .getElementById(id)
-    .scrollIntoView({
-      behavior:'smooth'
+    Object.assign(el.style, {
+      position: 'fixed',
+      left: x + (Math.random() - .5) * 160 + 'px',
+      top: y + 'px',
+      fontSize: (14 + Math.random() * 18) + 'px',
+      animation: `float ${2 + Math.random() * 2}s ease-out forwards`
     });
 
-}
-
-
-function reveal(id){
-
-  document
-    .querySelectorAll('.reveal')
-    .forEach(x => {
-
-      if(x.id !== id)
-        x.style.display='none';
-
-    });
-
-  let e =
-    document.getElementById(id);
-
-  e.style.display =
-    e.style.display === 'block'
-    ? 'none'
-    : 'block';
-
-}
-
-
-function answer(x){
-
-  let e =
-    document.getElementById('answer');
-
-  e.style.display='block';
-
-  if(x === 'a'){
-
-    e.innerHTML =
-      'Entonces ya llevo ventaja 😂';
-
-  }else{
-
-    e.innerHTML =
-      'Perfecto, me gustan los retos. ' +
-      'Pero no se vale ponerme nervioso desde el inicio 👀';
-
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 4200);
   }
-
 }
 
+// Carta
+function openLetter() {
+  $('envelope').classList.add('open');
+  $('letter').classList.remove('hidden');
+  burst(innerWidth / 2, innerHeight * .55);
+}
 
-function confetti(){
+// Juego
+let score = 0;
+let gameRunning = false;
+let spawnTimer;
 
-  for(let i=0;i<45;i++){
+function startGame() {
+  if (gameRunning) return;
 
-    let e =
-      document.createElement('div');
+  gameRunning = true;
+  score = 0;
 
-    e.className='confetti';
+  $('score').textContent = score;
+  $('gameProgress').style.width = '0%';
+  $('gameStatus').textContent = '¡Atrapa los corazones!';
+  $('gameWin').classList.add('hidden');
+  $('startGame').classList.add('hidden');
 
-    e.textContent =
-      ['♡','✦','♥','✨']
-      [Math.floor(Math.random()*4)];
+  const area = $('gameArea');
+  area.querySelectorAll('.catch-heart').forEach(el => el.remove());
 
-    e.style.left =
-      Math.random()*100+'vw';
+  spawnHeart();
+  spawnTimer = setInterval(spawnHeart, 700);
+}
 
-    e.style.animationDelay =
-      Math.random()*.7+'s';
+function spawnHeart() {
+  if (!gameRunning) return;
 
-    document.body.appendChild(e);
+  const area = $('gameArea');
+  const heart = document.createElement('button');
 
-    setTimeout(
-      () => e.remove(),
-      3200
+  heart.className = 'catch-heart';
+  heart.textContent = ['❤️','💗','💖','💕'][Math.floor(Math.random() * 4)];
+  heart.setAttribute('aria-label', 'Atrapar corazón');
+
+  const maxX = Math.max(0, area.clientWidth - 52);
+  const maxY = Math.max(0, area.clientHeight - 52);
+
+  heart.style.left = Math.random() * maxX + 'px';
+  heart.style.top = Math.random() * maxY + 'px';
+
+  heart.onclick = () => {
+    if (!gameRunning) return;
+
+    score++;
+    $('score').textContent = score;
+    $('gameProgress').style.width = (score / 7 * 100) + '%';
+
+    burst(
+      area.getBoundingClientRect().left + parseFloat(heart.style.left),
+      area.getBoundingClientRect().top + parseFloat(heart.style.top)
     );
 
+    heart.remove();
+
+    if (score >= 7) finishGame();
+  };
+
+  area.appendChild(heart);
+  setTimeout(() => heart.remove(), 1700);
+}
+
+function finishGame() {
+  gameRunning = false;
+  clearInterval(spawnTimer);
+
+  $('gameArea').querySelectorAll('.catch-heart').forEach(el => el.remove());
+  $('gameStatus').textContent = '¡Completado! 🏆';
+  $('gameWin').classList.remove('hidden');
+
+  burst(innerWidth / 2, innerHeight / 2);
+}
+
+// Preguntas interactivas
+const questions = [
+  {
+    q: '¿Cuál es el mejor plan para una tarde?',
+    options: [
+      'Salir a comer algo rico 🍟',
+      'Dar una vuelta y hablar de todo 🛵',
+      'Reírse de cualquier tontería 😂',
+      'Un poquito de todo, obvio ✨'
+    ],
+    replies: [
+      'Una respuesta que respeto muchísimo. La comida nunca falla.',
+      'Interesante elección. Hay que tomar nota. 👀',
+      'La risa es obligatoria, eso sí.',
+      'Respuesta diplomática. Me gusta tu estilo. JAJA.'
+    ]
+  },
+  {
+    q: '¿Qué hace que una persona sea interesante?',
+    options: [
+      'Que tenga buen sentido del humor 😌',
+      'Que se pueda hablar de cualquier cosa 💬',
+      'Que sea auténtica ✨',
+      'Que tenga un poquito de misterio 🕵️'
+    ],
+    replies: [
+      'El humor salva hasta las conversaciones más raras.',
+      'Las buenas conversaciones pueden durar horas.',
+      'Ser uno mismo siempre tiene su encanto.',
+      'Ah, tenemos una detective por aquí. JAJA.'
+    ]
+  },
+  {
+    q: 'Pregunta importante para la ciencia...',
+    options: [
+      '¿Quién inventó madrugar? 😭',
+      '¿Por qué la comida sabe mejor de noche? 🌙',
+      '¿Por qué pasan tan rápido los días libres? 🥲',
+      '¿Quién dejó que los lunes existieran? 💀'
+    ],
+    replies: [
+      'Esa persona nos debe una explicación.',
+      'La ciencia todavía no está preparada para esa respuesta.',
+      'Un misterio que merece una investigación seria.',
+      'Por fin alguien hace las preguntas correctas. JAJAJA.'
+    ]
+  }
+];
+
+let questionIndex = 0;
+
+function renderQuestion() {
+  const q = questions[questionIndex];
+
+  $('questionNumber').textContent =
+    `PREGUNTA ${questionIndex + 1} DE ${questions.length}`;
+
+  $('questionText').textContent = q.q;
+  $('quizFeedback').textContent = '';
+  $('nextQuestion').classList.add('hidden');
+  $('options').innerHTML = '';
+
+  q.options.forEach((option, i) => {
+    const button = document.createElement('button');
+    button.className = 'quiz-option';
+    button.textContent = option;
+
+    button.onclick = () => {
+      $('options').querySelectorAll('button').forEach(b => b.disabled = true);
+      $('quizFeedback').textContent = q.replies[i];
+      $('nextQuestion').classList.remove('hidden');
+      burst(innerWidth / 2, innerHeight * .5);
+    };
+
+    $('options').appendChild(button);
+  });
+}
+
+function nextQuestion() {
+  questionIndex++;
+
+  if (questionIndex >= questions.length) {
+    $('questionText').textContent = '¡Has superado el nivel bonus! 🎉';
+    $('questionNumber').textContent = 'RESULTADO: NIVEL DESBLOQUEADO';
+    $('options').innerHTML = '';
+    $('quizFeedback').textContent =
+      'Tu premio es seguir con tu día sabiendo que alguien se tomó el tiempo de hacerte esto. ❤️';
+    $('nextQuestion').classList.add('hidden');
+
+    const button = document.createElement('button');
+    button.className = 'btn primary';
+    button.textContent = 'Descubrir el final ✨';
+    button.onclick = () => $('final').scrollIntoView({behavior:'smooth'});
+    $('options').appendChild(button);
+
+    return;
   }
 
+  renderQuestion();
 }
 
+renderQuestion();
 
-function yes(){
-
-  confetti();
-
-  let e =
-    document.getElementById('final');
-
-  e.style.display='block';
-
-  e.innerHTML = `
-
-    <p style="
-      color:#ffd6e8;
-      font-weight:800;
-      font-size:19px
-    ">
-      Entonces queda pendiente ese café. ☕😌
-    </p>
-
-    <p class="text">
-      Prometo una buena conversación.
-      Lo demás... lo dejamos para cuando
-      estemos en persona. 👀
-    </p>
-
-  `;
-
+// Respuestas finales sin presión
+function yesAnswer() {
+  $('responseText').textContent =
+    '¡Trato hecho! 😊 Cuando quieras, podemos ponernos de acuerdo. Sin prisas.';
+  showResponse();
 }
 
-
-function no(){
-
-  let e =
-    document.getElementById('final');
-
-  e.style.display='block';
-
-  e.innerHTML = `
-
-    <p style="
-      color:#ddd;
-      font-weight:700
-    ">
-      Jajajaja, sabía que no me la iba a poner
-      tan fácil. 😂
-    </p>
-
-    <p class="text">
-      Está bien, todavía tiene tiempo de pensarlo...
-      pero no demasiado. 👀
-    </p>
-
-  `;
-
+function maybeAnswer() {
+  $('responseText').textContent =
+    'Está bien, no hay ninguna prisa. Lo importante es que te haya sacado una sonrisa. 🌷';
+  showResponse();
 }
 
+function showResponse() {
+  $('finalResponse').classList.remove('hidden');
+  burst(innerWidth / 2, innerHeight * .55);
+}
+
+function restartSite() {
+  location.reload();
+}
+
+$('footerDate').textContent = 'Un pequeño detalle para alegrarte el día · ♥';
 </script>
-
 </body>
 </html>
