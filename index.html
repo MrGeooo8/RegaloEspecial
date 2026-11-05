@@ -970,12 +970,11 @@ function goTo(number) {
 
 /* CARTA */
 
-function openLetter() {
+function abrirCarta() {
   const envelope = document.getElementById("envelope");
   const letter = document.getElementById("letter");
 
-  document.getElementById("openLetter").disabled = true;
-  envelope.classList.add("open");
+  document.getElementById("openLetterBtn").disabled = true;
 
   // Primero abre la solapa, luego sube la carta.
   setTimeout(() => {
