@@ -3,915 +3,312 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Para Vanesa ❤️</title>
+<title>Para Vanesa ♡</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
-
-:root {
-  --white: #fffaf7;
-  --pink: #ffb6c9;
-  --dark: #11152d;
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  color: var(--white);
-  background: #11152d;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-}
-
-#universe {
-  position: fixed;
-  inset: 0;
-  z-index: -5;
-  overflow: hidden;
-  background: linear-gradient(180deg, #17213e, #29284d);
-  transition: background 4s ease;
-}
-
-#universe.sunset {
-  background: linear-gradient(
-    180deg,
-    #6d527e 0%,
-    #bd7180 35%,
-    #f49a79 68%,
-    #f9bd87 100%
-  );
-}
-
-#universe.twilight {
-  background: linear-gradient(
-    180deg,
-    #171c3d 0%,
-    #343054 45%,
-    #78516d 75%,
-    #b87978 100%
-  );
-}
-
-#universe.night {
-  background: linear-gradient(
-    180deg,
-    #070d22 0%,
-    #101a38 50%,
-    #1b2346 100%
-  );
-}
-
-#sky {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 2.5s ease;
-  pointer-events: none;
-}
-
-#sky.visible {
-  opacity: 1;
-}
-
-.star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 0 7px white;
-  animation: twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle {
-  from { opacity: .25; transform: scale(.7); }
-  to { opacity: 1; transform: scale(1.4); }
-}
-
-.sun {
-  position: absolute;
-  z-index: 2;
-  width: 105px;
-  height: 105px;
-  border-radius: 50%;
-  top: 37%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, #fff7bd 0%, #ffdb86 50%, #ffad71 100%);
-  box-shadow:
-    0 0 35px #ffdc94,
-    0 0 85px #ffad75,
-    0 0 145px rgba(255, 150, 112, .5);
-  opacity: 0;
-  transition:
-    top 4s cubic-bezier(.55,0,.8,.4),
-    opacity 3.5s ease,
-    transform 4s ease;
-}
-
-.sun.visible {
-  opacity: 1;
-}
-
-.sun.gone {
-  top: 125%;
-  opacity: 0;
-  transform: translate(-50%, 0) scale(.65);
-}
-
-.reflection {
-  position: absolute;
-  z-index: 1;
-  top: 66%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 180px;
-  height: 100px;
-  opacity: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 215, 145, .6),
-    rgba(255, 176, 128, .08),
-    transparent
-  );
-  filter: blur(9px);
-  transition: opacity 2s ease;
-}
-
-.reflection.visible {
-  opacity: .85;
-}
-
-.reflection.off {
-  opacity: 0;
-}
-
-.clouds {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  transition: opacity 2s ease;
-}
-
-.cloud {
-  position: absolute;
-  width: 120px;
-  height: 30px;
-  border-radius: 50px;
-  background: rgba(255, 218, 207, .24);
-  filter: blur(5px);
-}
-
-.cloud:before,
-.cloud:after {
-  content: "";
-  position: absolute;
-  background: inherit;
-  border-radius: 50%;
-}
-
-.cloud:before {
-  width: 55px;
-  height: 55px;
-  top: -25px;
-  left: 20px;
-}
-
-.cloud:after {
-  width: 65px;
-  height: 65px;
-  top: -32px;
-  right: 15px;
-}
-
-.cloud.one {
-  top: 25%;
-  left: 8%;
-  animation: drift 35s linear infinite;
-}
-
-.cloud.two {
-  top: 43%;
-  right: 5%;
-  transform: scale(.75);
-  animation: drift 45s linear infinite reverse;
-}
-
-.cloud.three {
-  top: 15%;
-  right: 25%;
-  transform: scale(.55);
-  animation: drift 40s linear infinite;
-}
-
-@keyframes drift {
-  from { translate: -20px 0; }
-  to { translate: 60px 0; }
-}
-
-.clouds.off {
-  opacity: 0;
-}
-
-.mountains {
-  position: absolute;
-  z-index: 3;
-  bottom: 0;
-  width: 100%;
-  height: 38%;
-  pointer-events: none;
-}
-
-.mountains svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.mountain-back { fill: #514365; opacity: .7; }
-.mountain-front { fill: #292d4b; }
-.water { fill: rgba(36, 38, 66, .7); }
-
-.moon {
-  position: absolute;
-  z-index: 2;
-  width: 92px;
-  height: 92px;
-  top: 68%;
-  right: 17%;
-  border-radius: 50%;
-  opacity: 0;
-  transform: translateY(100px) scale(.6);
-  background:
-    radial-gradient(circle at 30% 30%, #fff 0 4%, transparent 5%),
-    radial-gradient(circle at 65% 65%, #d9dced 0 5%, transparent 6%),
-    radial-gradient(circle at 42% 70%, #e0e3ef 0 3%, transparent 4%),
-    #f2f0dc;
-  box-shadow: 0 0 25px rgba(240, 242, 255, .5),
-              0 0 75px rgba(206, 217, 255, .35);
-  transition: all 3s cubic-bezier(.2,.8,.2,1);
-}
-
-.moon.visible {
-  opacity: 1;
-  top: 17%;
-  transform: translateY(0) scale(1);
-}
-
-main {
-  width: 100%;
-  min-height: 100vh;
-  position: relative;
-  z-index: 5;
-}
-
-.scene {
-  display: none;
-  min-height: 100vh;
-  padding: 35px 20px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-  animation: appear .9s ease both;
-}
-
-.scene.active {
-  display: flex;
-}
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.content {
-  width: 100%;
-  max-width: 550px;
-  margin: auto;
-}
-
-.eyebrow {
-  font-size: 11px;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: #ffd5df;
-  margin-bottom: 17px;
-}
-
-h1, h2 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 500;
-}
-
-h1 {
-  font-size: clamp(35px, 8vw, 57px);
-  line-height: 1.15;
-  margin-bottom: 18px;
-}
-
-h2 {
-  font-size: clamp(28px, 6vw, 40px);
-  margin-bottom: 17px;
-}
-
-p {
-  line-height: 1.8;
-  font-size: 15px;
-  color: rgba(255,250,247,.88);
-}
-
-.soft {
-  color: #ffe0e8;
-}
-
-button.primary {
-  margin-top: 27px;
-  padding: 14px 24px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #ffd0dc, #f6a8c0);
-  color: #442b40;
-  font-weight: 700;
-  font-size: 14px;
-  box-shadow: 0 8px 28px rgba(255, 172, 198, .2);
-  transition: transform .25s, box-shadow .25s;
-}
-
-button.primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 172, 198, .35);
-}
-
-button.secondary {
-  margin-top: 15px;
-  padding: 12px 20px;
-  border-radius: 25px;
-  color: white;
-  background: rgba(255,255,255,.12);
-  border: 1px solid rgba(255,255,255,.28);
-}
-
-.envelope-wrap {
-  position: relative;
-  width: min(310px, 85vw);
-  height: 205px;
-  margin: 35px auto 20px;
-  perspective: 900px;
-}
-
-.envelope {
-  position: absolute;
-  inset: 0;
-  background: #d99ca9;
-  border-radius: 5px;
-  z-index: 2;
-  box-shadow: 0 15px 40px rgba(0,0,0,.22);
-}
-
-.envelope:before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #eab7c0;
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
-  transform-origin: top;
-  transition: transform .8s ease;
-  z-index: 4;
-}
-
-.envelope:after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #c98096;
-  clip-path: polygon(0 100%, 50% 48%, 100% 100%);
-  z-index: 5;
-}
-
-.envelope.open:before {
-  transform: rotateX(180deg);
-}
-
-.letter {
-  position: absolute;
-  z-index: 3;
-  width: 90%;
-  left: 5%;
-  top: 10px;
-  min-height: 175px;
-  padding: 20px 18px;
-  background: #fff8ef;
-  color: #493744;
-  border-radius: 5px;
-  opacity: 0;
-  transform: translateY(25px);
-  transition: transform 1s ease, opacity .6s ease;
-  box-shadow: 0 6px 22px rgba(0,0,0,.15);
-  text-align: left;
-  overflow: visible;
-}
-
-.letter.open {
-  opacity: 1;
-  transform: translateY(-165px);
-  z-index: 10;
-}
-
-.letter h2 {
-  color: #a75e79;
-  font-size: 23px;
-  margin-bottom: 10px;
-}
-
-.letter p {
-  color: #55414c;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.seal {
-  position: absolute;
-  z-index: 6;
-  width: 43px;
-  height: 43px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  border-radius: 50%;
-  background: #a94f70;
-  display: grid;
-  place-items: center;
-  color: white;
-  font-size: 19px;
-  transition: opacity .4s;
-}
-
-.envelope.open .seal {
-  opacity: 0;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 13px;
-  margin-top: 27px;
-}
-
-.detail-card {
-  min-height: 145px;
-  border-radius: 17px;
-  padding: 20px 15px;
-  background: rgba(255,255,255,.11);
-  border: 1px solid rgba(255,255,255,.17);
-  backdrop-filter: blur(8px);
-}
-
-.detail-card span {
-  font-size: 25px;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.detail-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 18px;
-  margin-bottom: 6px;
-}
-
-.detail-card p {
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.choices {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 25px auto 0;
-  max-width: 340px;
-}
-
-.choice {
-  background: rgba(255,255,255,.13);
-  color: white;
-  padding: 15px;
-  border: 1px solid rgba(255,255,255,.22);
-  border-radius: 15px;
-  font-size: 14px;
-  transition: .2s;
-}
-
-.choice:hover {
-  background: rgba(255,190,211,.3);
-  transform: scale(1.02);
-}
-
-#answer {
-  min-height: 48px;
-  margin-top: 18px;
-  color: #ffe0e8;
-}
-
-.final-heart {
-  font-size: 55px;
-  margin: 15px 0;
-  animation: heartbeat 1.4s infinite;
-}
-
-@keyframes heartbeat {
-  0%,100% { transform: scale(1); }
-  15% { transform: scale(1.18); }
-  30% { transform: scale(1); }
-  45% { transform: scale(1.12); }
-}
-
-#constellation {
-  width: min(330px, 90vw);
-  height: 230px;
-  margin: 20px auto;
-  opacity: 0;
-  transition: opacity 2s;
-}
-
-#constellation.visible {
-  opacity: 1;
-}
-
-#constellation svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.constellation-line {
-  fill: none;
-  stroke: #f7d9ef;
-  stroke-width: 1.5;
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-}
-
-#constellation.visible .constellation-line {
-  animation: draw 3s ease forwards;
-}
-
-@keyframes draw {
-  to { stroke-dashoffset: 0; }
-}
-
-.constellation-star {
-  fill: #fff5c9;
-  filter: drop-shadow(0 0 5px white);
-}
-
-#finalMessage {
-  opacity: 0;
-  transform: translateY(15px);
-  transition: all 1.5s ease;
-}
-
-#finalMessage.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.petal {
-  position: fixed;
-  top: -25px;
-  z-index: 8;
-  pointer-events: none;
-  animation: fall linear forwards;
-  opacity: .8;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(600deg);
-    opacity: 0;
-  }
-}
-
-#effects {
-  position: fixed;
-  inset: 0;
-  z-index: 9;
-  pointer-events: none;
-}
-
-@media(max-width:430px) {
-  .letter.open {
-    transform: translateY(-155px);
-  }
-
-  .cards {
-    gap: 9px;
-  }
-
-  .detail-card {
-    padding: 16px 11px;
-  }
-}
-
-@media(prefers-reduced-motion: reduce) {
-  *, *:before, *:after {
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;color:#fffaf7;background:#10152d;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:0}
+
+#universe{
+ position:fixed;inset:0;z-index:-5;overflow:hidden;
+ background:linear-gradient(180deg,#17213e,#29284d);
+ transition:background 4s;
+}
+#universe.sunset{background:linear-gradient(180deg,#705578,#bd7180 38%,#f49a79 70%,#f9bd87)}
+#universe.twilight{background:linear-gradient(180deg,#171c3d,#343054 45%,#78516d 75%,#b87978)}
+#universe.night{background:linear-gradient(180deg,#070d22,#101a38 55%,#1b2346)}
+
+#sky{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 2s;pointer-events:none}
+#sky.visible{opacity:1}
+.star{position:absolute;background:white;border-radius:50%;box-shadow:0 0 7px white;animation:twinkle 2s infinite alternate}
+@keyframes twinkle{from{opacity:.2}to{opacity:1}}
+
+.sun{
+ position:absolute;z-index:2;width:105px;height:105px;border-radius:50%;
+ top:37%;left:50%;transform:translate(-50%,-50%);
+ background:radial-gradient(circle,#fff7bd,#ffdb86 50%,#ffad71);
+ box-shadow:0 0 35px #ffdc94,0 0 85px #ffad75,0 0 145px #ff9870;
+ opacity:0;transition:top 4s ease,opacity 3.5s,transform 4s;
+}
+.sun.visible{opacity:1}
+.sun.gone{top:125%;opacity:0;transform:translate(-50%,0) scale(.65)}
+
+.reflection{
+ position:absolute;z-index:1;top:66%;left:50%;transform:translateX(-50%);
+ width:180px;height:100px;opacity:0;filter:blur(9px);
+ background:linear-gradient(180deg,rgba(255,215,145,.6),rgba(255,176,128,.08),transparent);
+ transition:opacity 2s;
+}
+.reflection.visible{opacity:.85}
+.reflection.off{opacity:0}
+
+.clouds{position:absolute;inset:0;z-index:2;transition:opacity 2s;pointer-events:none}
+.cloud{position:absolute;width:120px;height:30px;border-radius:50px;background:rgba(255,218,207,.24);filter:blur(5px)}
+.cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%}
+.cloud:before{width:55px;height:55px;top:-25px;left:20px}
+.cloud:after{width:65px;height:65px;top:-32px;right:15px}
+.cloud.one{top:25%;left:8%;animation:drift 35s linear infinite}
+.cloud.two{top:43%;right:5%;transform:scale(.75);animation:drift 45s linear infinite reverse}
+.cloud.three{top:15%;right:25%;transform:scale(.55);animation:drift 40s linear infinite}
+@keyframes drift{from{translate:-20px 0}to{translate:60px 0}}
+.clouds.off{opacity:0}
+
+.mountains{position:absolute;z-index:3;bottom:0;width:100%;height:38%;pointer-events:none}
+.mountains svg{width:100%;height:100%;display:block}
+.mountain-back{fill:#514365;opacity:.7}
+.mountain-front{fill:#292d4b}
+.water{fill:rgba(36,38,66,.7)}
+
+.moon{
+ position:absolute;z-index:2;width:92px;height:92px;top:68%;right:17%;
+ border-radius:50%;opacity:0;transform:translateY(100px) scale(.6);
+ background:radial-gradient(circle at 30% 30%,#fff 0 4%,transparent 5%),
+ radial-gradient(circle at 65% 65%,#d9dced 0 5%,transparent 6%),#f2f0dc;
+ box-shadow:0 0 25px rgba(240,242,255,.5),0 0 75px rgba(206,217,255,.35);
+ transition:all 3s cubic-bezier(.2,.8,.2,1);
+}
+.moon.visible{opacity:1;top:17%;transform:translateY(0) scale(1)}
+
+main{width:100%;min-height:100vh;position:relative;z-index:5}
+.scene{
+ display:none;min-height:100vh;padding:35px 20px;
+ align-items:center;justify-content:center;flex-direction:column;text-align:center;
+ animation:appear .8s ease both;
+}
+.scene.active{display:flex}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.content{width:100%;max-width:550px;margin:auto}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#ffd5df;margin-bottom:17px}
+h1,h2{font-family:'Playfair Display',serif;font-weight:500}
+h1{font-size:clamp(35px,8vw,57px);line-height:1.15;margin-bottom:18px}
+h2{font-size:clamp(28px,6vw,40px);margin-bottom:17px}
+p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
+.soft{color:#ffe0e8}
+
+.primary{
+ margin-top:27px;padding:14px 24px;border-radius:30px;
+ background:linear-gradient(135deg,#ffd0dc,#f6a8c0);
+ color:#442b40;font-weight:700;font-size:14px;
+ box-shadow:0 8px 28px rgba(255,172,198,.2);
+ transition:transform .25s;
+}
+.primary:hover{transform:translateY(-3px)}
+.primary:disabled{opacity:.5;cursor:default}
+.secondary{
+ margin-top:15px;padding:12px 20px;border-radius:25px;
+ color:white;background:rgba(255,255,255,.12);
+ border:1px solid rgba(255,255,255,.28);
+}
+
+.envelope-wrap{position:relative;width:min(310px,85vw);height:205px;margin:35px auto 20px;perspective:900px}
+.envelope{position:absolute;inset:0;background:#d99ca9;border-radius:5px;z-index:2;box-shadow:0 15px 40px #0003}
+.envelope:before{
+ content:"";position:absolute;inset:0;background:#eab7c0;
+ clip-path:polygon(0 0,100% 0,50% 58%);transform-origin:top;
+ transition:transform .8s;z-index:4;
+}
+.envelope:after{content:"";position:absolute;inset:0;background:#c98096;clip-path:polygon(0 100%,50% 48%,100% 100%);z-index:5}
+.envelope.open:before{transform:rotateX(180deg)}
+.letter{
+ position:absolute;z-index:3;width:90%;left:5%;top:10px;min-height:175px;
+ padding:20px 18px;background:#fff8ef;color:#493744;border-radius:5px;
+ opacity:0;transform:translateY(25px);
+ transition:transform 1s,opacity .6s;box-shadow:0 6px 22px #0002;
+ text-align:left;overflow:visible;
+}
+.letter.open{opacity:1;transform:translateY(-165px);z-index:10}
+.letter h2{color:#a75e79;font-size:23px;margin-bottom:10px}
+.letter p{color:#55414c;font-size:13px;line-height:1.8}
+.seal{
+ position:absolute;z-index:6;width:43px;height:43px;left:50%;top:50%;
+ transform:translate(-50%,-50%);border-radius:50%;background:#a94f70;
+ display:grid;place-items:center;color:white;font-size:19px;transition:opacity .4s;
+}
+.envelope.open .seal{opacity:0}
+
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:27px}
+.detail-card{min-height:145px;border-radius:17px;padding:20px 15px;background:#ffffff1c;border:1px solid #ffffff30;backdrop-filter:blur(8px)}
+.detail-card span{font-size:25px;display:block;margin-bottom:10px}
+.detail-card h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:6px}
+.detail-card p{font-size:12px;line-height:1.5}
+.choices{display:flex;flex-direction:column;gap:12px;margin:25px auto 0;max-width:340px}
+.choice{background:#ffffff20;color:white;padding:15px;border:1px solid #ffffff38;border-radius:15px;font-size:14px}
+.choice:hover{background:#ffbed14d}
+#answer{min-height:48px;margin-top:18px;color:#ffe0e8}
+
+.final-heart{font-size:55px;margin:15px 0;animation:heartbeat 1.4s infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}15%{transform:scale(1.18)}30%{transform:scale(1)}45%{transform:scale(1.12)}}
+#constellation{width:min(330px,90vw);height:230px;margin:20px auto;opacity:0;transition:opacity 2s}
+#constellation.visible{opacity:1}
+#constellation svg{width:100%;height:100%;overflow:visible}
+.constellation-line{fill:none;stroke:#f7d9ef;stroke-width:1.5;stroke-dasharray:300;stroke-dashoffset:300}
+#constellation.visible .constellation-line{animation:draw 3s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.constellation-star{fill:#fff5c9;filter:drop-shadow(0 0 5px white)}
+#finalMessage{opacity:0;transform:translateY(15px);transition:all 1.5s}
+#finalMessage.visible{opacity:1;transform:translateY(0)}
+
+.petal{position:fixed;top:-25px;z-index:8;pointer-events:none;animation:fall linear forwards;opacity:.8}
+@keyframes fall{to{transform:translateY(110vh) rotate(600deg);opacity:0}}
+#effects{position:fixed;inset:0;z-index:9;pointer-events:none}
+
+@media(max-width:430px){
+ .letter.open{transform:translateY(-155px)}
+ .cards{gap:9px}
+ .detail-card{padding:16px 11px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
 </style>
 </head>
 
 <body>
-
 <div id="universe">
-  <div id="sky"></div>
-
-  <div class="clouds" id="clouds">
-    <div class="cloud one"></div>
-    <div class="cloud two"></div>
-    <div class="cloud three"></div>
-  </div>
-
-  <div class="sun" id="sun"></div>
-  <div class="reflection" id="reflection"></div>
-  <div class="moon" id="moon"></div>
-
-  <div class="mountains">
-    <svg viewBox="0 0 1000 350" preserveAspectRatio="none">
-      <path class="mountain-back"
-        d="M0 210 L130 85 L230 190 L390 55 L560 205 L700 95 L850 200 L940 115 L1000 180 L1000 350 L0 350Z"/>
-      <path class="mountain-front"
-        d="M0 245 L140 165 L255 230 L410 125 L570 240 L720 155 L870 245 L1000 180 L1000 350 L0 350Z"/>
-      <path class="water"
-        d="M0 275 Q250 260 500 280 T1000 275 L1000 350 L0 350Z"/>
-    </svg>
-  </div>
+ <div id="sky"></div>
+ <div class="clouds" id="clouds">
+  <div class="cloud one"></div><div class="cloud two"></div><div class="cloud three"></div>
+ </div>
+ <div class="sun" id="sun"></div>
+ <div class="reflection" id="reflection"></div>
+ <div class="moon" id="moon"></div>
+ <div class="mountains">
+  <svg viewBox="0 0 1000 350" preserveAspectRatio="none">
+   <path class="mountain-back" d="M0 210 L130 85 L230 190 L390 55 L560 205 L700 95 L850 200 L940 115 L1000 180 L1000 350 L0 350Z"/>
+   <path class="mountain-front" d="M0 245 L140 165 L255 230 L410 125 L570 240 L720 155 L870 245 L1000 180 L1000 350 L0 350Z"/>
+   <path class="water" d="M0 275 Q250 260 500 280 T1000 275 L1000 350 L0 350Z"/>
+  </svg>
+ </div>
 </div>
-
 <canvas id="effects"></canvas>
 
 <main>
-
-<!-- ESCENA 0 -->
-
 <section class="scene active" id="scene0">
-  <div class="content">
-    <div class="eyebrow">Una pequeña sorpresa</div>
-    <h1>Hola, Vanesa <span style="color:#ffb6c9">♡</span></h1>
-    <p>
-      No sé si esperabas algo así, pero quería hacerte
-      algo diferente. Así que te preparé un pequeño
-      recorrido...
-    </p>
-    <p class="soft" style="margin-top:12px">
-      Espero que te guste tanto como a mí me gustó hacerlo.
-    </p>
-    <button class="primary" onclick="goTo(1)">Comenzar ✨</button>
-  </div>
+ <div class="content">
+  <div class="eyebrow">Una pequeña sorpresa</div>
+  <h1>Hola, Vanesa <span style="color:#ffb6c9">♡</span></h1>
+  <p>No sé si esperabas algo así, pero quería hacerte algo diferente. Así que te preparé un pequeño recorrido...</p>
+  <p class="soft" style="margin-top:12px">Espero que te guste tanto como a mí me gustó hacerlo.</p>
+  <button class="primary" type="button" onclick="goTo(1)">Comenzar ✨</button>
+ </div>
 </section>
-
-<!-- ESCENA 1 -->
 
 <section class="scene" id="scene1">
-  <div class="content">
-    <div class="eyebrow">Hay algo para ti</div>
-    <h2>Una carta pequeña...</h2>
-    <p>Pero escrita con una intención bastante bonita.</p>
-
-    <div class="envelope-wrap">
-      <div class="envelope" id="envelope">
-        <div class="seal">♡</div>
-      </div>
-
-      <div class="letter" id="letter">
-        <h2>Para ti, Vanesa</h2>
-        <p>
-          A veces no hace falta tener una ocasión especial
-          para hacerle saber a alguien que es importante.
-          Simplemente me dieron ganas de prepararte esto.
-          <br><br>
-          Me gusta compartir momentos contigo, nuestras
-          conversaciones y esas pequeñas cosas que,
-          aunque parezcan simples, terminan alegrando el día.
-          <br><br>
-          No sé qué nos espera más adelante, pero me gusta
-          la idea de seguir descubriéndolo.
-          <br><br>
-          Con cariño, alguien que quería sacarte una sonrisa. ♡
-        </p>
-      </div>
-    </div>
-
-    <button class="primary" id="openLetterBtn" onclick="abrirCarta()">
-      Abrir mi carta 💌
-    </button>
-
-    <button class="secondary" id="nextLetter" style="display:none"
-      onclick="goTo(2)">
-      Seguir leyendo el cielo ✨
-    </button>
+ <div class="content">
+  <div class="eyebrow">Hay algo para ti</div>
+  <h2>Una carta pequeña...</h2>
+  <p>Pero escrita con una intención bastante bonita.</p>
+  <div class="envelope-wrap">
+   <div class="envelope" id="envelope"><div class="seal">♡</div></div>
+   <div class="letter" id="letter">
+    <h2>Para ti, Vanesa</h2>
+    <p>
+     A veces no hace falta tener una ocasión especial para hacerle saber a alguien que es importante. Simplemente me dieron ganas de prepararte esto.
+     <br><br>
+     Me gusta compartir momentos contigo, nuestras conversaciones y esas pequeñas cosas que, aunque parezcan simples, terminan alegrando el día.
+     <br><br>
+     No sé qué nos espera más adelante, pero me gusta la idea de seguir descubriéndolo.
+     <br><br>
+     Con cariño, alguien que quería sacarte una sonrisa. ♡
+    </p>
+   </div>
   </div>
+  <button class="primary" id="letterOpenButton" type="button" onclick="handleOpenLetter()">Abrir mi carta 💌</button>
+  <button class="secondary" id="letterNextButton" type="button" style="display:none" onclick="goTo(2)">Seguir leyendo el cielo ✨</button>
+ </div>
 </section>
-
-<!-- ESCENA 2: ATARDECER -->
 
 <section class="scene" id="scene2">
-  <div class="content">
-    <div class="eyebrow">Un momento para detenerse</div>
-    <h2>Hay atardeceres que se quedan...</h2>
-    <p>
-      Me gustan esos momentos en los que todo parece
-      ir más despacio. El cielo cambia de colores,
-      el sol se despide y uno simplemente disfruta.
-    </p>
-    <p class="soft" style="margin-top:12px">
-      Y pensé que sería bonito compartirte uno.
-    </p>
-
-    <button class="primary" id="sunButton" onclick="showSunset()">
-      Ver el atardecer 🌅
-    </button>
-
-    <p id="sunText" style="display:none; margin-top:22px">
-      Qué bonito sería poder guardar algunos momentos
-      así y volver a ellos cuando quisiéramos.
-    </p>
-
-    <button class="primary" id="nightTransition"
-      style="display:none" onclick="beginNightTransition()">
-      Espera... viene la noche 🌙
-    </button>
-  </div>
+ <div class="content">
+  <div class="eyebrow">Un momento para detenerse</div>
+  <h2>Hay atardeceres que se quedan...</h2>
+  <p>Me gustan esos momentos en los que todo parece ir más despacio. El cielo cambia de colores, el sol se despide y uno simplemente disfruta.</p>
+  <p class="soft" style="margin-top:12px">Y pensé que sería bonito compartirte uno.</p>
+  <button class="primary" id="sunButton" type="button" onclick="showSunset()">Ver el atardecer 🌅</button>
+  <p id="sunText" style="display:none;margin-top:22px">Qué bonito sería poder guardar algunos momentos así y volver a ellos cuando quisiéramos.</p>
+  <button class="primary" id="nightTransition" type="button" style="display:none" onclick="beginNightTransition()">Espera... viene la noche 🌙</button>
+ </div>
 </section>
-
-<!-- ESCENA 3: NOCHE -->
 
 <section class="scene" id="scene3">
-  <div class="content">
-    <div class="eyebrow">Y cuando llega la noche...</div>
-    <h2>El cielo también tiene algo que contar.</h2>
-    <p id="moonText" style="opacity:0">
-      Aunque el sol se esconda, siempre quedan pequeñas
-      luces para recordarnos que incluso en la oscuridad
-      hay cosas bonitas.
-    </p>
-
-    <button class="primary" id="continueNight"
-      style="display:none" onclick="goTo(4)">
-      Hay algo más para ti ♡
-    </button>
-  </div>
+ <div class="content">
+  <div class="eyebrow">Y cuando llega la noche...</div>
+  <h2>El cielo también tiene algo que contar.</h2>
+  <p id="moonText" style="opacity:0">Aunque el sol se esconda, siempre quedan pequeñas luces para recordarnos que incluso en la oscuridad hay cosas bonitas.</p>
+  <button class="primary" id="continueNight" type="button" style="display:none" onclick="goTo(4)">Hay algo más para ti ♡</button>
+ </div>
 </section>
-
-<!-- ESCENA 4: DETALLES -->
 
 <section class="scene" id="scene4">
-  <div class="content">
-    <div class="eyebrow">Pequeños detalles</div>
-    <h2>Algunas cosas que quería decirte</h2>
-    <p>No todo tiene que ser enorme para ser especial.</p>
-
-    <div class="cards">
-      <div class="detail-card">
-        <span>🌷</span>
-        <h3>Tu forma de ser</h3>
-        <p>Hay detalles tuyos que hacen que conversar contigo sea diferente.</p>
-      </div>
-
-      <div class="detail-card">
-        <span>✨</span>
-        <h3>Tu sonrisa</h3>
-        <p>De esas cosas que pueden mejorar un día sin mucho esfuerzo.</p>
-      </div>
-
-      <div class="detail-card">
-        <span>🌙</span>
-        <h3>Los momentos</h3>
-        <p>Me gusta que podamos crear recuerdos, incluso sin planearlos.</p>
-      </div>
-
-      <div class="detail-card">
-        <span>♡</span>
-        <h3>Esta sorpresa</h3>
-        <p>Solo quería encontrar otra manera de sacarte una sonrisa.</p>
-      </div>
-    </div>
-
-    <button class="primary" onclick="goTo(5)">
-      Tengo una pregunta para ti 👀
-    </button>
+ <div class="content">
+  <div class="eyebrow">Pequeños detalles</div>
+  <h2>Algunas cosas que quería decirte</h2>
+  <p>No todo tiene que ser enorme para ser especial.</p>
+  <div class="cards">
+   <div class="detail-card"><span>🌷</span><h3>Tu forma de ser</h3><p>Hay detalles tuyos que hacen que conversar contigo sea diferente.</p></div>
+   <div class="detail-card"><span>✨</span><h3>Tu sonrisa</h3><p>De esas cosas que pueden mejorar un día sin mucho esfuerzo.</p></div>
+   <div class="detail-card"><span>🌙</span><h3>Los momentos</h3><p>Me gusta que podamos crear recuerdos, incluso sin planearlos.</p></div>
+   <div class="detail-card"><span>♡</span><h3>Esta sorpresa</h3><p>Solo quería encontrar otra manera de sacarte una sonrisa.</p></div>
   </div>
+  <button class="primary" type="button" onclick="goTo(5)">Tengo una pregunta para ti 👀</button>
+ </div>
 </section>
-
-<!-- ESCENA 5: PREGUNTA -->
 
 <section class="scene" id="scene5">
-  <div class="content">
-    <div class="eyebrow">Ahora dime algo...</div>
-    <h2>Si pudiéramos escaparnos un rato...</h2>
-    <p>¿Qué plan te gustaría más?</p>
-
-    <div class="choices">
-      <button class="choice" onclick="choose(0)">
-        🌄 Ver un atardecer en algún lugar bonito
-      </button>
-
-      <button class="choice" onclick="choose(1)">
-        🍦 Salir por algo rico y hablar de todo
-      </button>
-
-      <button class="choice" onclick="choose(2)">
-        🌃 Dar una vuelta y descubrir algún lugar
-      </button>
-
-      <button class="choice" onclick="choose(3)">
-        🤭 Cualquier plan, si la compañía es buena
-      </button>
-    </div>
-
-    <p id="answer"></p>
-
-    <button class="primary" id="questionNext"
-      style="display:none" onclick="goTo(6)">
-      Continuar ♡
-    </button>
+ <div class="content">
+  <div class="eyebrow">Ahora dime algo...</div>
+  <h2>Si pudiéramos escaparnos un rato...</h2>
+  <p>¿Qué plan te gustaría más?</p>
+  <div class="choices">
+   <button class="choice" type="button" onclick="choose(0)">🌄 Ver un atardecer en algún lugar bonito</button>
+   <button class="choice" type="button" onclick="choose(1)">🍦 Salir por algo rico y hablar de todo</button>
+   <button class="choice" type="button" onclick="choose(2)">🌃 Dar una vuelta y descubrir algún lugar</button>
+   <button class="choice" type="button" onclick="choose(3)">🤭 Cualquier plan, si la compañía es buena</button>
   </div>
+  <p id="answer"></p>
+  <button class="primary" id="questionNext" type="button" style="display:none" onclick="goTo(6)">Continuar ♡</button>
+ </div>
 </section>
-
-<!-- ESCENA 6: FINAL -->
 
 <section class="scene" id="scene6">
-  <div class="content">
-    <div class="eyebrow">Y antes de terminar...</div>
-    <h1>Una última cosita</h1>
-    <div class="final-heart">♡</div>
-
-    <p>
-      No quería hacerte una página cualquiera.
-      Quería que al recorrerla encontraras un poquito
-      de creatividad, cariño y algo que te hiciera sonreír.
-    </p>
-
-    <p class="soft" style="margin-top:13px">
-      Porque hay personas que hacen que hasta las
-      cosas más sencillas tengan algo especial.
-    </p>
-
-    <button class="primary" id="revealConstellation"
-      onclick="revealFinal()">
-      Tengo una última sorpresa ✨
-    </button>
-
-    <div id="constellation">
-      <svg viewBox="0 0 330 230">
-        <path class="constellation-line"
-          d="M165 25 L205 65 L260 70 L220 112 L230 170 L165 137 L100 170 L110 112 L70 70 L125 65 Z"/>
-        <path class="constellation-line"
-          d="M70 70 L165 25 L260 70 L165 137 L70 70"/>
-        <circle class="constellation-star" cx="165" cy="25" r="4"/>
-        <circle class="constellation-star" cx="205" cy="65" r="3"/>
-        <circle class="constellation-star" cx="260" cy="70" r="4"/>
-        <circle class="constellation-star" cx="220" cy="112" r="3"/>
-        <circle class="constellation-star" cx="230" cy="170" r="4"/>
-        <circle class="constellation-star" cx="165" cy="137" r="4"/>
-        <circle class="constellation-star" cx="100" cy="170" r="4"/>
-        <circle class="constellation-star" cx="110" cy="112" r="3"/>
-        <circle class="constellation-star" cx="70" cy="70" r="4"/>
-        <circle class="constellation-star" cx="125" cy="65" r="3"/>
-      </svg>
-    </div>
-
-    <div id="finalMessage">
-      <h2 style="color:#ffd6e5">Una constelación para ti ♡</h2>
-      <p>
-        Si pudiera ponerle nombre a esta pequeña constelación,
-        le pondría Vanesa. Para que incluso entre tantas
-        estrellas, hubiera una que me recordara a ti.
-      </p>
-      <p style="margin-top:18px; font-family:'Playfair Display',serif;
-        font-size:21px; color:#ffe2eb">
-        Gracias por llegar hasta aquí. ❤️
-      </p>
-    </div>
+ <div class="content">
+  <div class="eyebrow">Y antes de terminar...</div>
+  <h1>Una última cosita</h1>
+  <div class="final-heart">♡</div>
+  <p>No quería hacerte una página cualquiera. Quería que al recorrerla encontraras un poquito de creatividad, cariño y algo que te hiciera sonreír.</p>
+  <p class="soft" style="margin-top:13px">Porque hay personas que hacen que hasta las cosas más sencillas tengan algo especial.</p>
+  <button class="primary" id="revealConstellation" type="button" onclick="revealFinal()">Tengo una última sorpresa ✨</button>
+  <div id="constellation">
+   <svg viewBox="0 0 330 230">
+    <path class="constellation-line" d="M165 25 L205 65 L260 70 L220 112 L230 170 L165 137 L100 170 L110 112 L70 70 L125 65 Z"/>
+    <path class="constellation-line" d="M70 70 L165 25 L260 70 L165 137 L70 70"/>
+    <circle class="constellation-star" cx="165" cy="25" r="4"/>
+    <circle class="constellation-star" cx="205" cy="65" r="3"/>
+    <circle class="constellation-star" cx="260" cy="70" r="4"/>
+    <circle class="constellation-star" cx="220" cy="112" r="3"/>
+    <circle class="constellation-star" cx="230" cy="170" r="4"/>
+    <circle class="constellation-star" cx="165" cy="137" r="4"/>
+    <circle class="constellation-star" cx="100" cy="170" r="4"/>
+    <circle class="constellation-star" cx="110" cy="112" r="3"/>
+    <circle class="constellation-star" cx="70" cy="70" r="4"/>
+    <circle class="constellation-star" cx="125" cy="65" r="3"/>
+   </svg>
   </div>
+  <div id="finalMessage">
+   <h2 style="color:#ffd6e5">Una constelación para ti ♡</h2>
+   <p>Si pudiera ponerle nombre a esta pequeña constelación, le pondría Vanesa. Para que incluso entre tantas estrellas, hubiera una que me recordara a ti.</p>
+   <p style="margin-top:18px;font-family:'Playfair Display',serif;font-size:21px;color:#ffe2eb">Gracias por llegar hasta aquí. ❤️</p>
+  </div>
+ </div>
 </section>
-
 </main>
 
 <script>
+"use strict";
+
 const universe = document.getElementById("universe");
 const sun = document.getElementById("sun");
 const sky = document.getElementById("sky");
@@ -922,18 +319,18 @@ const clouds = document.getElementById("clouds");
 let nightStarted = false;
 let selectedAnswer = false;
 let petalsStarted = false;
-
-/* CAMBIO DE ESCENAS */
+let letterHasOpened = false;
 
 function goTo(number) {
+  const target = document.getElementById("scene" + number);
+  if (!target) return;
+
   document.querySelectorAll(".scene").forEach(scene => {
     scene.classList.remove("active");
   });
 
-  const target = document.getElementById("scene" + number);
   target.classList.add("active");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({top:0,behavior:"smooth"});
 
   if (!petalsStarted) {
     petalsStarted = true;
@@ -941,37 +338,39 @@ function goTo(number) {
   }
 }
 
-/* CARTA - CORREGIDO */
+/* FUNCIÓN DE APERTURA CON NOMBRE DISTINTO AL BOTÓN */
 
-function abrirCarta() {
+function handleOpenLetter() {
+  if (letterHasOpened) return;
+  letterHasOpened = true;
+
   const envelope = document.getElementById("envelope");
   const letter = document.getElementById("letter");
+  const openButton = document.getElementById("letterOpenButton");
+  const nextButton = document.getElementById("letterNextButton");
 
-  document.getElementById("openLetterBtn").disabled = true;
+  openButton.disabled = true;
   envelope.classList.add("open");
 
-  // Primero abre la solapa, luego sube la carta.
   setTimeout(() => {
     letter.classList.add("open");
-  }, 650);
+  }, 500);
 
   setTimeout(() => {
-    document.getElementById("nextLetter").style.display = "inline-block";
+    nextButton.style.display = "inline-block";
   }, 1800);
 }
 
-/* ATARDECER */
-
 function showSunset() {
-  universe.classList.remove("twilight", "night");
+  universe.classList.remove("twilight","night");
   universe.classList.add("sunset");
 
-  sun.classList.add("visible");
+  sun.style.display = "block";
   sun.classList.remove("gone");
+  sun.classList.add("visible");
 
-  reflection.classList.add("visible");
   reflection.classList.remove("off");
-
+  reflection.classList.add("visible");
   clouds.classList.remove("off");
 
   document.getElementById("sunButton").style.display = "none";
@@ -982,29 +381,24 @@ function showSunset() {
   }, 1200);
 }
 
-/* ESTRELLAS */
-
 function createStars() {
   sky.innerHTML = "";
-
   for (let i = 0; i < 100; i++) {
     const star = document.createElement("div");
     star.className = "star";
-
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 75 + "%";
-    star.style.animationDelay = Math.random() * 3 + "s";
-    star.style.animationDuration = (1.5 + Math.random() * 3) + "s";
-
-    const size = 1 + Math.random() * 2.5;
+    star.style.left = Math.random()*100 + "%";
+    star.style.top = Math.random()*75 + "%";
+    star.style.animationDelay = Math.random()*3 + "s";
+    const size = 1 + Math.random()*2.5;
     star.style.width = size + "px";
     star.style.height = size + "px";
-
     sky.appendChild(star);
   }
 }
 
-/* TRANSICIÓN: SOL -> CREPÚSCULO -> ESTRELLAS -> LUNA */
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
 
 async function beginNightTransition() {
   if (nightStarted) return;
@@ -1014,57 +408,40 @@ async function beginNightTransition() {
   button.disabled = true;
   button.style.display = "none";
 
-  // 1. El reflejo desaparece.
   reflection.classList.remove("visible");
   reflection.classList.add("off");
   clouds.classList.add("off");
 
-  // 2. El sol baja hasta salir completamente de la pantalla.
+  universe.classList.add("twilight");
   sun.classList.add("gone");
 
-  // 3. El cielo cambia gradualmente a crepúsculo.
-  universe.classList.add("twilight");
+  await wait(4300);
 
-  // Esperamos más que la duración de la animación del sol.
-  await wait(4600);
-
-  // Comprobación de seguridad: el sol queda oculto.
+  // Se oculta el sol físicamente antes de mostrar el cielo nocturno.
   sun.style.display = "none";
 
-  // 4. El cielo se oscurece.
   universe.classList.remove("twilight");
   universe.classList.add("night");
 
   await wait(1800);
 
-  // 5. Solo ahora aparecen las estrellas.
   createStars();
   sky.classList.add("visible");
 
   await wait(2500);
 
-  // 6. La luna aparece después de las estrellas.
   moon.classList.add("visible");
 
   await wait(3200);
 
-  // 7. Mostramos el mensaje cuando la luna ya está arriba.
   goTo(3);
-
   const message = document.getElementById("moonText");
-  message.style.transition = "opacity 2s ease";
+  message.style.transition = "opacity 2s";
   message.style.opacity = "1";
 
   await wait(1800);
-
   document.getElementById("continueNight").style.display = "inline-block";
 }
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/* RESPUESTA DE LA PREGUNTA */
 
 function choose(choice) {
   if (selectedAnswer) return;
@@ -1079,117 +456,95 @@ function choose(choice) {
 
   document.getElementById("answer").textContent = messages[choice];
 
-  document.querySelectorAll(".choice").forEach(button => {
+  document.querySelectorAll(".choice").forEach((button,index) => {
     button.disabled = true;
-    button.style.opacity = ".55";
+    button.style.opacity = index === choice ? "1" : ".55";
   });
-
-  document.querySelectorAll(".choice")[choice].style.opacity = "1";
 
   document.getElementById("questionNext").style.display = "inline-block";
 }
 
-/* CONSTELACIÓN FINAL */
-
 function revealFinal() {
   document.getElementById("revealConstellation").style.display = "none";
-
-  const constellation = document.getElementById("constellation");
-  constellation.classList.add("visible");
+  document.getElementById("constellation").classList.add("visible");
 
   setTimeout(() => {
     document.getElementById("finalMessage").classList.add("visible");
     fireworks();
-  }, 3200);
+  },3200);
 }
-
-/* PÉTALOS */
 
 function createPetal() {
   const petal = document.createElement("div");
   petal.className = "petal";
-  petal.textContent = Math.random() > .5 ? "✿" : "♡";
-
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.fontSize = (12 + Math.random() * 15) + "px";
-  petal.style.color = Math.random() > .5 ? "#ffc3d5" : "#ffe4ec";
-  petal.style.animationDuration = (6 + Math.random() * 6) + "s";
-
+  petal.textContent = Math.random()>.5 ? "✿" : "♡";
+  petal.style.left = Math.random()*100 + "vw";
+  petal.style.fontSize = (12+Math.random()*15)+"px";
+  petal.style.color = Math.random()>.5 ? "#ffc3d5" : "#ffe4ec";
+  petal.style.animationDuration = (6+Math.random()*6)+"s";
   document.body.appendChild(petal);
-
-  setTimeout(() => petal.remove(), 13000);
+  setTimeout(() => petal.remove(),13000);
 }
-
-/* FUEGOS ARTIFICIALES */
 
 const canvas = document.getElementById("effects");
 const ctx = canvas.getContext("2d");
-
 let particles = [];
 
 function resizeCanvas() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-  canvas.width = window.innerWidth * dpr;
-  canvas.height = window.innerHeight * dpr;
-
-  canvas.style.width = window.innerWidth + "px";
-  canvas.style.height = window.innerHeight + "px";
-
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const dpr = Math.min(window.devicePixelRatio||1,2);
+  canvas.width = window.innerWidth*dpr;
+  canvas.height = window.innerHeight*dpr;
+  canvas.style.width = window.innerWidth+"px";
+  canvas.style.height = window.innerHeight+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
-
-window.addEventListener("resize", resizeCanvas);
+window.addEventListener("resize",resizeCanvas);
 resizeCanvas();
 
-function burst(x, y) {
-  for (let i = 0; i < 45; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const speed = 1 + Math.random() * 4;
-
+function burst(x,y) {
+  for (let i=0;i<45;i++) {
+    const angle = Math.random()*Math.PI*2;
+    const speed = 1+Math.random()*4;
     particles.push({
-      x, y,
-      vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed,
-      life: 1,
-      size: 1 + Math.random() * 2.5
+      x,y,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed,
+      life:1,
+      size:1+Math.random()*2.5
     });
   }
 }
 
 function fireworks() {
-  burst(window.innerWidth * .25, window.innerHeight * .3);
-  setTimeout(() => burst(window.innerWidth * .75, window.innerHeight * .25), 600);
-  setTimeout(() => burst(window.innerWidth * .5, window.innerHeight * .2), 1300);
+  burst(innerWidth*.25,innerHeight*.3);
+  setTimeout(() => burst(innerWidth*.75,innerHeight*.25),600);
+  setTimeout(() => burst(innerWidth*.5,innerHeight*.2),1300);
 }
 
 function animateEffects() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const dpr = Math.min(window.devicePixelRatio||1,2);
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 
-  particles = particles.filter(p => p.life > 0);
-
+  particles = particles.filter(p => p.life>0);
   particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    p.vy += .025;
-    p.life -= .012;
-
-    ctx.globalAlpha = Math.max(0, p.life);
-    ctx.fillStyle = "#ffe4a8";
+    p.x+=p.vx;
+    p.y+=p.vy;
+    p.vy+=.025;
+    p.life-=.012;
+    ctx.globalAlpha=Math.max(0,p.life);
+    ctx.fillStyle="#ffe4a8";
     ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
     ctx.fill();
   });
 
-  ctx.globalAlpha = 1;
+  ctx.globalAlpha=1;
   requestAnimationFrame(animateEffects);
 }
 
 animateEffects();
 </script>
-
 </body>
 </html>
