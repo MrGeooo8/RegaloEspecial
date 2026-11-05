@@ -72,8 +72,6 @@ button {
   );
 }
 
-/* CIELO Y ESTRELLAS */
-
 #sky {
   position: absolute;
   inset: 0;
@@ -101,8 +99,6 @@ button {
   from { opacity: .25; transform: scale(.7); }
   to { opacity: 1; transform: scale(1.4); }
 }
-
-/* SOL */
 
 .sun {
   position: absolute;
@@ -135,8 +131,6 @@ button {
   transform: translate(-50%, 0) scale(.65);
 }
 
-/* REFLEJO */
-
 .reflection {
   position: absolute;
   z-index: 1;
@@ -163,8 +157,6 @@ button {
 .reflection.off {
   opacity: 0;
 }
-
-/* NUBES */
 
 .clouds {
   position: absolute;
@@ -234,8 +226,6 @@ button {
   opacity: 0;
 }
 
-/* MONTAÑAS */
-
 .mountains {
   position: absolute;
   z-index: 3;
@@ -254,8 +244,6 @@ button {
 .mountain-back { fill: #514365; opacity: .7; }
 .mountain-front { fill: #292d4b; }
 .water { fill: rgba(36, 38, 66, .7); }
-
-/* LUNA */
 
 .moon {
   position: absolute;
@@ -282,8 +270,6 @@ button {
   top: 17%;
   transform: translateY(0) scale(1);
 }
-
-/* CONTENIDO */
 
 main {
   width: 100%;
@@ -377,8 +363,6 @@ button.secondary {
   background: rgba(255,255,255,.12);
   border: 1px solid rgba(255,255,255,.28);
 }
-
-/* SOBRE Y CARTA */
 
 .envelope-wrap {
   position: relative;
@@ -479,8 +463,6 @@ button.secondary {
   opacity: 0;
 }
 
-/* TARJETAS */
-
 .cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -514,8 +496,6 @@ button.secondary {
   line-height: 1.5;
 }
 
-/* PREGUNTA */
-
 .choices {
   display: flex;
   flex-direction: column;
@@ -544,8 +524,6 @@ button.secondary {
   margin-top: 18px;
   color: #ffe0e8;
 }
-
-/* FINAL */
 
 .final-heart {
   font-size: 55px;
@@ -609,8 +587,6 @@ button.secondary {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* PÉTALOS Y EFECTOS */
 
 .petal {
   position: fixed;
@@ -693,8 +669,8 @@ button.secondary {
 
 <section class="scene active" id="scene0">
   <div class="content">
-    <div class="eyebrow">I Love You Vanesitaaaa</div>
-    <h1>Hola, My Lady <span style="color:#ffb6c9">♡</span></h1>
+    <div class="eyebrow">Una pequeña sorpresa</div>
+    <h1>Hola, Vanesa <span style="color:#ffb6c9">♡</span></h1>
     <p>
       No sé si esperabas algo así, pero quería hacerte
       algo diferente. Así que te preparé un pequeño
@@ -703,10 +679,7 @@ button.secondary {
     <p class="soft" style="margin-top:12px">
       Espero que te guste tanto como a mí me gustó hacerlo.
     </p>
-
-<button class="primary" id="openLetterBtn" onclick="abrirCarta()">
-  Abrir carta 💌
-</button>
+    <button class="primary" onclick="goTo(1)">Comenzar ✨</button>
   </div>
 </section>
 
@@ -742,7 +715,7 @@ button.secondary {
       </div>
     </div>
 
-    <button class="primary" id="openLetter" onclick="openLetter()">
+    <button class="primary" id="openLetterBtn" onclick="abrirCarta()">
       Abrir mi carta 💌
     </button>
 
@@ -968,13 +941,14 @@ function goTo(number) {
   }
 }
 
-/* CARTA */
+/* CARTA - CORREGIDO */
 
 function abrirCarta() {
   const envelope = document.getElementById("envelope");
   const letter = document.getElementById("letter");
 
   document.getElementById("openLetterBtn").disabled = true;
+  envelope.classList.add("open");
 
   // Primero abre la solapa, luego sube la carta.
   setTimeout(() => {
@@ -1190,7 +1164,6 @@ function fireworks() {
 }
 
 function animateEffects() {
-  // Limpiar usando coordenadas CSS, sin alterar la escala.
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
