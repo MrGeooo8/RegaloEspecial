@@ -4,18 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Un pequeño universo para Vanesa ❤️</title>
+<meta name="theme-color" content="#100b20">
+<title>Una sorpresa para Vanesa ♡</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,500&family=Poppins:wght@300;400;500;600&display=swap');
 
 :root {
-  --pink: #ff719d;
-  --rose: #ffb6ca;
-  --bg: #100910;
-  --card: #21131f;
-  --text: #fff0f5;
-  --muted: #c6aab9;
+  --pink: #ff9fc5;
+  --white: #fff7fa;
+  --gold: #ffe2ae;
 }
 
 * { box-sizing: border-box; }
@@ -24,906 +22,978 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 50% 0%, #45152f 0%, transparent 55%),
-    var(--bg);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  background: #100b20;
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
 }
 
-button {
-  font: inherit;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+button { font: inherit; cursor: pointer; }
+
+#universe {
+  position: fixed;
+  inset: 0;
+  z-index: -5;
+  background: linear-gradient(#181332, #55314f, #d47b83);
+  transition: background 4s ease;
 }
 
-button:focus-visible {
-  outline: 2px solid white;
-  outline-offset: 4px;
+#universe.sunset {
+  background: linear-gradient(
+    #39305e 0%, #a85878 45%, #f39a83 75%, #ffd09c 100%
+  );
 }
 
-#stars, #particles {
+#universe.twilight {
+  background: linear-gradient(
+    #232348, #655078 45%, #c17b8b 75%, #efb2a0
+  );
+}
+
+#universe.night {
+  background: linear-gradient(
+    #050817, #101832 55%, #222747
+  );
+}
+
+#sky {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
+  z-index: -4;
   pointer-events: none;
 }
 
-#stars { z-index: 0; }
-#particles { z-index: 5; }
+#effects {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+}
 
-main {
-  position: relative;
-  z-index: 2;
-  width: min(100% - 32px, 760px);
+.sun {
+  position: fixed;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%, #fff5ce, #ffc68d 55%, #ff887e
+  );
+  box-shadow: 0 0 70px #ffb477, 0 0 160px #ff9c8b88;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, 100px) scale(.2);
+  opacity: 0;
+  transition: 4s cubic-bezier(.2,.7,.2,1);
+  z-index: -3;
+}
+
+.sun.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.moon {
+  position: fixed;
+  width: 105px;
+  height: 105px;
+  right: 15%;
+  top: 13%;
+  border-radius: 50%;
+  background: #fff6d8;
+  box-shadow: 0 0 40px #fff4c9, 0 0 110px #b9d4ff88;
+  opacity: 0;
+  transform: scale(.2);
+  transition: 3s;
+  z-index: -2;
+}
+
+.moon.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mountains {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 24%;
+  z-index: -2;
+  opacity: 0;
+  transition: 3s;
+}
+
+.mountains.visible { opacity: 1; }
+
+.mountains svg {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  width: min(900px, 92%);
   margin: auto;
 }
 
-section {
-  padding: 78px 0;
-  text-align: center;
+nav {
+  padding: 25px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #ffe2ee;
 }
 
-.hidden { display: none !important; }
+.badge {
+  border: 1px solid #ffffff44;
+  padding: 8px 13px;
+  border-radius: 30px;
+  background: #ffffff0d;
+}
+
+.scene {
+  min-height: 88vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 45px 0 75px;
+}
+
+.scene.active {
+  display: flex;
+  animation: sceneEnter 1.3s both;
+}
+
+@keyframes sceneEnter {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.content { width: min(720px, 100%); }
 
 .eyebrow {
+  color: #ffc4dc;
+  font-size: 11px;
+  letter-spacing: 5px;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  font-size: 10px;
-  color: var(--rose);
 }
 
 h1, h2, .serif {
   font-family: 'Playfair Display', serif;
+  font-weight: 400;
 }
 
 h1 {
-  font-size: clamp(44px, 10vw, 78px);
-  line-height: 1.05;
-  margin: 22px 0;
+  font-size: clamp(55px, 10vw, 105px);
+  line-height: 1;
+  margin: 28px 0;
 }
 
-h2 {
-  font-size: clamp(30px, 7vw, 44px);
-  margin: 16px 0;
-}
-
-p {
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.gradient {
-  background: linear-gradient(100deg, #fff1f6, #ff719d, #ffd4e3);
+h1 span {
+  background: linear-gradient(90deg,#fff,#ff9fc5,#ffe4b7);
   color: transparent;
-  -webkit-background-clip: text;
   background-clip: text;
 }
 
-.glow {
-  text-shadow: 0 0 35px #ff719d55;
+h2 {
+  font-size: clamp(37px,7vw,65px);
+  margin: 20px 0;
 }
 
-.btn {
-  border: 1px solid #ff9dbc55;
-  border-radius: 100px;
-  padding: 14px 24px;
+p {
+  color: #f0dce7;
+  line-height: 1.95;
+  font-size: 15px;
+}
+
+.intro {
+  max-width: 560px;
+  margin: auto;
+}
+
+.button {
+  border: none;
+  border-radius: 50px;
+  padding: 15px 27px;
+  margin: 25px 6px 0;
+  background: linear-gradient(110deg,#ff8eb9,#d95794);
   color: white;
-  background: #ff719d16;
-  transition: .25s;
+  font-weight: 600;
+  box-shadow: 0 8px 35px #f36b9c55;
+  transition: .35s;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  background: #ff719d32;
-  border-color: var(--pink);
+.button:hover {
+  transform: translateY(-5px) scale(1.04);
+  box-shadow: 0 15px 45px #ff83b9aa;
 }
 
-.btn.primary {
-  color: #321020;
-  background: linear-gradient(110deg, #ffb6ca, #ff719d);
-  border: 0;
-  font-weight: 700;
-  box-shadow: 0 8px 35px #ff719d25;
+.button.secondary {
+  background: #ffffff14;
+  border: 1px solid #ffffff44;
+  box-shadow: none;
 }
-
-.btn:active { transform: scale(.97); }
-
-.row {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 25px;
-}
-
-.hero {
-  min-height: 94svh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.orbit {
-  width: 180px;
-  height: 180px;
-  display: grid;
-  place-items: center;
-  position: relative;
-  margin: 16px 0;
-}
-
-.orbit::before, .orbit::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid #ff719d40;
-  border-radius: 50%;
-  animation: rotate 15s linear infinite;
-}
-
-.orbit::after {
-  inset: 16px;
-  border-style: dashed;
-  animation-direction: reverse;
-  animation-duration: 22s;
-}
-
-.big-heart {
-  font-size: 72px;
-  filter: drop-shadow(0 0 22px #ff719d99);
-  animation: heartbeat 2s infinite;
-}
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  12% { transform: scale(1.13); }
-  24% { transform: scale(1); }
-  36% { transform: scale(1.08); }
-}
-
-@keyframes rotate {
-  to { transform: rotate(360deg); }
-}
-
-@keyframes float {
-  0% { transform: translateY(0) rotate(0); opacity: 0; }
-  15% { opacity: .8; }
-  100% { transform: translateY(-105vh) rotate(35deg); opacity: 0; }
-}
-
-.small-note {
-  font-size: 12px;
-  letter-spacing: 1px;
-}
-
-.card {
-  padding: 28px;
-  border: 1px solid #ffb6ca20;
-  border-radius: 24px;
-  background: linear-gradient(145deg, #2b1827cc, #160d18ed);
-  box-shadow: 0 20px 60px #0003;
-  text-align: left;
-}
-
-.card.center { text-align: center; }
-
-.icon {
-  font-size: 32px;
-  margin-bottom: 12px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 13px;
-  margin-top: 28px;
-}
-
-.tile {
-  padding: 22px 15px;
-  min-height: 150px;
-  border-radius: 20px;
-  border: 1px solid #ffb6ca22;
-  background: #ffffff05;
-  text-align: left;
-}
-
-.tile .icon { font-size: 26px; }
-.tile h3 { font-size: 15px; margin: 8px 0; }
-.tile p { font-size: 13px; margin: 0; }
 
 .envelope {
-  width: min(270px, 75vw);
-  height: 175px;
-  margin: 35px auto;
+  width: 190px;
+  height: 130px;
+  margin: 60px auto 25px;
   position: relative;
+  cursor: pointer;
+  transition: .5s;
+  filter: drop-shadow(0 20px 30px #0008);
+}
+
+.envelope:hover { transform: translateY(-8px); }
+
+.env-body {
+  position: absolute;
+  inset: 25px 0 0;
+  background: #e8a4c2;
+  border-radius: 5px;
+}
+
+.env-flap {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  border-left: 95px solid transparent;
+  border-right: 95px solid transparent;
+  border-top: 80px solid #ffe2eb;
+  transform-origin: top;
+  transition: 1s;
+  z-index: 3;
+}
+
+.env-paper {
+  position: absolute;
+  background: #fff4ed;
+  color: #a04e74;
+  left: 15px;
+  right: 15px;
+  top: 0;
+  height: 100px;
   display: grid;
   place-items: center;
-  background: #6f294d;
-  border-radius: 8px;
-  box-shadow: 0 12px 50px #0005;
-  cursor: pointer;
+  font-family: 'Playfair Display';
+  transition: 1.4s;
+  border-radius: 5px;
 }
 
-.envelope::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(145deg, #ffb6ca, #d64b83);
-  clip-path: polygon(0 0, 100% 0, 50% 58%);
-  transform-origin: top;
-  transition: transform .8s;
-  z-index: 2;
-}
-
-.envelope.open::before {
+.envelope.open .env-flap {
   transform: rotateX(180deg);
 }
 
-.envelope .seal {
-  z-index: 3;
-  font-size: 34px;
-  transition: .4s;
+.envelope.open .env-paper {
+  transform: translateY(-90px);
 }
 
-.envelope.open .seal {
-  opacity: 0;
-  transform: scale(.3);
+.seal {
+  position: absolute;
+  z-index: 4;
+  top: 68px;
+  left: 77px;
+  color: white;
+  background: #b94278;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
 }
 
 .letter {
-  max-width: 530px;
-  margin: -12px auto 0;
-  padding: 28px;
-  background: #fff0f4;
-  color: #4b2037;
-  border-radius: 12px;
+  max-width: 690px;
+  margin: 35px auto;
+  padding: 35px;
+  border: 1px solid #ffffff44;
+  border-radius: 25px;
+  background: #ffffff12;
+  backdrop-filter: blur(15px);
   text-align: left;
-  animation: appear .7s ease;
+  opacity: 0;
+  transform: translateY(35px);
+  transition: 1.5s;
+  box-shadow: 0 25px 80px #0004;
 }
 
-.letter p { color: #70445a; }
-
-@keyframes appear {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+.letter.show {
+  opacity: 1;
+  transform: none;
 }
 
-.game-box {
-  padding: 24px;
-  border: 1px solid #ff719d44;
-  border-radius: 24px;
-  background: #1a101c;
+.letter p { font-size: 15px; }
+
+.signature {
+  font-family: 'Playfair Display';
+  font-size: 24px;
+  color: #ffb7d2;
+  text-align: right;
+  margin-top: 30px;
 }
 
-.game-stats {
-  display: flex;
-  justify-content: space-between;
-  color: var(--rose);
-  font-size: 13px;
-}
-
-#gameArea {
-  position: relative;
-  height: 280px;
-  overflow: hidden;
-  margin-top: 18px;
-  border-radius: 18px;
-  background: radial-gradient(ellipse, #51203955, #120b15);
-  border: 1px solid #ffffff0d;
-  touch-action: manipulation;
-}
-
-.catch-heart {
-  position: absolute;
-  font-size: 29px;
-  background: transparent;
-  border: 0;
-  padding: 8px;
-  animation: appear .2s ease;
-}
-
-.catch-heart:active { transform: scale(1.3); }
-
-.progress {
-  height: 5px;
-  border-radius: 10px;
-  background: #ffffff10;
-  overflow: hidden;
-  margin: 18px 0;
-}
-
-.progress > div {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, #ff719d, #ffd4e3);
-  transition: width .4s;
-}
-
-.quiz-option {
-  display: block;
-  width: 100%;
-  margin-top: 10px;
-  padding: 15px;
-  border: 1px solid #ffb6ca25;
-  background: #ffffff05;
-  color: white;
-  border-radius: 14px;
-  text-align: left;
-  transition: .2s;
-}
-
-.quiz-option:hover {
-  border-color: var(--pink);
-  background: #ff719d15;
-}
-
-.quiz-option:disabled { opacity: .65; cursor: default; }
-
-.feedback {
-  color: var(--rose);
-  min-height: 30px;
-  font-size: 14px;
-}
-
-.final-card {
+.reveal-message {
+  max-width: 640px;
+  margin: 35px auto;
   padding: 35px 25px;
-  border: 1px solid #ff719d55;
-  border-radius: 28px;
-  background: radial-gradient(ellipse at top, #54213d, #1a101c 65%);
+  background: #ffffff12;
+  backdrop-filter: blur(15px);
+  border: 1px solid #ffffff55;
+  border-radius: 25px;
+  box-shadow: 0 0 80px #ffb2d344;
+  opacity: 0;
+  transform: scale(.65) translateY(50px);
+  filter: blur(15px);
+  transition: 1.7s cubic-bezier(.16,1,.3,1);
+}
+
+.reveal-message.show {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+.reveal-message p {
+  font-family: 'Playfair Display';
+  font-size: clamp(23px,4vw,34px);
+  line-height: 1.55;
+  color: white;
+}
+
+.reveal-message small {
+  display: block;
+  margin-top: 20px;
+  color: #ffcfdf;
+  letter-spacing: 3px;
+  font-size: 10px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 15px;
+  margin: 35px 0;
+}
+
+.card {
+  padding: 25px 17px;
+  background: #ffffff13;
+  border: 1px solid #ffffff35;
+  border-radius: 22px;
+  backdrop-filter: blur(10px);
+  transition: .4s;
+}
+
+.card:hover {
+  transform: translateY(-10px) rotate(2deg);
+  background: #ffffff25;
+}
+
+.card span { font-size: 30px; }
+
+.card h3 {
+  font-family: 'Playfair Display';
+  color: #ffd5e5;
+  font-weight: 400;
+}
+
+.card p { font-size: 12px; }
+
+.answers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.answer {
+  background: #ffffff12;
+  border: 1px solid #ffffff44;
+  color: white;
+  border-radius: 40px;
+  padding: 13px 18px;
+  transition: .3s;
+}
+
+.answer:hover, .answer.selected {
+  background: #ff8dbb88;
+  transform: translateY(-4px);
+}
+
+#result, #finalResult {
+  min-height: 30px;
+  color: #ffd3e4;
 }
 
 footer {
-  padding: 25px 0 50px;
+  padding: 35px 0;
   text-align: center;
-  color: #9e7c91;
-  font-size: 12px;
+  font-size: 11px;
+  color: #ffffff77;
 }
 
-@media (max-width: 460px) {
-  section { padding: 55px 0; }
-  .grid { gap: 9px; }
-  .tile { padding: 16px 12px; }
-  .card { padding: 22px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
+@media(max-width:650px) {
+  .cards { grid-template-columns: 1fr; }
+  .card { display: flex; align-items: center; gap: 18px; text-align: left; }
+  .card span { min-width: 35px; }
+  .letter { padding: 23px; }
+  .moon { width: 70px; height: 70px; }
 }
 </style>
 </head>
 
 <body>
-<canvas id="stars"></canvas>
-<div id="particles"></div>
 
-<main>
-  <!-- PORTADA -->
-  <section class="hero" id="inicio">
-    <div class="eyebrow">Un pequeño secreto del universo</div>
+<div id="universe"></div>
+<canvas id="sky"></canvas>
+<canvas id="effects"></canvas>
+<div class="sun" id="sun"></div>
+<div class="moon" id="moon"></div>
 
-    <div class="orbit">
-      <div class="big-heart">❤️</div>
-    </div>
+<div class="mountains" id="mountains">
+<svg viewBox="0 0 1200 300" preserveAspectRatio="none">
+<path d="M0 190 L150 80 L270 180 L450 45 L630 190 L790 75 L960 190 L1100 90 L1200 170 L1200 300 L0 300Z" fill="#39223f"/>
+<path d="M0 225 L200 130 L370 220 L550 110 L730 225 L930 135 L1100 220 L1200 160 L1200 300 L0 300Z" fill="#20182e"/>
+</svg>
+</div>
 
-    <h1 class="glow">Hola,<br><span class="gradient">Vanesa.</span></h1>
+<div class="wrapper">
 
-    <p style="max-width:400px">
-      Hice algo que probablemente no esperabas encontrar hoy.
-      No es una tarea, no es un examen... puedes respirar tranquila. JAJA.
+<nav>
+  <span>✦ UNA PEQUEÑA SORPRESA</span>
+  <span class="badge">PARA VANESA</span>
+</nav>
+
+<!-- ESCENA 1 -->
+
+<section class="scene active" id="scene0">
+<div class="content">
+  <div class="eyebrow">Después de tres semanas...</div>
+  <h1>Hay algo<br><span>para ti.</span></h1>
+  <p class="intro">
+    Te dije que estaba preparando algo y no me olvidé.
+    Quería que fuera diferente, así que esta vez
+    tendrás que descubrirlo poco a poco.
+  </p>
+
+  <div class="envelope" id="envelope" onclick="openLetter()">
+    <div class="env-paper">Para Vanesa ♡</div>
+    <div class="env-body"></div>
+    <div class="env-flap"></div>
+    <div class="seal">♥</div>
+  </div>
+
+  <div class="eyebrow">Toca el sobre para comenzar</div>
+</div>
+</section>
+
+<!-- ESCENA 2 -->
+
+<section class="scene" id="scene1">
+<div class="content">
+  <div class="eyebrow">01 · Una carta para ti</div>
+  <h2>Antes de continuar...</h2>
+
+  <div class="letter" id="letter">
+    <p>Hola, Vanesa. 🤍</p>
+
+    <p>
+      Sé que te dije que estaba preparando otra sorpresa
+      y que me tardé un poquito. JAJA.
+      Pero no quería mandarte cualquier cosa solo por cumplir.
     </p>
 
-    <button class="btn primary" onclick="enterSite()">
-      Descubrir la sorpresa ✨
+    <p>
+      Me gusta que poco a poco tengamos más confianza,
+      que podamos molestarnos, hablar de cualquier cosa
+      y que de repente una conversación termine
+      sacándome una sonrisa.
+    </p>
+
+    <p>
+      No sé qué vaya pasando después, y tampoco quiero
+      adelantarme a nada. Prefiero disfrutar el momento,
+      seguir conociéndote y descubrir todas esas pequeñas
+      cosas que todavía no sé de ti.
+    </p>
+
+    <p>
+      Así que hoy quería regalarte este pequeño momento.
+      Espero que te guste tanto como a mí me gustó prepararlo.
+    </p>
+
+    <div class="signature">
+      Con cariño, alguien que te tiene presente. ✦
+    </div>
+  </div>
+
+  <button class="button" onclick="goTo(2)">
+    Todavía hay algo más... →
+  </button>
+</div>
+</section>
+
+<!-- ESCENA 3: ATARDECER -->
+
+<section class="scene" id="scene2">
+<div class="content">
+  <div class="eyebrow">02 · Un pequeño momento</div>
+  <h2>Quiero enseñarte algo...</h2>
+
+  <p class="intro">
+    Hay momentos que no necesitan demasiadas palabras.
+    A veces basta con detenerse un instante
+    y disfrutar de algo bonito.
+  </p>
+
+  <button class="button" id="sunButton" onclick="sunset()">
+    Ver el atardecer 🌅
+  </button>
+
+  <div class="reveal-message" id="sunText">
+    <p>
+      Si pudiera guardar un momento bonito de estos días,
+      probablemente sería uno en el que terminamos
+      riéndonos por cualquier tontería.
+    </p>
+    <small>Y TODAVÍA QUEDAN MUCHOS POR DESCUBRIR</small>
+  </div>
+
+  <button class="button secondary" id="nightTransition"
+    style="display:none" onclick="goTo(3)">
+    Espera... viene la noche 🌙
+  </button>
+</div>
+</section>
+
+<!-- ESCENA 4: NOCHE -->
+
+<section class="scene" id="scene3">
+<div class="content">
+  <div class="eyebrow">03 · Bajo el mismo cielo</div>
+  <h2>Y cuando cae la noche...</h2>
+
+  <p class="intro">
+    El día termina, aparecen las estrellas
+    y todavía queda una sorpresa para ti.
+  </p>
+
+  <button class="button" id="moonButton" onclick="night()">
+    Encender el cielo ✨
+  </button>
+
+  <div class="reveal-message" id="moonText">
+    <p>
+      No sé si te lo he dicho así,
+      pero tienes algo bonito:
+      haces que quiera saber un poquito más de ti cada día.
+    </p>
+    <small>SIN PRISA, PERO CON GANAS DE CONOCERTE</small>
+  </div>
+
+  <button class="button secondary" id="continueNight"
+    style="display:none" onclick="goTo(4)">
+    Continuar ♡
+  </button>
+</div>
+</section>
+
+<!-- ESCENA 5 -->
+
+<section class="scene" id="scene4">
+<div class="content">
+  <div class="eyebrow">04 · Algunas observaciones</div>
+  <h2>Pequeños detalles...</h2>
+
+  <p class="intro">
+    No es un estudio científico,
+    pero tengo algunas conclusiones. JAJA.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <span>☀️</span>
+      <div>
+        <h3>Efecto sonrisa</h3>
+        <p>A veces basta con ver tu nombre en la pantalla
+        para mejorar un día normal.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span>🤭</span>
+      <div>
+        <h3>Buena compañía</h3>
+        <p>Me gusta esa confianza que vamos construyendo
+        poco a poco.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <span>✨</span>
+      <div>
+        <h3>Curiosidad</h3>
+        <p>Siempre queda algo nuevo por descubrir de ti.
+        Y eso me gusta.</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="button" onclick="goTo(5)">
+    Tengo una pregunta para ti →
+  </button>
+</div>
+</section>
+
+<!-- ESCENA 6 -->
+
+<section class="scene" id="scene5">
+<div class="content">
+  <div class="eyebrow">05 · Una pregunta importante</div>
+  <h2>Elige tu plan...</h2>
+
+  <p>Si tuviéramos una tarde libre, ¿qué escogerías?</p>
+
+  <div class="answers">
+    <button class="answer" onclick="choose(this,'Una salida improvisada 😌')">
+      Una salida improvisada
     </button>
 
-    <p class="small-note">HECHO CON CURIOSIDAD Y UN POQUITO DE VALENTÍA</p>
-  </section>
+    <button class="answer" onclick="choose(this,'Comer algo rico y platicar 🍓')">
+      Comer algo rico y platicar
+    </button>
 
-  <div id="content" class="hidden">
-
-    <!-- INTRODUCCIÓN -->
-    <section id="intro">
-      <div class="eyebrow">Expediente secreto · 001</div>
-      <h2>¿Por qué tú?</h2>
-
-      <div class="card center">
-        <div class="icon">🌙</div>
-        <p>
-          No sé en qué momento se me ocurrió hacer una página
-          entera para ti, pero aquí estamos.
-        </p>
-        <p>
-          Hay personas que tienen algo especial sin proponérselo.
-          Y tú tienes esa curiosa capacidad de llamar mi atención
-          sin hacer demasiado.
-        </p>
-        <p style="color:#ffb6ca">
-          Así que decidí convertir una idea medio loca en algo bonito.
-        </p>
-      </div>
-    </section>
-
-    <!-- PEQUEÑAS COSAS -->
-    <section id="detalles">
-      <div class="eyebrow">Cosas que merecen una sonrisa</div>
-      <h2>Pequeños detalles,<br><span class="gradient">grandes efectos.</span></h2>
-
-      <p>No hacen falta grandes discursos para que algo sea especial.</p>
-
-      <div class="grid">
-        <div class="tile">
-          <div class="icon">😊</div>
-          <h3>Una sonrisa</h3>
-          <p>De esas que hacen que un día normal se sienta diferente.</p>
-        </div>
-
-        <div class="tile">
-          <div class="icon">🪐</div>
-          <h3>Tu esencia</h3>
-          <p>Ser tú, sin tener que impresionar a nadie.</p>
-        </div>
-
-        <div class="tile">
-          <div class="icon">😂</div>
-          <h3>Las tonterías</h3>
-          <p>Porque reírse de cualquier cosa también cuenta como plan.</p>
-        </div>
-
-        <div class="tile">
-          <div class="icon">✨</div>
-          <h3>Lo inesperado</h3>
-          <p>Como encontrarte una página así de la nada. JAJA.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CARTA -->
-    <section id="carta">
-      <div class="eyebrow">Correspondencia confidencial</div>
-      <h2>Tienes una carta. 💌</h2>
-
-      <p>Solo tienes que tocar el sobre para abrirla.</p>
-
-      <div class="envelope" id="envelope" role="button" tabindex="0"
-           aria-label="Abrir carta" onclick="openLetter()"
-           onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openLetter()}">
-        <div class="seal">💌</div>
-      </div>
-
-      <div id="letter" class="letter hidden">
-        <div class="serif" style="font-size:24px">Para Vanesa:</div>
-
-        <p>
-          Quería hacerte algo diferente, algo que no fuera simplemente
-          mandar un mensaje más.
-        </p>
-
-        <p>
-          No voy a fingir que te conozco por completo, porque todavía
-          hay muchas cosas que descubrir. Pero sí puedo decir que
-          me pareces una persona interesante y que me gustaría
-          compartir más momentos contigo.
-        </p>
-
-        <p>
-          Sin presiones, sin complicaciones y sin tener que convertir
-          todo en algo demasiado serio.
-        </p>
-
-        <p>
-          A veces basta con una buena conversación, una risa inesperada
-          y las ganas de volver a coincidir.
-        </p>
-
-        <p class="serif" style="font-size:21px;color:#a83264">
-          Y bueno... esta es mi manera un poquito extraña de decirte eso. ❤️
-        </p>
-
-        <p style="text-align:right;margin-bottom:0">
-          — Alguien que decidió programar en vez de dormir.
-        </p>
-      </div>
-    </section>
-
-    <!-- MINIJUEGO -->
-    <section id="juego">
-      <div class="eyebrow">Prueba de habilidad</div>
-      <h2>La misión de los <span class="gradient">corazones</span></h2>
-
-      <p>
-        Atrapa 7 corazones. Hay una pequeña sorpresa al completar
-        la misión. No hace falta tener poderes mágicos.
-      </p>
-
-      <div class="game-box">
-        <div class="game-stats">
-          <span>❤️ Corazones: <b id="score">0</b>/7</span>
-          <span id="gameStatus">Misión pendiente</span>
-        </div>
-
-        <div class="progress"><div id="gameProgress"></div></div>
-
-        <div id="gameArea" aria-label="Zona del minijuego">
-          <button class="btn primary" id="startGame"
-                  style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"
-                  onclick="startGame()">
-            ¡Comenzar! 🎮
-          </button>
-        </div>
-
-        <div id="gameWin" class="hidden">
-          <h3 class="gradient">¡Misión completada! 🏆</h3>
-          <p>
-            Excelente trabajo, Vanesa. Has demostrado una habilidad
-            preocupante para coleccionar corazones. JAJAJA.
-          </p>
-          <button class="btn" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">
-            Siguiente desafío →
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- PREGUNTAS -->
-    <section id="quiz">
-      <div class="eyebrow">Nivel bonus</div>
-      <h2>Una pequeña prueba 😌</h2>
-      <p>Responde según tu criterio. Aquí no se reprueba.</p>
-
-      <div class="card">
-        <div class="small-note" id="questionNumber">PREGUNTA 1 DE 3</div>
-        <h3 id="questionText">¿Cuál es el mejor plan para una tarde?</h3>
-
-        <div id="options"></div>
-        <p class="feedback" id="quizFeedback" aria-live="polite"></p>
-
-        <button class="btn primary hidden" id="nextQuestion"
-                onclick="nextQuestion()">Siguiente pregunta →</button>
-      </div>
-    </section>
-
-    <!-- FINAL -->
-    <section id="final">
-      <div class="eyebrow">Has llegado al final</div>
-
-      <div class="final-card">
-        <div style="font-size:48px">🌹</div>
-
-        <h2>Una última cosa,<br><span class="gradient">Vanesa.</span></h2>
-
-        <p>
-          Si llegaste hasta aquí, primero que nada:
-          gracias por dedicarle unos minutos a esta pequeña locura.
-        </p>
-
-        <p>
-          No sé qué te pareció todo esto, pero espero haberte sacado
-          aunque sea una sonrisa.
-        </p>
-
-        <p>
-          Y si algún día te apetece, podríamos dejar las pantallas
-          por un rato y hacer algo más divertido en persona.
-        </p>
-
-        <h3 class="serif" style="font-size:27px">
-          ¿Te gustaría que nos viéramos un día de estos? ☕
-        </h3>
-
-        <div class="row">
-          <button class="btn primary" onclick="yesAnswer()">
-            Va, estaría bonito 😊
-          </button>
-
-          <button class="btn" onclick="maybeAnswer()">
-            Déjame pensarlo 👀
-          </button>
-        </div>
-
-        <div id="finalResponse" class="hidden" aria-live="polite">
-          <p id="responseText" style="color:#ffd4e3"></p>
-          <button class="btn" onclick="restartSite()">Volver al principio ↺</button>
-        </div>
-      </div>
-    </section>
+    <button class="answer" onclick="choose(this,'Un paseo sin tanto plan 🌄')">
+      Un paseo sin tanto plan
+    </button>
   </div>
-</main>
+
+  <p id="result"></p>
+
+  <button class="button" id="questionNext"
+    style="display:none" onclick="goTo(6)">
+    Una última cosita...
+  </button>
+</div>
+</section>
+
+<!-- ESCENA 7: FINAL -->
+
+<section class="scene" id="scene6">
+<div class="content">
+  <div class="eyebrow">06 · Y ahora te toca a ti</div>
+  <h2>Una propuesta...</h2>
+
+  <div class="reveal-message show">
+    <p>
+      Me gustaría que un día de estos compartamos
+      uno de esos momentos en persona:
+      algo rico, una buena plática y muchas risas.
+    </p>
+    <small>SIN GUION, SIN PRESIÓN... SOLO PASARLA BONITO</small>
+  </div>
+
+  <p class="serif" style="font-size:24px">
+    ¿Te gustaría que hagamos ese plan?
+  </p>
+
+  <div class="answers">
+    <button class="answer" onclick="finish('Entonces queda pendiente esa salida. Ya tengo una buena razón para organizarla. 🤭')">
+      Sí, me gustaría 💗
+    </button>
+
+    <button class="answer" onclick="finish('Acepto el suspenso... pero no retiro la invitación. JAJA. 😌')">
+      Déjame pensarlo 🤭
+    </button>
+  </div>
+
+  <p id="finalResult"></p>
+</div>
+</section>
 
 <footer>
-  Diseñado con cariño, curiosidad y varias líneas de código. ❤️
-  <br><br>
-  <span id="footerDate"></span>
+  Hecho con tiempo, creatividad y un poquito de nervios. ♡
 </footer>
+
+</div>
 
 <script>
 const $ = id => document.getElementById(id);
 
-// Fondo de estrellas
-const canvas = $('stars');
-const ctx = canvas.getContext('2d');
-let stars = [];
+let current = 0;
 
-function makeStars() {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = innerWidth * dpr;
-  canvas.height = innerHeight * dpr;
-  canvas.style.width = innerWidth + 'px';
-  canvas.style.height = innerHeight + 'px';
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+function goTo(n) {
+  $('scene' + current).classList.remove('active');
+  current = n;
+  $('scene' + n).classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 
-  stars = Array.from({length: Math.min(120, Math.floor(innerWidth / 4))}, () => ({
-    x: Math.random() * innerWidth,
-    y: Math.random() * innerHeight,
-    r: Math.random() * 1.5 + .3,
-    a: Math.random(),
-    speed: Math.random() * .008 + .002
+function openLetter() {
+  $('envelope').classList.add('open');
+
+  setTimeout(() => {
+    goTo(1);
+    setTimeout(() => $('letter').classList.add('show'), 400);
+  }, 1000);
+}
+
+function sunset() {
+  $('sunButton').style.display = 'none';
+
+  $('universe').className = 'sunset';
+  $('sun').classList.add('visible');
+  $('mountains').classList.add('visible');
+
+  setTimeout(() => {
+    $('sunText').classList.add('show');
+    burst();
+  }, 2800);
+
+  setTimeout(() => {
+    $('nightTransition').style.display = 'inline-block';
+  }, 5500);
+}
+
+function night() {
+  $('moonButton').style.display = 'none';
+
+  $('universe').className = 'night';
+  $('moon').classList.add('visible');
+
+  setTimeout(() => {
+    $('moonText').classList.add('show');
+    burst();
+    fireworks();
+  }, 2500);
+
+  setTimeout(() => {
+    $('continueNight').style.display = 'inline-block';
+  }, 5200);
+}
+
+function choose(button, answer) {
+  document.querySelectorAll('.answer').forEach(b =>
+    b.classList.remove('selected')
+  );
+
+  button.classList.add('selected');
+
+  $('result').textContent =
+    'Respuesta anotada. Ahora ya tengo una idea... 😏';
+
+  $('questionNext').style.display = 'inline-block';
+}
+
+function finish(message) {
+  $('finalResult').textContent = message;
+  fireworks();
+  setTimeout(fireworks, 900);
+}
+
+/* PARTICULAS Y DESTELLOS */
+
+function burst() {
+  for (let i=0; i<45; i++) {
+    const el = document.createElement('div');
+
+    el.textContent = ['✦','♡','✧','·'][i%4];
+
+    el.style.position = 'fixed';
+    el.style.left = '50%';
+    el.style.top = '50%';
+    el.style.zIndex = '30';
+    el.style.pointerEvents = 'none';
+    el.style.color = ['#fff','#ffc0dc','#ffe5af'][i%3];
+    el.style.fontSize = (Math.random()*15+9)+'px';
+
+    document.body.appendChild(el);
+
+    const angle = Math.random()*Math.PI*2;
+    const distance = 80+Math.random()*230;
+
+    el.animate([
+      {transform:'translate(-50%,-50%) scale(1)',opacity:1},
+      {
+        transform:`translate(${Math.cos(angle)*distance}px,${Math.sin(angle)*distance}px) scale(0)`,
+        opacity:0
+      }
+    ], {
+      duration:1200+Math.random()*800,
+      easing:'cubic-bezier(.1,.8,.3,1)'
+    });
+
+    setTimeout(()=>el.remove(),2200);
+  }
+}
+
+/* FUEGOS ARTIFICIALES */
+
+function fireworks() {
+  const canvas = $('effects');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = innerWidth*devicePixelRatio;
+  canvas.height = innerHeight*devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+
+  let particles=[];
+
+  for(let k=0;k<6;k++) {
+    const x=Math.random()*innerWidth;
+    const y=Math.random()*innerHeight*.6;
+
+    for(let i=0;i<50;i++) {
+      const a=Math.PI*2*i/50;
+      const speed=1+Math.random()*4;
+
+      particles.push({
+        x,y,
+        vx:Math.cos(a)*speed,
+        vy:Math.sin(a)*speed,
+        life:1,
+        color:Math.random()*60+320
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+
+    particles.forEach(p=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
+      p.vy+=.025;
+      p.life-=.012;
+
+      ctx.globalAlpha=Math.max(0,p.life);
+      ctx.fillStyle=`hsl(${p.color},95%,80%)`;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,2,0,Math.PI*2);
+      ctx.fill();
+    });
+
+    ctx.globalAlpha=1;
+
+    particles=particles.filter(p=>p.life>0);
+
+    if(particles.length) requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+/* CIELO ESTRELLADO */
+
+const canvas=$('sky');
+const ctx=canvas.getContext('2d');
+
+let stars=[];
+let shooting=[];
+
+function resize() {
+  canvas.width=innerWidth*devicePixelRatio;
+  canvas.height=innerHeight*devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+
+  stars=Array.from({length:190},()=>({
+    x:Math.random()*innerWidth,
+    y:Math.random()*innerHeight,
+    r:Math.random()*1.5+.2,
+    alpha:Math.random(),
+    speed:Math.random()*.015+.003
   }));
 }
 
-function drawStars() {
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
+function animateStars() {
+  ctx.clearRect(0,0,innerWidth,innerHeight);
 
-  stars.forEach(s => {
-    s.a += s.speed;
-    const alpha = .25 + Math.abs(Math.sin(s.a)) * .65;
+  stars.forEach(s=>{
+    s.alpha+=s.speed;
+
+    if(s.alpha>1 || s.alpha<.1) s.speed*=-1;
+
+    ctx.globalAlpha=s.alpha;
+    ctx.fillStyle='#fff8ed';
     ctx.beginPath();
-    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,190,218,${alpha})`;
+    ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
     ctx.fill();
   });
 
-  requestAnimationFrame(drawStars);
-}
-
-makeStars();
-drawStars();
-window.addEventListener('resize', makeStars);
-
-// Entrada
-function enterSite() {
-  $('content').classList.remove('hidden');
-  $('intro').scrollIntoView({behavior:'smooth'});
-  burst(window.innerWidth / 2, window.innerHeight / 2);
-}
-
-// Corazones flotantes
-function burst(x, y) {
-  const container = $('particles');
-  const emojis = ['❤️','💗','✨','💕','🌸'];
-
-  for (let i = 0; i < 18; i++) {
-    const el = document.createElement('span');
-    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-
-    Object.assign(el.style, {
-      position: 'fixed',
-      left: x + (Math.random() - .5) * 160 + 'px',
-      top: y + 'px',
-      fontSize: (14 + Math.random() * 18) + 'px',
-      animation: `float ${2 + Math.random() * 2}s ease-out forwards`
+  if(current===3 && Math.random()<.025) {
+    shooting.push({
+      x:Math.random()*innerWidth,
+      y:Math.random()*innerHeight*.5,
+      life:1
     });
-
-    container.appendChild(el);
-    setTimeout(() => el.remove(), 4200);
   }
-}
 
-// Carta
-function openLetter() {
-  $('envelope').classList.add('open');
-  $('letter').classList.remove('hidden');
-  burst(innerWidth / 2, innerHeight * .55);
-}
+  shooting.forEach(s=>{
+    ctx.globalAlpha=s.life;
+    ctx.strokeStyle='#ffffff';
+    ctx.lineWidth=2;
+    ctx.beginPath();
+    ctx.moveTo(s.x,s.y);
+    ctx.lineTo(s.x-65,s.y-23);
+    ctx.stroke();
 
-// Juego
-let score = 0;
-let gameRunning = false;
-let spawnTimer;
-
-function startGame() {
-  if (gameRunning) return;
-
-  gameRunning = true;
-  score = 0;
-
-  $('score').textContent = score;
-  $('gameProgress').style.width = '0%';
-  $('gameStatus').textContent = '¡Atrapa los corazones!';
-  $('gameWin').classList.add('hidden');
-  $('startGame').classList.add('hidden');
-
-  const area = $('gameArea');
-  area.querySelectorAll('.catch-heart').forEach(el => el.remove());
-
-  spawnHeart();
-  spawnTimer = setInterval(spawnHeart, 700);
-}
-
-function spawnHeart() {
-  if (!gameRunning) return;
-
-  const area = $('gameArea');
-  const heart = document.createElement('button');
-
-  heart.className = 'catch-heart';
-  heart.textContent = ['❤️','💗','💖','💕'][Math.floor(Math.random() * 4)];
-  heart.setAttribute('aria-label', 'Atrapar corazón');
-
-  const maxX = Math.max(0, area.clientWidth - 52);
-  const maxY = Math.max(0, area.clientHeight - 52);
-
-  heart.style.left = Math.random() * maxX + 'px';
-  heart.style.top = Math.random() * maxY + 'px';
-
-  heart.onclick = () => {
-    if (!gameRunning) return;
-
-    score++;
-    $('score').textContent = score;
-    $('gameProgress').style.width = (score / 7 * 100) + '%';
-
-    burst(
-      area.getBoundingClientRect().left + parseFloat(heart.style.left),
-      area.getBoundingClientRect().top + parseFloat(heart.style.top)
-    );
-
-    heart.remove();
-
-    if (score >= 7) finishGame();
-  };
-
-  area.appendChild(heart);
-  setTimeout(() => heart.remove(), 1700);
-}
-
-function finishGame() {
-  gameRunning = false;
-  clearInterval(spawnTimer);
-
-  $('gameArea').querySelectorAll('.catch-heart').forEach(el => el.remove());
-  $('gameStatus').textContent = '¡Completado! 🏆';
-  $('gameWin').classList.remove('hidden');
-
-  burst(innerWidth / 2, innerHeight / 2);
-}
-
-// Preguntas interactivas
-const questions = [
-  {
-    q: '¿Cuál es el mejor plan para una tarde?',
-    options: [
-      'Salir a comer algo rico 🍟',
-      'Dar una vuelta y hablar de todo 🛵',
-      'Reírse de cualquier tontería 😂',
-      'Un poquito de todo, obvio ✨'
-    ],
-    replies: [
-      'Una respuesta que respeto muchísimo. La comida nunca falla.',
-      'Interesante elección. Hay que tomar nota. 👀',
-      'La risa es obligatoria, eso sí.',
-      'Respuesta diplomática. Me gusta tu estilo. JAJA.'
-    ]
-  },
-  {
-    q: '¿Qué hace que una persona sea interesante?',
-    options: [
-      'Que tenga buen sentido del humor 😌',
-      'Que se pueda hablar de cualquier cosa 💬',
-      'Que sea auténtica ✨',
-      'Que tenga un poquito de misterio 🕵️'
-    ],
-    replies: [
-      'El humor salva hasta las conversaciones más raras.',
-      'Las buenas conversaciones pueden durar horas.',
-      'Ser uno mismo siempre tiene su encanto.',
-      'Ah, tenemos una detective por aquí. JAJA.'
-    ]
-  },
-  {
-    q: 'Pregunta importante para la ciencia...',
-    options: [
-      '¿Quién inventó madrugar? 😭',
-      '¿Por qué la comida sabe mejor de noche? 🌙',
-      '¿Por qué pasan tan rápido los días libres? 🥲',
-      '¿Quién dejó que los lunes existieran? 💀'
-    ],
-    replies: [
-      'Esa persona nos debe una explicación.',
-      'La ciencia todavía no está preparada para esa respuesta.',
-      'Un misterio que merece una investigación seria.',
-      'Por fin alguien hace las preguntas correctas. JAJAJA.'
-    ]
-  }
-];
-
-let questionIndex = 0;
-
-function renderQuestion() {
-  const q = questions[questionIndex];
-
-  $('questionNumber').textContent =
-    `PREGUNTA ${questionIndex + 1} DE ${questions.length}`;
-
-  $('questionText').textContent = q.q;
-  $('quizFeedback').textContent = '';
-  $('nextQuestion').classList.add('hidden');
-  $('options').innerHTML = '';
-
-  q.options.forEach((option, i) => {
-    const button = document.createElement('button');
-    button.className = 'quiz-option';
-    button.textContent = option;
-
-    button.onclick = () => {
-      $('options').querySelectorAll('button').forEach(b => b.disabled = true);
-      $('quizFeedback').textContent = q.replies[i];
-      $('nextQuestion').classList.remove('hidden');
-      burst(innerWidth / 2, innerHeight * .5);
-    };
-
-    $('options').appendChild(button);
+    s.x+=9;
+    s.y+=3;
+    s.life-=.025;
   });
+
+  shooting=shooting.filter(s=>s.life>0);
+
+  ctx.globalAlpha=1;
+
+  requestAnimationFrame(animateStars);
 }
 
-function nextQuestion() {
-  questionIndex++;
+addEventListener('resize',resize);
+resize();
+animateStars();
 
-  if (questionIndex >= questions.length) {
-    $('questionText').textContent = '¡Has superado el nivel bonus! 🎉';
-    $('questionNumber').textContent = 'RESULTADO: NIVEL DESBLOQUEADO';
-    $('options').innerHTML = '';
-    $('quizFeedback').textContent =
-      'Tu premio es seguir con tu día sabiendo que alguien se tomó el tiempo de hacerte esto. ❤️';
-    $('nextQuestion').classList.add('hidden');
+/* PETALOS FLOTANTES */
 
-    const button = document.createElement('button');
-    button.className = 'btn primary';
-    button.textContent = 'Descubrir el final ✨';
-    button.onclick = () => $('final').scrollIntoView({behavior:'smooth'});
-    $('options').appendChild(button);
+function petal() {
+  const p=document.createElement('div');
 
-    return;
-  }
+  p.textContent=Math.random()>.5?'🌸':'✧';
 
-  renderQuestion();
+  p.style.position='fixed';
+  p.style.left=Math.random()*100+'vw';
+  p.style.top='105vh';
+  p.style.fontSize=(12+Math.random()*18)+'px';
+  p.style.pointerEvents='none';
+  p.style.zIndex='10';
+
+  document.body.appendChild(p);
+
+  p.animate([
+    {transform:'translateY(0) rotate(0deg)',opacity:0},
+    {opacity:.9,offset:.2},
+    {transform:`translate(${Math.random()*160-80}px,-120vh) rotate(500deg)`,opacity:0}
+  ],{
+    duration:7000+Math.random()*5000,
+    easing:'linear'
+  });
+
+  setTimeout(()=>p.remove(),13000);
 }
 
-renderQuestion();
+setInterval(petal,950);
 
-// Respuestas finales sin presión
-function yesAnswer() {
-  $('responseText').textContent =
-    '¡Trato hecho! 😊 Cuando quieras, podemos ponernos de acuerdo. Sin prisas.';
-  showResponse();
-}
-
-function maybeAnswer() {
-  $('responseText').textContent =
-    'Está bien, no hay ninguna prisa. Lo importante es que te haya sacado una sonrisa. 🌷';
-  showResponse();
-}
-
-function showResponse() {
-  $('finalResponse').classList.remove('hidden');
-  burst(innerWidth / 2, innerHeight * .55);
-}
-
-function restartSite() {
-  location.reload();
-}
-
-$('footerDate').textContent = 'Un pequeño detalle para alegrarte el día · ♥';
 </script>
 </body>
 </html>
