@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,13 +11,10 @@
 
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;color:#fffaf7;background:#10152d;overflow-x:hidden}
-button{font-family:inherit;cursor:pointer;border:0}
+button{font:inherit;cursor:pointer;border:0}
+[hidden]{display:none!important}
 
-#universe{
- position:fixed;inset:0;z-index:-5;overflow:hidden;
- background:linear-gradient(180deg,#17213e,#29284d);
- transition:background 4s;
-}
+#universe{position:fixed;inset:0;z-index:-5;overflow:hidden;background:linear-gradient(180deg,#17213e,#29284d);transition:background 4s}
 #universe.sunset{background:linear-gradient(180deg,#705578,#bd7180 38%,#f49a79 70%,#f9bd87)}
 #universe.twilight{background:linear-gradient(180deg,#171c3d,#343054 45%,#78516d 75%,#b87978)}
 #universe.night{background:linear-gradient(180deg,#070d22,#101a38 55%,#1b2346)}
@@ -26,22 +24,11 @@ button{font-family:inherit;cursor:pointer;border:0}
 .star{position:absolute;background:white;border-radius:50%;box-shadow:0 0 7px white;animation:twinkle 2s infinite alternate}
 @keyframes twinkle{from{opacity:.2}to{opacity:1}}
 
-.sun{
- position:absolute;z-index:2;width:105px;height:105px;border-radius:50%;
- top:37%;left:50%;transform:translate(-50%,-50%);
- background:radial-gradient(circle,#fff7bd,#ffdb86 50%,#ffad71);
- box-shadow:0 0 35px #ffdc94,0 0 85px #ffad75,0 0 145px #ff9870;
- opacity:0;transition:top 4s ease,opacity 3.5s,transform 4s;
-}
+.sun{position:absolute;z-index:2;width:105px;height:105px;border-radius:50%;top:37%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff7bd,#ffdb86 50%,#ffad71);box-shadow:0 0 35px #ffdc94,0 0 85px #ffad75,0 0 145px #ff9870;opacity:0;transition:top 4s ease,opacity 3.5s,transform 4s}
 .sun.visible{opacity:1}
 .sun.gone{top:125%;opacity:0;transform:translate(-50%,0) scale(.65)}
 
-.reflection{
- position:absolute;z-index:1;top:66%;left:50%;transform:translateX(-50%);
- width:180px;height:100px;opacity:0;filter:blur(9px);
- background:linear-gradient(180deg,rgba(255,215,145,.6),rgba(255,176,128,.08),transparent);
- transition:opacity 2s;
-}
+.reflection{position:absolute;z-index:1;top:66%;left:50%;transform:translateX(-50%);width:180px;height:100px;opacity:0;filter:blur(9px);background:linear-gradient(180deg,rgba(255,215,145,.6),rgba(255,176,128,.08),transparent);transition:opacity 2s}
 .reflection.visible{opacity:.85}
 .reflection.off{opacity:0}
 
@@ -62,22 +49,11 @@ button{font-family:inherit;cursor:pointer;border:0}
 .mountain-front{fill:#292d4b}
 .water{fill:rgba(36,38,66,.7)}
 
-.moon{
- position:absolute;z-index:2;width:92px;height:92px;top:68%;right:17%;
- border-radius:50%;opacity:0;transform:translateY(100px) scale(.6);
- background:radial-gradient(circle at 30% 30%,#fff 0 4%,transparent 5%),
- radial-gradient(circle at 65% 65%,#d9dced 0 5%,transparent 6%),#f2f0dc;
- box-shadow:0 0 25px rgba(240,242,255,.5),0 0 75px rgba(206,217,255,.35);
- transition:all 3s cubic-bezier(.2,.8,.2,1);
-}
+.moon{position:absolute;z-index:2;width:92px;height:92px;top:68%;right:17%;border-radius:50%;opacity:0;transform:translateY(100px) scale(.6);background:radial-gradient(circle at 30% 30%,#fff 0 4%,transparent 5%),radial-gradient(circle at 65% 65%,#d9dced 0 5%,transparent 6%),#f2f0dc;box-shadow:0 0 25px rgba(240,242,255,.5),0 0 75px rgba(206,217,255,.35);transition:all 3s cubic-bezier(.2,.8,.2,1)}
 .moon.visible{opacity:1;top:17%;transform:translateY(0) scale(1)}
 
 main{width:100%;min-height:100vh;position:relative;z-index:5}
-.scene{
- display:none;min-height:100vh;padding:35px 20px;
- align-items:center;justify-content:center;flex-direction:column;text-align:center;
- animation:appear .8s ease both;
-}
+.scene{display:none;min-height:100vh;padding:35px 20px;align-items:center;justify-content:center;flex-direction:column;text-align:center;animation:appear .8s ease both}
 .scene.active{display:flex}
 @keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 .content{width:100%;max-width:550px;margin:auto}
@@ -88,46 +64,26 @@ h2{font-size:clamp(28px,6vw,40px);margin-bottom:17px}
 p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
 .soft{color:#ffe0e8}
 
-.primary{
- margin-top:27px;padding:14px 24px;border-radius:30px;
- background:linear-gradient(135deg,#ffd0dc,#f6a8c0);
- color:#442b40;font-weight:700;font-size:14px;
- box-shadow:0 8px 28px rgba(255,172,198,.2);
- transition:transform .25s;
-}
+.primary{margin-top:27px;padding:14px 24px;border-radius:30px;background:linear-gradient(135deg,#ffd0dc,#f6a8c0);color:#442b40;font-weight:700;font-size:14px;box-shadow:0 8px 28px rgba(255,172,198,.2);transition:transform .25s}
 .primary:hover{transform:translateY(-3px)}
 .primary:disabled{opacity:.5;cursor:default}
-.secondary{
- margin-top:15px;padding:12px 20px;border-radius:25px;
- color:white;background:rgba(255,255,255,.12);
- border:1px solid rgba(255,255,255,.28);
-}
+.secondary{margin-top:15px;padding:12px 20px;border-radius:25px;color:white;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28)}
 
-.envelope-wrap{position:relative;width:min(310px,85vw);height:205px;margin:35px auto 20px;perspective:900px}
-.envelope{position:absolute;inset:0;background:#d99ca9;border-radius:5px;z-index:2;box-shadow:0 15px 40px #0003}
-.envelope:before{
- content:"";position:absolute;inset:0;background:#eab7c0;
- clip-path:polygon(0 0,100% 0,50% 58%);transform-origin:top;
- transition:transform .8s;z-index:4;
-}
-.envelope:after{content:"";position:absolute;inset:0;background:#c98096;clip-path:polygon(0 100%,50% 48%,100% 100%);z-index:5}
-.envelope.open:before{transform:rotateX(180deg)}
-.letter{
- position:absolute;z-index:3;width:90%;left:5%;top:10px;min-height:175px;
- padding:20px 18px;background:#fff8ef;color:#493744;border-radius:5px;
- opacity:0;transform:translateY(25px);
- transition:transform 1s,opacity .6s;box-shadow:0 6px 22px #0002;
- text-align:left;overflow:visible;
-}
-.letter.open{opacity:1;transform:translateY(-165px);z-index:10}
+/* SOBRE Y CARTA */
+.envelope-wrap{position:relative;width:min(310px,85vw);height:230px;margin:35px auto 20px;perspective:900px;transition:height .8s}
+.envelope-wrap.is-open{height:390px}
+
+.letter{position:absolute;z-index:4;width:90%;left:5%;top:8px;min-height:190px;padding:22px 18px;background:#fff8ef;color:#493744;border-radius:5px;opacity:0;transform:translateY(35px);pointer-events:none;transition:transform 1s ease,opacity .6s ease;box-shadow:0 8px 25px #0003;text-align:left}
+.letter.open{opacity:1;transform:translateY(-5px);pointer-events:auto}
 .letter h2{color:#a75e79;font-size:23px;margin-bottom:10px}
 .letter p{color:#55414c;font-size:13px;line-height:1.8}
-.seal{
- position:absolute;z-index:6;width:43px;height:43px;left:50%;top:50%;
- transform:translate(-50%,-50%);border-radius:50%;background:#a94f70;
- display:grid;place-items:center;color:white;font-size:19px;transition:opacity .4s;
-}
-.envelope.open .seal{opacity:0}
+
+.envelope{position:absolute;left:0;right:0;bottom:0;height:205px;background:#d99ca9;border-radius:5px;z-index:2;box-shadow:0 15px 40px #0003}
+.envelope-front{position:absolute;inset:0;background:#c98096;clip-path:polygon(0 100%,50% 48%,100% 100%);z-index:3}
+.envelope-flap{position:absolute;inset:0;background:#eab7c0;clip-path:polygon(0 0,100% 0,50% 58%);transform-origin:top;transition:transform .8s;z-index:5}
+.envelope.is-open .envelope-flap{transform:rotateX(180deg)}
+.seal{position:absolute;z-index:6;width:43px;height:43px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:#a94f70;display:grid;place-items:center;color:white;font-size:19px;transition:opacity .4s}
+.envelope.is-open .seal{opacity:0}
 
 .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:27px}
 .detail-card{min-height:145px;border-radius:17px;padding:20px 15px;background:#ffffff1c;border:1px solid #ffffff30;backdrop-filter:blur(8px)}
@@ -137,6 +93,7 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
 .choices{display:flex;flex-direction:column;gap:12px;margin:25px auto 0;max-width:340px}
 .choice{background:#ffffff20;color:white;padding:15px;border:1px solid #ffffff38;border-radius:15px;font-size:14px}
 .choice:hover{background:#ffbed14d}
+.choice:disabled{cursor:default}
 #answer{min-height:48px;margin-top:18px;color:#ffe0e8}
 
 .final-heart{font-size:55px;margin:15px 0;animation:heartbeat 1.4s infinite}
@@ -156,9 +113,10 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
 #effects{position:fixed;inset:0;z-index:9;pointer-events:none}
 
 @media(max-width:430px){
- .letter.open{transform:translateY(-155px)}
  .cards{gap:9px}
  .detail-card{padding:16px 11px}
+ .letter{padding:18px 15px}
+ .letter p{font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
@@ -192,7 +150,7 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <h1>Hola, Vanesa <span style="color:#ffb6c9">♡</span></h1>
   <p>No sé si esperabas algo así, pero quería hacerte algo diferente. Así que te preparé un pequeño recorrido...</p>
   <p class="soft" style="margin-top:12px">Espero que te guste tanto como a mí me gustó hacerlo.</p>
-  <button class="primary" type="button" onclick="goTo(1)">Comenzar ✨</button>
+  <button class="primary" data-go="1">Comenzar ✨</button>
  </div>
 </section>
 
@@ -201,8 +159,8 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <div class="eyebrow">Hay algo para ti</div>
   <h2>Una carta pequeña...</h2>
   <p>Pero escrita con una intención bastante bonita.</p>
-  <div class="envelope-wrap">
-   <div class="envelope" id="envelope"><div class="seal">♡</div></div>
+
+  <div class="envelope-wrap" id="envelopeWrap">
    <div class="letter" id="letter">
     <h2>Para ti, Vanesa</h2>
     <p>
@@ -215,9 +173,15 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
      Con cariño, alguien que quería sacarte una sonrisa. ♡
     </p>
    </div>
+   <div class="envelope" id="envelope">
+    <div class="envelope-flap"></div>
+    <div class="envelope-front"></div>
+    <div class="seal">♡</div>
+   </div>
   </div>
-  <button class="primary" id="letterOpenButton" type="button" onclick="handleOpenLetter()">Abrir mi carta 💌</button>
-  <button class="secondary" id="letterNextButton" type="button" style="display:none" onclick="goTo(2)">Seguir leyendo el cielo ✨</button>
+
+  <button class="primary" id="letterOpenButton">Abrir mi carta 💌</button>
+  <button class="secondary" id="letterNextButton" hidden>Seguir leyendo el cielo ✨</button>
  </div>
 </section>
 
@@ -227,9 +191,9 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <h2>Hay atardeceres que se quedan...</h2>
   <p>Me gustan esos momentos en los que todo parece ir más despacio. El cielo cambia de colores, el sol se despide y uno simplemente disfruta.</p>
   <p class="soft" style="margin-top:12px">Y pensé que sería bonito compartirte uno.</p>
-  <button class="primary" id="sunButton" type="button" onclick="showSunset()">Ver el atardecer 🌅</button>
-  <p id="sunText" style="display:none;margin-top:22px">Qué bonito sería poder guardar algunos momentos así y volver a ellos cuando quisiéramos.</p>
-  <button class="primary" id="nightTransition" type="button" style="display:none" onclick="beginNightTransition()">Espera... viene la noche 🌙</button>
+  <button class="primary" id="sunButton">Ver el atardecer 🌅</button>
+  <p id="sunText" hidden style="margin-top:22px">Qué bonito sería poder guardar algunos momentos así y volver a ellos cuando quisiéramos.</p>
+  <button class="primary" id="nightTransition" hidden>Espera... viene la noche 🌙</button>
  </div>
 </section>
 
@@ -238,7 +202,7 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <div class="eyebrow">Y cuando llega la noche...</div>
   <h2>El cielo también tiene algo que contar.</h2>
   <p id="moonText" style="opacity:0">Aunque el sol se esconda, siempre quedan pequeñas luces para recordarnos que incluso en la oscuridad hay cosas bonitas.</p>
-  <button class="primary" id="continueNight" type="button" style="display:none" onclick="goTo(4)">Hay algo más para ti ♡</button>
+  <button class="primary" id="continueNight" hidden>Hay algo más para ti ♡</button>
  </div>
 </section>
 
@@ -253,7 +217,7 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
    <div class="detail-card"><span>🌙</span><h3>Los momentos</h3><p>Me gusta que podamos crear recuerdos, incluso sin planearlos.</p></div>
    <div class="detail-card"><span>♡</span><h3>Esta sorpresa</h3><p>Solo quería encontrar otra manera de sacarte una sonrisa.</p></div>
   </div>
-  <button class="primary" type="button" onclick="goTo(5)">Tengo una pregunta para ti 👀</button>
+  <button class="primary" data-go="5">Tengo una pregunta para ti 👀</button>
  </div>
 </section>
 
@@ -263,13 +227,13 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <h2>Si pudiéramos escaparnos un rato...</h2>
   <p>¿Qué plan te gustaría más?</p>
   <div class="choices">
-   <button class="choice" type="button" onclick="choose(0)">🌄 Ver un atardecer en algún lugar bonito</button>
-   <button class="choice" type="button" onclick="choose(1)">🍦 Salir por algo rico y hablar de todo</button>
-   <button class="choice" type="button" onclick="choose(2)">🌃 Dar una vuelta y descubrir algún lugar</button>
-   <button class="choice" type="button" onclick="choose(3)">🤭 Cualquier plan, si la compañía es buena</button>
+   <button class="choice" data-choice="0">🌄 Ver un atardecer en algún lugar bonito</button>
+   <button class="choice" data-choice="1">🍦 Salir por algo rico y hablar de todo</button>
+   <button class="choice" data-choice="2">🌃 Dar una vuelta y descubrir algún lugar</button>
+   <button class="choice" data-choice="3">🤭 Cualquier plan, si la compañía es buena</button>
   </div>
   <p id="answer"></p>
-  <button class="primary" id="questionNext" type="button" style="display:none" onclick="goTo(6)">Continuar ♡</button>
+  <button class="primary" id="questionNext" hidden>Continuar ♡</button>
  </div>
 </section>
 
@@ -280,7 +244,7 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
   <div class="final-heart">♡</div>
   <p>No quería hacerte una página cualquiera. Quería que al recorrerla encontraras un poquito de creatividad, cariño y algo que te hiciera sonreír.</p>
   <p class="soft" style="margin-top:13px">Porque hay personas que hacen que hasta las cosas más sencillas tengan algo especial.</p>
-  <button class="primary" id="revealConstellation" type="button" onclick="revealFinal()">Tengo una última sorpresa ✨</button>
+  <button class="primary" id="revealConstellation">Tengo una última sorpresa ✨</button>
   <div id="constellation">
    <svg viewBox="0 0 330 230">
     <path class="constellation-line" d="M165 25 L205 65 L260 70 L220 112 L230 170 L165 137 L100 170 L110 112 L70 70 L125 65 Z"/>
@@ -307,244 +271,301 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
 </main>
 
 <script>
+(() => {
 "use strict";
 
-const universe = document.getElementById("universe");
-const sun = document.getElementById("sun");
-const sky = document.getElementById("sky");
-const moon = document.getElementById("moon");
-const reflection = document.getElementById("reflection");
-const clouds = document.getElementById("clouds");
+const $ = id => document.getElementById(id);
+const universe = $("universe");
+const sun = $("sun");
+const sky = $("sky");
+const moon = $("moon");
+const reflection = $("reflection");
+const clouds = $("clouds");
 
 let nightStarted = false;
 let selectedAnswer = false;
 let petalsStarted = false;
 let letterHasOpened = false;
+let finalShown = false;
 
-function goTo(number) {
-  const target = document.getElementById("scene" + number);
-  if (!target) return;
+function goTo(number){
+ const target = $("scene"+number);
+ if(!target) return;
+ document.querySelectorAll(".scene").forEach(scene=>scene.classList.remove("active"));
+ target.classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
 
-  document.querySelectorAll(".scene").forEach(scene => {
-    scene.classList.remove("active");
-  });
-
-  target.classList.add("active");
-  window.scrollTo({top:0,behavior:"smooth"});
-
-  if (!petalsStarted) {
-    petalsStarted = true;
-    setInterval(createPetal, 1300);
-  }
+ if(!petalsStarted){
+  petalsStarted = true;
+  window.setInterval(createPetal,1600);
+ }
 }
 
-/* FUNCIÓN DE APERTURA CON NOMBRE DISTINTO AL BOTÓN */
+/* Todos los botones se conectan aquí.
+   No usamos onclick dentro del HTML. */
+document.addEventListener("click",event=>{
+ const button = event.target.closest("button");
+ if(!button) return;
 
-function handleOpenLetter() {
-  if (letterHasOpened) return;
-  letterHasOpened = true;
+ if(button.dataset.go !== undefined){
+  goTo(Number(button.dataset.go));
+  return;
+ }
 
-  const envelope = document.getElementById("envelope");
-  const letter = document.getElementById("letter");
-  const openButton = document.getElementById("letterOpenButton");
-  const nextButton = document.getElementById("letterNextButton");
+ if(button.id === "letterOpenButton"){
+  openLetter();
+  return;
+ }
 
-  openButton.disabled = true;
-  envelope.classList.add("open");
+ if(button.id === "letterNextButton"){
+  goTo(2);
+  return;
+ }
 
-  setTimeout(() => {
-    letter.classList.add("open");
-  }, 500);
+ if(button.id === "sunButton"){
+  showSunset();
+  return;
+ }
 
-  setTimeout(() => {
-    nextButton.style.display = "inline-block";
-  }, 1800);
+ if(button.id === "nightTransition"){
+  beginNightTransition();
+  return;
+ }
+
+ if(button.id === "continueNight"){
+  goTo(4);
+  return;
+ }
+
+ if(button.dataset.choice !== undefined){
+  choose(Number(button.dataset.choice));
+  return;
+ }
+
+ if(button.id === "questionNext"){
+  goTo(6);
+  return;
+ }
+
+ if(button.id === "revealConstellation"){
+  revealFinal();
+ }
+});
+
+function openLetter(){
+ if(letterHasOpened) return;
+ letterHasOpened = true;
+
+ const openButton = $("letterOpenButton");
+ const nextButton = $("letterNextButton");
+
+ openButton.disabled = true;
+ openButton.hidden = true;
+
+ $("envelopeWrap").classList.add("is-open");
+ $("envelope").classList.add("is-open");
+
+ // La carta aparece después de que la solapa empieza a abrirse.
+ window.setTimeout(()=>{
+  $("letter").classList.add("open");
+ },350);
+
+ // El siguiente botón aparece cuando la carta ya terminó de subir.
+ window.setTimeout(()=>{
+  nextButton.hidden = false;
+ },1450);
 }
 
-function showSunset() {
-  universe.classList.remove("twilight","night");
-  universe.classList.add("sunset");
+function showSunset(){
+ universe.classList.remove("twilight","night");
+ universe.classList.add("sunset");
 
-  sun.style.display = "block";
-  sun.classList.remove("gone");
-  sun.classList.add("visible");
+ sun.hidden = false;
+ sun.style.display = "block";
+ sun.classList.remove("gone");
+ sun.classList.add("visible");
 
-  reflection.classList.remove("off");
-  reflection.classList.add("visible");
-  clouds.classList.remove("off");
+ reflection.classList.remove("off");
+ reflection.classList.add("visible");
+ clouds.classList.remove("off");
 
-  document.getElementById("sunButton").style.display = "none";
-  document.getElementById("sunText").style.display = "block";
+ $("sunButton").hidden = true;
+ $("sunText").hidden = false;
 
-  setTimeout(() => {
-    document.getElementById("nightTransition").style.display = "inline-block";
-  }, 1200);
+ window.setTimeout(()=>{
+  $("nightTransition").hidden = false;
+ },1200);
 }
 
-function createStars() {
-  sky.innerHTML = "";
-  for (let i = 0; i < 100; i++) {
-    const star = document.createElement("div");
-    star.className = "star";
-    star.style.left = Math.random()*100 + "%";
-    star.style.top = Math.random()*75 + "%";
-    star.style.animationDelay = Math.random()*3 + "s";
-    const size = 1 + Math.random()*2.5;
-    star.style.width = size + "px";
-    star.style.height = size + "px";
-    sky.appendChild(star);
-  }
+function createStars(){
+ sky.innerHTML = "";
+ for(let i=0;i<100;i++){
+  const star = document.createElement("div");
+  star.className = "star";
+  star.style.left = Math.random()*100+"%";
+  star.style.top = Math.random()*75+"%";
+  star.style.animationDelay = Math.random()*3+"s";
+  const size = 1+Math.random()*2.5;
+  star.style.width = size+"px";
+  star.style.height = size+"px";
+  sky.appendChild(star);
+ }
 }
 
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve,ms));
+const wait = ms => new Promise(resolve=>window.setTimeout(resolve,ms));
+
+async function beginNightTransition(){
+ if(nightStarted) return;
+ nightStarted = true;
+
+ $("nightTransition").disabled = true;
+ $("nightTransition").hidden = true;
+
+ reflection.classList.remove("visible");
+ reflection.classList.add("off");
+ clouds.classList.add("off");
+
+ universe.classList.add("twilight");
+ sun.classList.add("gone");
+
+ // Primero esperamos a que el sol desaparezca.
+ await wait(4300);
+ sun.style.display = "none";
+
+ // Solo después comienza la noche.
+ universe.classList.remove("twilight");
+ universe.classList.add("night");
+
+ await wait(1200);
+ createStars();
+ sky.classList.add("visible");
+
+ await wait(2200);
+ moon.classList.add("visible");
+
+ await wait(2800);
+ goTo(3);
+
+ const message = $("moonText");
+ message.style.transition = "opacity 2s";
+ message.style.opacity = "1";
+
+ await wait(1800);
+ $("continueNight").hidden = false;
 }
 
-async function beginNightTransition() {
-  if (nightStarted) return;
-  nightStarted = true;
+function choose(choice){
+ if(selectedAnswer) return;
+ selectedAnswer = true;
 
-  const button = document.getElementById("nightTransition");
+ const messages = [
+  "Entonces ya tenemos una buena excusa para ver un atardecer juntos. 🌄",
+  "Ese plan suena bastante bien... especialmente por la compañía. 🍦",
+  "Me gusta. A veces los mejores lugares son los que uno encuentra sin buscarlos. 🌃",
+  "JAJAJA, esa respuesta tiene bastante sentido. 🤭"
+ ];
+
+ $("answer").textContent = messages[choice];
+
+ document.querySelectorAll(".choice").forEach((button,index)=>{
   button.disabled = true;
-  button.style.display = "none";
+  button.style.opacity = index === choice ? "1" : ".55";
+ });
 
-  reflection.classList.remove("visible");
-  reflection.classList.add("off");
-  clouds.classList.add("off");
-
-  universe.classList.add("twilight");
-  sun.classList.add("gone");
-
-  await wait(4300);
-
-  // Se oculta el sol físicamente antes de mostrar el cielo nocturno.
-  sun.style.display = "none";
-
-  universe.classList.remove("twilight");
-  universe.classList.add("night");
-
-  await wait(1800);
-
-  createStars();
-  sky.classList.add("visible");
-
-  await wait(2500);
-
-  moon.classList.add("visible");
-
-  await wait(3200);
-
-  goTo(3);
-  const message = document.getElementById("moonText");
-  message.style.transition = "opacity 2s";
-  message.style.opacity = "1";
-
-  await wait(1800);
-  document.getElementById("continueNight").style.display = "inline-block";
+ $("questionNext").hidden = false;
 }
 
-function choose(choice) {
-  if (selectedAnswer) return;
-  selectedAnswer = true;
+function revealFinal(){
+ if(finalShown) return;
+ finalShown = true;
 
-  const messages = [
-    "Entonces ya tenemos una buena excusa para ver un atardecer juntos. 🌄",
-    "Ese plan suena bastante bien... especialmente por la compañía. 🍦",
-    "Me gusta. A veces los mejores lugares son los que uno encuentra sin buscarlos. 🌃",
-    "JAJAJA, esa respuesta tiene bastante sentido. 🤭"
-  ];
+ $("revealConstellation").hidden = true;
+ $("constellation").classList.add("visible");
 
-  document.getElementById("answer").textContent = messages[choice];
-
-  document.querySelectorAll(".choice").forEach((button,index) => {
-    button.disabled = true;
-    button.style.opacity = index === choice ? "1" : ".55";
-  });
-
-  document.getElementById("questionNext").style.display = "inline-block";
+ window.setTimeout(()=>{
+  $("finalMessage").classList.add("visible");
+  fireworks();
+ },3200);
 }
 
-function revealFinal() {
-  document.getElementById("revealConstellation").style.display = "none";
-  document.getElementById("constellation").classList.add("visible");
-
-  setTimeout(() => {
-    document.getElementById("finalMessage").classList.add("visible");
-    fireworks();
-  },3200);
+function createPetal(){
+ const petal = document.createElement("div");
+ petal.className = "petal";
+ petal.textContent = Math.random()>.5 ? "✿" : "♡";
+ petal.style.left = Math.random()*100+"vw";
+ petal.style.fontSize = (12+Math.random()*15)+"px";
+ petal.style.color = Math.random()>.5 ? "#ffc3d5" : "#ffe4ec";
+ petal.style.animationDuration = (6+Math.random()*6)+"s";
+ document.body.appendChild(petal);
+ window.setTimeout(()=>petal.remove(),13000);
 }
 
-function createPetal() {
-  const petal = document.createElement("div");
-  petal.className = "petal";
-  petal.textContent = Math.random()>.5 ? "✿" : "♡";
-  petal.style.left = Math.random()*100 + "vw";
-  petal.style.fontSize = (12+Math.random()*15)+"px";
-  petal.style.color = Math.random()>.5 ? "#ffc3d5" : "#ffe4ec";
-  petal.style.animationDuration = (6+Math.random()*6)+"s";
-  document.body.appendChild(petal);
-  setTimeout(() => petal.remove(),13000);
-}
-
-const canvas = document.getElementById("effects");
-const ctx = canvas.getContext("2d");
+/* Efectos de fuegos artificiales con protección por si el móvil
+   no permite crear el contexto del canvas. */
+const canvas = $("effects");
+const ctx = canvas ? canvas.getContext("2d") : null;
 let particles = [];
 
-function resizeCanvas() {
-  const dpr = Math.min(window.devicePixelRatio||1,2);
-  canvas.width = window.innerWidth*dpr;
-  canvas.height = window.innerHeight*dpr;
-  canvas.style.width = window.innerWidth+"px";
-  canvas.style.height = window.innerHeight+"px";
-  ctx.setTransform(dpr,0,0,dpr,0,0);
+function resizeCanvas(){
+ if(!canvas || !ctx) return;
+ const dpr = Math.min(window.devicePixelRatio||1,2);
+ canvas.width = window.innerWidth*dpr;
+ canvas.height = window.innerHeight*dpr;
+ canvas.style.width = window.innerWidth+"px";
+ canvas.style.height = window.innerHeight+"px";
+ ctx.setTransform(dpr,0,0,dpr,0,0);
 }
+
+function burst(x,y){
+ for(let i=0;i<45;i++){
+  const angle = Math.random()*Math.PI*2;
+  const speed = 1+Math.random()*4;
+  particles.push({
+   x,y,
+   vx:Math.cos(angle)*speed,
+   vy:Math.sin(angle)*speed,
+   life:1,
+   size:1+Math.random()*2.5
+  });
+ }
+}
+
+function fireworks(){
+ burst(window.innerWidth*.25,window.innerHeight*.3);
+ window.setTimeout(()=>burst(window.innerWidth*.75,window.innerHeight*.25),600);
+ window.setTimeout(()=>burst(window.innerWidth*.5,window.innerHeight*.2),1300);
+}
+
+function animateEffects(){
+ if(!ctx || !canvas) return;
+
+ const dpr = Math.min(window.devicePixelRatio||1,2);
+ ctx.setTransform(1,0,0,1,0,0);
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+
+ particles = particles.filter(p=>p.life>0);
+ particles.forEach(p=>{
+  p.x += p.vx;
+  p.y += p.vy;
+  p.vy += .025;
+  p.life -= .012;
+  ctx.globalAlpha = Math.max(0,p.life);
+  ctx.fillStyle = "#ffe4a8";
+  ctx.beginPath();
+  ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+  ctx.fill();
+ });
+
+ ctx.globalAlpha = 1;
+ window.requestAnimationFrame(animateEffects);
+}
+
 window.addEventListener("resize",resizeCanvas);
 resizeCanvas();
+if(ctx) animateEffects();
 
-function burst(x,y) {
-  for (let i=0;i<45;i++) {
-    const angle = Math.random()*Math.PI*2;
-    const speed = 1+Math.random()*4;
-    particles.push({
-      x,y,
-      vx:Math.cos(angle)*speed,
-      vy:Math.sin(angle)*speed,
-      life:1,
-      size:1+Math.random()*2.5
-    });
-  }
-}
-
-function fireworks() {
-  burst(innerWidth*.25,innerHeight*.3);
-  setTimeout(() => burst(innerWidth*.75,innerHeight*.25),600);
-  setTimeout(() => burst(innerWidth*.5,innerHeight*.2),1300);
-}
-
-function animateEffects() {
-  const dpr = Math.min(window.devicePixelRatio||1,2);
-  ctx.setTransform(1,0,0,1,0,0);
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-
-  particles = particles.filter(p => p.life>0);
-  particles.forEach(p => {
-    p.x+=p.vx;
-    p.y+=p.vy;
-    p.vy+=.025;
-    p.life-=.012;
-    ctx.globalAlpha=Math.max(0,p.life);
-    ctx.fillStyle="#ffe4a8";
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fill();
-  });
-
-  ctx.globalAlpha=1;
-  requestAnimationFrame(animateEffects);
-}
-
-animateEffects();
+})();
 </script>
 </body>
 </html>
