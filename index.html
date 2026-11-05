@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -69,14 +68,12 @@ p{line-height:1.8;font-size:15px;color:rgba(255,250,247,.9)}
 .primary:disabled{opacity:.5;cursor:default}
 .secondary{margin-top:15px;padding:12px 20px;border-radius:25px;color:white;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28)}
 
-/* SOBRE Y CARTA */
+/* SOBRE Y CARTA CORREGIDOS */
 .envelope-wrap{position:relative;width:min(310px,85vw);height:230px;margin:35px auto 20px;perspective:900px;transition:height .8s}
 .envelope-wrap.is-open{height:390px}
 
 .letter{position:absolute;z-index:4;width:90%;left:5%;top:8px;min-height:190px;padding:22px 18px;background:#fff8ef;color:#493744;border-radius:5px;opacity:0;transform:translateY(35px);pointer-events:none;transition:transform 1s ease,opacity .6s ease;box-shadow:0 8px 25px #0003;text-align:left}
-.letter.open{opacity:1;transform:translateY(-5px);pointer-events:auto}
-.letter h2{color:#a75e79;font-size:23px;margin-bottom:10px}
-.letter p{color:#55414c;font-size:13px;line-height:1.8}
+.letter.open{opacity:1;transform:translateY(-135px);pointer-events:auto} /* CORREGIDO: Se eleva lo suficiente para salir del sobre */
 
 .envelope{position:absolute;left:0;right:0;bottom:0;height:205px;background:#d99ca9;border-radius:5px;z-index:2;box-shadow:0 15px 40px #0003}
 .envelope-front{position:absolute;inset:0;background:#c98096;clip-path:polygon(0 100%,50% 48%,100% 100%);z-index:3}
@@ -301,8 +298,6 @@ function goTo(number){
  }
 }
 
-/* Todos los botones se conectan aquí.
-   No usamos onclick dentro del HTML. */
 document.addEventListener("click",event=>{
  const button = event.target.closest("button");
  if(!button) return;
@@ -365,12 +360,10 @@ function openLetter(){
  $("envelopeWrap").classList.add("is-open");
  $("envelope").classList.add("is-open");
 
- // La carta aparece después de que la solapa empieza a abrirse.
  window.setTimeout(()=>{
   $("letter").classList.add("open");
  },350);
 
- // El siguiente botón aparece cuando la carta ya terminó de subir.
  window.setTimeout(()=>{
   nextButton.hidden = false;
  },1450);
@@ -428,11 +421,9 @@ async function beginNightTransition(){
  universe.classList.add("twilight");
  sun.classList.add("gone");
 
- // Primero esperamos a que el sol desaparezca.
  await wait(4300);
  sun.style.display = "none";
 
- // Solo después comienza la noche.
  universe.classList.remove("twilight");
  universe.classList.add("night");
 
@@ -500,8 +491,6 @@ function createPetal(){
  window.setTimeout(()=>petal.remove(),13000);
 }
 
-/* Efectos de fuegos artificiales con protección por si el móvil
-   no permite crear el contexto del canvas. */
 const canvas = $("effects");
 const ctx = canvas ? canvas.getContext("2d") : null;
 let particles = [];
